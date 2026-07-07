@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            background: #3498db;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2c3e50;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #34495e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: #fff;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>नमस्ते, मेरा नाम [Aapka Naam] है</h1>
+        <p>वेब डेवलपर / क्रिएटर</p>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2>मेरे बारे में (About Me)</h2>
+            <p>मैं एक वेब डेवलपर हूँ और मुझे नई तकनीकें सीखना और उनके साथ काम करना पसंद है। यह मेरी पहली वेबसाइट है जिसे मैंने GitHub Pages के माध्यम से होस्ट किया है।</p>
+        </section>
+
+        <section id="skills">
+            <h2>स्किल्स (Skills)</h2>
+            <ul class="skills-list">
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>GitHub</li>
+                <li>Responsive Design</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>संपर्क करें (Contact)</h2>
+            <p>यदि आप मुझसे जुड़ना चाहते हैं, तो मुझे ईमेल कर सकते हैं या नीचे दिए गए बटन पर क्लिक कर सकते हैं।</p>
+            <a href="mailto:your-email@example.com" class="btn">ईमेल भेजें</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 [Aapka Naam]. सर्वाधिकार सुरक्षित।</p>
+    </footer>
+
+</body>
+</html>
