@@ -39,70 +39,26 @@
         }
     </script>
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        .glass-header {
-            background: rgba(10, 10, 10, 0.94);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .glass-card {
-            background: rgba(22, 22, 22, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(212, 175, 55, 0.12);
-        }
-        .brand-string {
-            background: linear-gradient(135deg, #3ad5e0 0%, #1a82e2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .brand-creations {
-            background: linear-gradient(135deg, #1a82e2 0%, #7a1ae2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .brand-03 {
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 50%, #71717a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .logo-glowing-effect {
-            filter: drop-shadow(0px 2px 10px rgba(26, 130, 226, 0.3));
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0d0d0d;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1a82e2;
-        }
-        /* Continuous Infinite Horizontal Scrolling Reviews */
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            width: 100%;
-        }
-        .marquee-content {
-            display: inline-flex;
-            animation: marquee 35s linear infinite;
-        }
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
+        html { scroll-behavior: smooth; }
+        .glass-header { background: rgba(10, 10, 10, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .glass-card { background: rgba(22, 22, 22, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(212, 175, 55, 0.12); }
+        .brand-string { background: linear-gradient(135deg, #3ad5e0 0%, #1a82e2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-creations { background: linear-gradient(135deg, #1a82e2 0%, #7a1ae2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-03 { background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 50%, #71717a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-glowing-effect { filter: drop-shadow(0px 2px 10px rgba(26, 130, 226, 0.3)); }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #0d0d0d; }
+        ::-webkit-scrollbar-thumb { background: #1a82e2; }
+        /* Infinite Marquee Animation for Reviews */
+        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; width: 100%; }
+        .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
+        .marquee-content:hover { animation-play-state: paused; }
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        /* Steps progressive loop transitions */
-        .process-step-card, .heritage-step-card {
-            display: none !important;
-        }
+        /* Steps active looping config */
+        .process-step-card, .heritage-step-card { display: none !important; }
         .process-step-card.active-reveal, .heritage-step-card.active-reveal {
             display: block !important;
             margin: 0 auto;
@@ -242,7 +198,7 @@
                             <span data-i18n="more_styles">More Art Styles</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform duration-200" id="dropdown-arrow"></i>
                         </button>
                         <div id="more-styles-dropdown" class="hidden absolute left-0 sm:right-0 mt-3 w-72 sm:w-80 max-h-96 overflow-y-auto bg-luxuryCharcoal border border-luxuryGold/25 rounded-md shadow-2xl z-50 p-4 space-y-4">
-                            <!-- Populated dynamically inside JS -->
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
                 </div>
@@ -251,7 +207,7 @@
             </div>
         </section>
 
-        <!-- Creation Process -->
+        <!-- Our Handcrafting Process Section -->
         <section id="process-section" class="py-24 bg-luxuryCharcoal/30 border-t border-luxuryGold/10">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="text-center mb-16 space-y-2">
@@ -506,7 +462,7 @@
                     </div>
                 </div>
 
-                <!-- instructions details -->
+                <!-- custom details -->
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-sans" data-i18n="details_label">Additional Custom Details & Instructions</label>
                     <textarea id="custom-details-msg" rows="4" placeholder="Enter custom requirements..." data-i18n-placeholder="details_placeholder" class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600 font-sans"></textarea>
@@ -523,7 +479,7 @@
                 </div>
             </div>
 
-            <!-- Right Half Screen Directory Index (Symmetric Split) -->
+            <!-- Right Half Directory Symmetrical Split -->
             <div class="lg:col-span-6 space-y-6 glass-card p-8">
                 <div class="border-b border-luxuryGold/10 pb-4 flex justify-between items-center">
                     <h3 class="font-serif text-xl text-luxuryGold uppercase tracking-wide" data-i18n="directory_title">Main Types of String Art</h3>
@@ -535,7 +491,7 @@
         </div>
     </div>
 
-    <!-- Secured Admin Suite -->
+    <!-- Admin Suite -->
     <div id="admin-view" class="app-route-view hidden min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-10 border-b border-luxuryGold/20 pb-4">
             <h2 class="font-serif text-2xl text-luxuryGold tracking-wider uppercase">Secured Executive Admin Suite</h2>
@@ -562,7 +518,7 @@
                 </div>
             </div>
 
-            <!-- Product Manager Creator -->
+            <!-- Product Manager Form -->
             <div class="lg:col-span-6 glass-card p-8 space-y-6">
                 <h3 class="font-serif text-lg text-luxuryGold border-b border-luxuryGold/10 pb-4">Add Portfolio Artwork</h3>
                 <form onsubmit="handleAdminAddProduct(event)" class="space-y-3 font-sans">
@@ -610,7 +566,7 @@
                 </form>
             </div>
 
-            <!-- In-Memory Catalog List -->
+            <!-- Manage catalog -->
             <div class="lg:col-span-6 glass-card p-8 space-y-4">
                 <h3 class="font-serif text-lg text-luxuryGold border-b border-luxuryGold/10 pb-4">Manage Catalog (Click trash to delete)</h3>
                 <div id="admin-products-list" class="space-y-2 max-h-[450px] overflow-y-auto pr-2"></div>
@@ -678,7 +634,77 @@
         </div>
     </div>
 
-    <!-- JavaScript Core Execution System -->
+    <!-- Art Style Curated Image Modal (Displays real sample photo!) -->
+    <div id="art-class-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex items-center justify-center p-6">
+        <div class="glass-card max-w-xl w-full p-6 sm:p-8 relative text-center space-y-6 border border-luxuryGold/30 rounded-lg">
+            <button onclick="toggleArtClassModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="class-modal-title" class="font-serif text-2xl text-luxuryGold uppercase tracking-wider">Geometric Art</h3>
+            <p id="class-modal-desc" class="text-xs text-gray-300 leading-relaxed max-w-md mx-auto">Beautiful custom-engineered fibers and manual coordinate configurations mapped with pristine tension details.</p>
+            
+            <div class="w-full max-h-[300px] aspect-video sm:aspect-square sm:max-h-[360px] mx-auto rounded overflow-hidden bg-neutral-900 border border-luxuryGold/20 shadow-2xl flex items-center justify-center">
+                <img id="class-modal-img" src="" class="w-full h-full object-cover transition duration-500" alt="Sample String Art">
+            </div>
+            
+            <button onclick="toggleArtClassModal()" class="border border-luxuryGold/30 hover:border-luxuryGold px-8 py-2 text-xs uppercase tracking-widest text-luxuryGold font-bold transition" data-i18n="dismiss_btn">Dismiss Preview</button>
+        </div>
+    </div>
+
+    <!-- Dynamic Certificate modal -->
+    <div id="certificate-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex flex-col items-center justify-center p-6">
+        <button onclick="closeCertificate()" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+        <div class="max-w-2xl w-full bg-[#fcfbf9] text-[#111111] p-12 border-[12px] border-[#d4af37] shadow-2xl space-y-8 relative font-serif text-center">
+            <div class="absolute top-2 left-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute top-2 right-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute bottom-2 left-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute bottom-2 right-2 text-[#d4af37] text-2xl">⚜</div>
+
+            <h3 class="text-2xl uppercase tracking-[0.2em] text-[#d4af37] font-bold font-cinzel">Certificate of Authenticity</h3>
+            <div class="w-16 h-[2px] bg-[#d4af37] mx-auto"></div>
+            
+            <p class="text-xs uppercase tracking-widest text-gray-500">This certifies that the original thread-mapping creation entitled</p>
+            <h4 id="cert-title" class="text-3xl font-bold my-4">Symphony of Grace</h4>
+            <p class="text-xs max-w-md mx-auto leading-relaxed text-gray-600">is an authentic hand-hammered and woven string art formulation under registry of String Creations 03, incorporating premium threads, custom wooden profiles, and lifetime archival pigments.</p>
+            
+            <div class="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200 text-xs">
+                <div>
+                    <p class="font-sans font-bold text-gray-800" id="cert-registry-id">ID: SC03-38291</p>
+                    <p class="text-[10px] uppercase text-gray-400 mt-1">Registry Seal No</p>
+                </div>
+                <div>
+                    <p class="italic text-base">String Creations 03</p>
+                    <p class="text-[10px] uppercase text-gray-400 mt-1">Artist Signature Stamp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-out Shopping Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-luxuryCharcoal border-l border-luxuryGold/20 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col font-sans">
+        <div class="p-6 border-b border-luxuryGold/10 flex justify-between items-center bg-luxuryBlack font-serif">
+            <h3 class="text-xl text-luxuryGold tracking-wide" data-i18n="selected_masterpieces">Selected Masterpieces</h3>
+            <button onclick="toggleCart()" class="text-luxuryCream hover:text-luxuryGold"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <p id="cart-empty-msg" class="text-xs text-gray-500 text-center py-8" data-i18n="cart_empty">Your collection container is empty.</p>
+        </div>
+
+        <div class="p-6 border-t border-luxuryGold/10 bg-luxuryBlack space-y-4">
+            <div class="flex justify-between items-center text-xs uppercase tracking-wider">
+                <span data-i18n="cart_total_label">Value:</span>
+                <span id="cart-total-price" class="font-serif text-xl text-luxuryGold font-bold">₹0</span>
+            </div>
+            <button onclick="dispatchCartCheckout()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-4 font-bold text-xs uppercase tracking-widest transition" data-i18n="proceed_checkout">
+                Proceed Order to WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <a href="https://wa.me/918140125772" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 hover:bg-emerald-600 text-luxuryCream h-14 w-14 rounded-full flex items-center justify-center text-2xl shadow-xl hover:scale-110 transition duration-300 z-40">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript Core System with Safety Boundaries -->
     <script>
         // Global visual debuggers for live safety
         window.onerror = function (msg, url, lineNo) {
@@ -697,7 +723,7 @@
             "EN": {
                 "tagline": "Masterpiece In Every Thread",
                 "hero_title": "Luxury Handmade <br><span class=\"italic font-light\">String Art</span>",
-                "hero_desc": "Crafting timeless portraits and abstract designs with thousands of threads.",
+                "hero_desc": "Crafting timeless portraits and abstract designs with thousands of threads and unwavering passion.",
                 "explore_coll": "Explore Collection", "commission_art": "Commission Artwork",
                 "gallery_title": "The Masterpiece Gallery", "gallery_subtitle": "Curated Catalog",
                 "filter_all": "All Masterpieces", "filter_portraits": "Portraits", "filter_mandalas": "Mandalas", "filter_corporate": "Corporate & Custom",
@@ -714,7 +740,7 @@
                 "track_modal_title": "Track Order Phase", "track_modal_subtitle": "Enter reference code", "verify_btn": "Verify Status",
                 "form_name": "Your Name", "form_rating": "Stars", "form_review": "Your Review", "publish_btn": "Publish Experience",
                 "dismiss_btn": "Dismiss Preview", "selected_masterpieces": "Selected Masterpieces", "cart_empty": "Your collection is empty.",
-                "cart_total_label": "Value:", "proceed_checkout": "Proceed to WhatsApp"
+                "cart_total_label": "Value:", "proceed_checkout": "Proceed Order to WhatsApp"
             },
             "GU": {
                 "tagline": "દરેક દોરામાં એક ઉત્કૃષ્ટ કૃતિ",
@@ -731,7 +757,7 @@
                 "thread_label": "દોરા પસંદ કરો", "color_label": "રંગો પસંદ કરો", "details_label": "વધારાની સૂચનાઓ",
                 "details_placeholder": "કસ્ટમ નામ, તારીખો વિગતો લખો...", "pricing_form": "કિંમત ગણતરી:", "pricing_val": "વોટ્સએપ પર કસ્ટમ ક્વોટ",
                 "submit_to_artist": "ડિઝાઇન મોકલો", "directory_title": "સ્ટ્રિંગ આર્ટના પ્રકારો", "interactive_index": "ઇન્ટરેક્ટિવ ઇન્ડેક્સ",
-                "search_title": "કલાકૃતિ શોધો", "search_placeholder": "નામ, કદ દ્વારા શોધો...", "search_hint": "Enter દબાવો",
+                "search_title": "કલાકૃતિ શોધો", "search_placeholder": "શોધો...", "search_hint": "Enter દબાવો",
                 "nav_home": "હોમ", "nav_gallery": "ગેલેરી", "nav_process": "પ્રક્રિયા", "nav_reviews": "રિવ્યુઝ",
                 "track_modal_title": "ઓર્ડર સ્ટેટસ", "track_modal_subtitle": "આઈડી દાખલ કરો", "verify_btn": "તપાસો",
                 "form_name": "નામ", "form_rating": "રેટિંગ પસંદ કરો", "form_review": "પ્રતિભાવ", "publish_btn": "મોકલો",
@@ -741,9 +767,9 @@
             "HI": {
                 "tagline": "हर धागे में एक उत्कृष्ट कृति",
                 "hero_title": "लक्जरी हस्तनिर्मित <br><span class=\"italic font-light\">स्ट्रिंग आर्ट</span>",
-                "hero_desc": "हजारों धागों और अटूट जुनून के साथ किया गया उत्कृष्ट काम.",
+                "hero_desc": "हजारों धागों और अटूट जुनून के साथ किया गया उत्कृष्ट काम।",
                 "explore_coll": "कलेक्शन देखें", "commission_art": "ऑर्डर करें",
-                "gallery_title": "मास्टरपीस गैलरी", "gallery_subtitle": "चुनिंदा कैटलॉग",
+                "gallery_title": "मास्टर品 गैलरी", "gallery_subtitle": "चुनिंदा कैटलॉग",
                 "filter_all": "सभी कलाकृतियां", "filter_portraits": "पोर्ट्रेट", "filter_mandalas": "मंडला", "filter_corporate": "कॉर्पोरेट",
                 "more_styles": "और अधिक शैलियाँ", "precision_label": "सटीकता की कला", "process_title": "हमारी निर्माण प्रक्रिया",
                 "philosophy_btn": "निर्माण दर्शन", "mastery_btn": "१५-चरण शिल्प कौशल",
@@ -762,9 +788,46 @@
             }
         };
 
-        // Safety wrappers to completely shield script compilation from old corrupted browser storage data
+        // Default Catalog Data Base (Moved to top safety zone!)
+        const defaultProductsList = [
+            {
+                id: 1,
+                name: "Symphony of Grace",
+                category: "portrait",
+                price: 4499,
+                hours: "18 Hours",
+                nails: 360,
+                threads: 2400,
+                img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=600",
+                desc: "An intricate portrait that utilizes premium threads to build photorealistic shadows."
+            },
+            {
+                id: 2,
+                name: "Eternal Lotus Mandala",
+                category: "mandala",
+                price: 6999,
+                hours: "28 Hours",
+                nails: 500,
+                threads: 4000,
+                img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=600",
+                desc: "Symmetrical golden lotus mandala formulated with high-tensile metallic wires."
+            },
+            {
+                id: 3,
+                name: "Corporate Crest Legacy",
+                category: "custom",
+                price: 9999,
+                hours: "35 Hours",
+                nails: 650,
+                threads: 5200,
+                img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600",
+                desc: "Specialized dynamic branding layout handcrafted on dark sustainable base wood sheets."
+            }
+        ];
+
+        // Safety Cache Cleaner Version
         let products, reviews, cart;
-        const currentStorageVer = '3.0'; 
+        const currentStorageVer = '3.5'; 
         try {
             if (localStorage.getItem('sc03_storage_ver') !== currentStorageVer) {
                 localStorage.removeItem('sc03_products');
@@ -775,8 +838,8 @@
 
         try {
             products = JSON.parse(localStorage.getItem('sc03_products'));
-            if (!products || !Array.isArray(products) || products.length === 0) products = defaultProducts;
-        } catch(e) { products = defaultProducts; }
+            if (!products || !Array.isArray(products) || products.length === 0) products = defaultProductsList;
+        } catch(e) { products = defaultProductsList; }
 
         try {
             reviews = JSON.parse(localStorage.getItem('sc03_reviews'));
@@ -823,7 +886,7 @@
             } catch(e) {}
         }
 
-        // Looping Step Controllers
+        // Looping Step Controllers (Philosophy Loop)
         function startPhilosophyLoop() {
             stopAllProcessLoops();
             const cards = document.querySelectorAll('.process-step-card');
@@ -856,7 +919,7 @@
             }, 2500);
         }
 
-        // DOMContentLoaded Bootstrap Loader (Using strong try-catch barriers)
+        // Safe DOMContentLoaded Initializer (Try-Catch Protected)
         window.addEventListener('DOMContentLoaded', () => {
             try {
                 if (!localStorage.getItem('sc03_products')) {
@@ -864,17 +927,17 @@
                 }
             } catch(e) {}
 
-            try { populateCustomSelectors(); } catch(e) {}
-            try { renderGallery(); } catch(e) {}
-            try { renderReviews(); } catch(e) {}
-            try { renderStringArtDirectory(); } catch(e) {}
-            try { renderDropdownList(); } catch(e) {}
-            try { updateCartCount(); } catch(e) {}
+            try { populateCustomSelectors(); } catch(e) { console.error(e); }
+            try { renderGallery(); } catch(e) { console.error(e); }
+            try { renderReviews(); } catch(e) { console.error(e); }
+            try { renderStringArtDirectory(); } catch(e) { console.error(e); }
+            try { renderDropdownList(); } catch(e) { console.error(e); }
+            try { updateCartCount(); } catch(e) { console.error(e); }
 
-            // Loop initial active
-            try { startPhilosophyLoop(); } catch(e) {}
+            // Loop Philosophy Start
+            try { startPhilosophyLoop(); } catch(e) { console.error(e); }
 
-            // Language checking bootstrap
+            // Dynamic Language Initial Setup
             try {
                 const savedLang = localStorage.getItem('sc03_lang') || 'EN';
                 const langSwitcher = document.getElementById('language-switcher');
@@ -882,7 +945,7 @@
                     langSwitcher.value = savedLang;
                     switchLanguage();
                 }
-            } catch(e) {}
+            } catch(e) { console.error(e); }
         });
 
         // Toggle More Art Styles Dropdown (Rule 1)
@@ -904,7 +967,7 @@
             }
         });
 
-        // Render "More Art Styles" Dropdown Hierarchy in gallery filters
+        // Render "More Art Styles" Dropdown Hierarchy inside Gallery
         function renderDropdownList() {
             const container = document.getElementById('more-styles-dropdown');
             if (!container) return;
@@ -924,7 +987,7 @@
 
                 item.subtypes.forEach(sub => {
                     const btn = document.createElement('button');
-                    btn.className = 'text-left text-[11px] text-gray-300 hover:text-luxuryGold transition py-0.5 whitespace-nowrap overflow-hidden text-ellipsis';
+                    btn.className = 'text-left text-[11px] text-gray-300 hover:text-luxuryGold transition py-0.5 whitespace-nowrap overflow-hidden text-ellipsis font-sans';
                     btn.innerText = sub.name;
                     btn.onclick = () => triggerArtClassPreview(sub.name, sub.img);
                     listDiv.appendChild(btn);
@@ -963,7 +1026,7 @@
             });
         }
 
-        // Populate Customization Selectors dynamically (Completely bug-free and optimized!)
+        // Populate Customization Selectors dynamically (Fixed formatToFt error!)
         function populateCustomSelectors() {
             const sizeSelector = document.getElementById('custom-size');
             if (!sizeSelector) return;
@@ -1149,7 +1212,7 @@
                         <span class="font-serif text-sm lg:text-base text-luxuryGold font-semibold uppercase tracking-wider">${item.category}</span>
                         <span id="accordion-icon-${index}" class="text-luxuryGold text-xs"><i class="fa-solid fa-chevron-down"></i></span>
                     </div>
-                    <div id="accordion-content-${index}" class="hidden pt-4 flex flex-wrap gap-2 animate-fadeIn">
+                    <div id="accordion-content-${index}" class="hidden pt-4 flex flex-wrap gap-2 animate-fadeIn font-sans">
                         ${subButtonsHTML}
                     </div>
                 `;
@@ -1275,6 +1338,17 @@
             const drawer = document.getElementById('cart-drawer');
             if (drawer) drawer.classList.toggle('translate-x-full');
             renderCart();
+        }
+
+        // Admin Security Access & Panel Logic
+        function requestAdminAccess() {
+            const password = prompt('Please enter your Admin Console Password:');
+            if (password === 'admin123') {
+                showSection('admin-view');
+                renderAdminProducts();
+            } else {
+                alert('Access Denied. Incorrect credentials.');
+            }
         }
 
         function addToCart(id) {
@@ -1412,8 +1486,8 @@
 
             if (c1) c1.classList.remove('hidden');
             if (c2) c2.classList.add('hidden');
-            if (b1) b1.className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
-            if (b2) b2.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
+            if (b1) b1.className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition font-sans";
+            if (b2) b2.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition font-sans";
             startPhilosophyLoop();
         }
 
@@ -1425,8 +1499,8 @@
 
             if (c1) c1.classList.add('hidden');
             if (c2) c2.classList.remove('hidden');
-            if (b1) b1.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
-            if (b2) b2.className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
+            if (b1) b1.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition font-sans";
+            if (b2) b2.className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition font-sans";
             startHeritageLoop();
         }
 
