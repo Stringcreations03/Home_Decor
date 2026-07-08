@@ -396,13 +396,138 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <!-- Form Specs Panel -->
-            <div class="lg:col-span-5 glass-card p-8 space-y-6">
-                <h3 class="font-serif text-xl text-luxuryGold tracking-wide">Configure Specifications</h3>
-                
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Canvas Archetype & Size (From 3ft to 8ft)</label>
-                    <select id="custom-size" onchange="updateLiveStudio()" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
-                        <!-- Populated dynamically via JS loop -->
+            <!-- Form Specs Panel -->
+<div class="lg:col-span-5 glass-card p-8 space-y-6">
+    <h3 class="font-serif text-xl text-luxuryGold tracking-wide">Configure Specifications</h3>
+    
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Canvas Archetype & Size (From 3ft to 8ft)</label>
+        <select id="custom-size" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
+            <!-- Populated dynamically via JS loop -->
+        </select>
+    </div>
+
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Frame Aesthetics</label>
+        <select id="custom-frame" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
+            <option value="wood-black" selected>Wood - Black</option>
+            <option value="wood-white">Wood - White</option>
+            <option value="pvc-brown">PVC - Brown</option>
+            <option value="pvc-white">PVC - White</option>
+            <option value="without-frame">No Frame (Without Frame)</option>
+        </select>
+    </div>
+
+    <!-- Multi-Select Thread Types Options -->
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Select Thread Types (Multiple Select)</label>
+        <div class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-36 overflow-y-auto text-[11px]">
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Cotton Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Cotton Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Silk Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Silk Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Polyester Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Polyester Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Embroidery Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Embroidery Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Metallic Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Metallic Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Jute Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Jute Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Nylon Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Nylon Thread</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-threads" value="Glow in the Dark Thread" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Glow in the Dark</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Multi-Select Color Options -->
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Select Art Colors (Multiple Select)</label>
+        <div class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-36 overflow-y-auto text-[11px]">
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Gold" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Gold</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Silver" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Silver</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Copper" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Copper</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Black" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Black</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="White" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>White</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Red" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Red</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Blue" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Blue</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Glow-in-the-dark" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Glow in dark</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold">
+                <input type="checkbox" name="custom-colors" value="Multi-Color / Rainbow" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold focus:ring-0">
+                <span>Multi-Color/Rainbow</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Upload Reference with dynamic name tracker -->
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Upload Reference Portrait</label>
+        <div class="border border-dashed border-luxuryGold/20 hover:border-luxuryGold p-6 text-center cursor-pointer relative transition duration-300 bg-luxuryBlack/50">
+            <input type="file" id="custom-image-input" accept="image/*" onchange="handleFileSelection(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+            <i class="fa-solid fa-cloud-arrow-up text-luxuryGold text-2xl mb-2"></i>
+            <p id="file-upload-label" class="text-[10px] text-gray-400 uppercase tracking-widest">Select Image File</p>
+        </div>
+    </div>
+
+    <!-- Additional Message Details Textarea -->
+    <div>
+        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Additional Custom Details & Instructions</label>
+        <textarea id="custom-details-msg" rows="3" placeholder="Enter custom names, dates, or specific requirements here..." class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600"></textarea>
+    </div>
+
+    <!-- Note: Nail points and thread loop details completely removed as per screenshot -->
+
+    <div class="border-t border-luxuryGold/10 pt-4">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-xs uppercase tracking-wider text-gray-400">Pricing Formulation:</span>
+            <span class="font-serif text-sm text-luxuryGold font-bold uppercase tracking-widest">Custom Quote on WhatsApp</span>
+        </div>
+        <button onclick="dispatchCustomOrder()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-4 font-bold text-xs uppercase tracking-widest transition">
+            Submit Design to Artist
+        </button>
+    </div>
+</div>                        <!-- Populated dynamically via JS loop -->
                     </select>
                 </div>
 
@@ -1208,7 +1333,54 @@
             document.getElementById('studio-nails').innerText = `${estimatedNails} Nails`;
             document.getElementById('studio-threads').innerText = `~${estimatedThreads.toLocaleString()} Meters`;
         }
+// ૧. ફાઇલનું નામ ટ્રેક કરવા માટેનું નવું ફંક્શન
+let selectedFileName = "";
+function handleFileSelection(event) {
+    const file = event.target.files[0];
+    if (file) {
+        selectedFileName = file.name;
+        document.getElementById('file-upload-label').innerText = `Selected: ${file.name}`;
+        document.getElementById('file-upload-label').classList.remove('text-gray-400');
+        document.getElementById('file-upload-label').classList.add('text-luxuryGold', 'font-bold');
+    } else {
+        selectedFileName = "";
+        document.getElementById('file-upload-label').innerText = "Select Image File";
+    }
+}
 
+// ૨. નવું સુધારેલું dispatchCustomOrder ફંક્શન (WhatsApp બટન માટે)
+function dispatchCustomOrder() {
+    const sizeSelector = document.getElementById('custom-size');
+    const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
+    
+    const frameSelector = document.getElementById('custom-frame');
+    const frameText = frameSelector.options[frameSelector.selectedIndex].text;
+    
+    // મલ્ટીપલ સિલેક્ટેડ થ્રેડ મેળવો
+    const checkedThreads = Array.from(document.querySelectorAll('input[name="custom-threads"]:checked')).map(el => el.value);
+    const selectedThreadsText = checkedThreads.length > 0 ? checkedThreads.join(", ") : "None Selected";
+
+    // મલ્ટીપલ સિલેક્ટેડ કલર મેળવો
+    const checkedColors = Array.from(document.querySelectorAll('input[name="custom-colors"]:checked')).map(el => el.value);
+    const selectedColorsText = checkedColors.length > 0 ? checkedColors.join(", ") : "None Selected";
+
+    // વધારાની વિગતો મેળવો
+    const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra details provided.";
+
+    // ઈમેજ ફાઈલનું નામ અને સૂચના
+    const imageInfo = selectedFileName ? `• Selected Reference File: ${selectedFileName}\n⚠️ Please attach this photo in this chat! ⚠️` : "• Selected Reference File: None";
+
+    const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece with these configurations:\n\n` + 
+                `• Dimension: ${sizeText}\n` +
+                `• Frame Style: ${frameText}\n` +
+                `• Thread Formulation(s): ${selectedThreadsText}\n` +
+                `• Color Selection(s): ${selectedColorsText}\n` +
+                `${imageInfo}\n\n` +
+                `• Extra Custom Details:\n"${customDetails}"\n\n` +
+                `Please calculate the pricing structure and design layout based on these parameters.`;
+    
+    window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
+}
         function dispatchCustomOrder() {
             const sizeSelector = document.getElementById('custom-size');
             const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
