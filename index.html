@@ -6,7 +6,7 @@
     <title>String Creations 03 | Elite Handmade String Art Portfolio</title>
     
     <!-- SEO Master Configuration -->
-    <meta name="description" content="Discover premium, international-quality handmade string art custom creations. Elegant wooden frames, custom portraits, mandalas, and premium decor.">
+    <meta name="description" content="Discover premium, international-quality handmade string art custom creations by String Creations 03. Elegant wooden frames, custom portraits, and luxury decor.">
     <meta name="keywords" content="String Art, Handmade Art, Premium Decor, Custom String Art, String Creations 03, Luxury Art India">
     
     <!-- Premium Google Fonts -->
@@ -42,7 +42,7 @@
             scroll-behavior: smooth;
         }
         .glass-header {
-            background: rgba(13, 13, 13, 0.85);
+            background: rgba(13, 13, 13, 0.9);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
@@ -65,12 +65,18 @@
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
 
-    <!-- Sticky Header (Matches Screen Shot Exactly) -->
+    <!-- Sticky Header with Round Logo -->
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex flex-col">
-                <span class="font-serif text-2xl lg:text-3xl tracking-[0.15em] text-luxuryGold font-bold">STRING CREATIONS 03</span>
-                <span class="text-[9px] tracking-[0.3em] text-gray-400 uppercase">Masterpiece In Every Thread</span>
+            <a href="#" class="flex items-center space-x-3">
+                <!-- Round Logo Frame -->
+                <div class="h-12 w-12 rounded-full overflow-hidden border border-luxuryGold/50 bg-luxuryCharcoal flex items-center justify-center">
+                    <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl lg:text-2xl tracking-[0.12em] text-luxuryGold font-bold">STRING CREATIONS 03</span>
+                    <span class="text-[8px] tracking-[0.25em] text-gray-400 uppercase">Masterpiece In Every Thread</span>
+                </div>
             </a>
             
             <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.2em] font-medium">
@@ -157,7 +163,7 @@
 
             <!-- Dynamic Grid (Updated from local storage if admin updates it) -->
             <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Fallback items if storage is empty - dynamically built by script -->
+                <!-- Fallback items if storage is empty -->
             </div>
         </div>
     </section>
@@ -355,7 +361,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-1">Detailed Review</label>
+                        <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-1">Your Review</label>
                         <textarea id="review-form-text" required rows="4" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-4 py-2 text-xs focus:outline-none focus:border-luxuryGold text-luxuryCream"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition">Publish Experience</button>
@@ -381,4 +387,630 @@
                     <p id="modal-desc" class="text-xs text-gray-400 mt-4 leading-relaxed"></p>
                 </div>
                 
-                <div class="border-t border-luxuryGold/10 pt-4
+                <div class="border-t border-luxuryGold/10 pt-4 space-y-2 text-[10px] uppercase tracking-wider text-gray-500">
+                    <div class="flex justify-between"><span>Precision Nails:</span><span id="modal-nails" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Threading Hours:</span><span id="modal-hours" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Thread Length:</span><span id="modal-threads" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Certification:</span><span class="text-luxuryCream font-bold">Authentic Signed Seal Included</span></div>
+                </div>
+
+                <div class="flex space-x-4 pt-4 border-t border-luxuryGold/10">
+                    <button id="modal-add-to-cart-btn" class="flex-1 bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-out Shopping Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-luxuryCharcoal border-l border-luxuryGold/20 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-luxuryGold/10 flex justify-between items-center bg-luxuryBlack">
+            <h3 class="font-serif text-xl text-luxuryGold tracking-wide">Selected Masterpieces</h3>
+            <button onclick="toggleCart()" class="text-luxuryCream hover:text-luxuryGold"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Empty message -->
+            <p id="cart-empty-msg" class="text-xs text-gray-500 text-center py-8">Your collection container is empty.</p>
+        </div>
+
+        <div class="p-6 border-t border-luxuryGold/10 bg-luxuryBlack space-y-4">
+            <div class="flex justify-between items-center text-xs uppercase tracking-wider">
+                <span>Value:</span>
+                <span id="cart-total-price" class="font-serif text-xl text-luxuryGold font-bold">₹0</span>
+            </div>
+            <button onclick="dispatchCartCheckout()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-4 font-bold text-xs uppercase tracking-widest transition">
+                Proceed Order to WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal Layout -->
+    <div id="admin-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-4xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleAdminPanel()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="font-serif text-2xl text-luxuryGold mb-6 tracking-wider">Secured Studio Admin Panel</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Add New Product Form -->
+                <div class="space-y-4 border-r border-luxuryGold/10 pr-0 md:pr-8">
+                    <h3 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">Add Portfolio Product</h3>
+                    <form onsubmit="handleAdminAddProduct(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400">Artwork Name</label>
+                            <input type="text" id="admin-p-name" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400">Category</label>
+                            <select id="admin-p-cat" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                                <option value="portrait">Portrait</option>
+                                <option value="mandala">Mandala</option>
+                                <option value="custom">Corporate & Custom</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-400">Price (₹)</label>
+                                <input type="number" id="admin-p-price" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-400">Hours Taken</label>
+                                <input type="text" id="admin-p-hours" required placeholder="e.g. 18 Hours" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-400">Nail Count</label>
+                                <input type="number" id="admin-p-nails" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-400">Thread Length (meters)</label>
+                                <input type="number" id="admin-p-threads" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400">Image URL</label>
+                            <input type="text" id="admin-p-img" required placeholder="https://unsplash.com/... or base64" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400">Description</label>
+                            <textarea id="admin-p-desc" required rows="2" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-2 text-xs uppercase tracking-widest font-bold">Publish to Catalog</button>
+                    </form>
+                </div>
+
+                <!-- Product Catalog List -->
+                <div class="space-y-4">
+                    <h3 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">In-Memory Products</h3>
+                    <div id="admin-products-list" class="space-y-2 max-h-[350px] overflow-y-auto pr-2">
+                        <!-- Listed dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Widget connected to 918140125772 -->
+    <a href="https://wa.me/918140125772" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 hover:bg-emerald-600 text-luxuryCream h-14 w-14 rounded-full flex items-center justify-center text-2xl shadow-xl hover:scale-110 transition duration-300 z-40">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer with Round Logo & Instagram QR Code Placement -->
+    <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+            
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center">
+                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                    </div>
+                    <span class="font-serif text-lg tracking-[0.1em] text-luxuryGold font-bold">STRING CREATIONS 03</span>
+                </div>
+                <p class="text-[11px] text-gray-500 leading-relaxed">International-caliber handcrafted luxury string art pieces based out of India, crafted for modern interiors and elite collectors.</p>
+                <div class="text-[11px] text-gray-400 space-y-1">
+                    <p><i class="fa-solid fa-envelope text-luxuryGold mr-2"></i> <a href="mailto:stringcreations03@gmail.com" class="hover:text-luxuryGold">stringcreations03@gmail.com</a></p>
+                    <p><i class="fa-solid fa-phone text-luxuryGold mr-2"></i> <a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold">+91 81401 25772</a></p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Aesthetics Directory</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Custom Portraits</a></li>
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Sacred Mandala Art</a></li>
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Couple Milestones</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Collector Support</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#tracking" class="hover:text-luxuryGold">Track Creation Phase</a></li>
+                    <li><a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold font-semibold text-luxuryGold"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Inquiry</a></li>
+                    <li><button onclick="requestAdminAccess()" class="hover:text-luxuryGold text-left focus:outline-none">🔒 Admin Console</button></li>
+                </ul>
+            </div>
+            
+            <!-- Instagram Connect Box with QR Code -->
+            <div class="space-y-4">
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">Follow Our Art</h4>
+                <div class="flex items-start space-x-4">
+                    <!-- Scan Widget -->
+                    <div class="w-20 h-20 bg-white p-1 rounded-md shadow-lg flex items-center justify-center shrink-0">
+                        <img src="instagram_qr.jpg" alt="Scan Instagram QR Code" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/150/ffffff/000000?text=Instagram'">
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 leading-tight">Scan the QR code with your camera or click below to explore reels & daily designs.</p>
+                        <a href="https://instagram.com/stringcreations03" target="_blank" class="inline-flex items-center space-x-1 text-xs text-luxuryGold hover:text-luxuryGoldHover font-semibold mt-2">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                            <span>@string_creations03</span>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-500 pt-2">© 2026 String Creations 03. All Rights Reserved.</p>
+            </div>
+            
+        </div>
+    </footer>
+
+    <!-- JavaScript Core Script -->
+    <script>
+        // Default Catalog Data Base (Used if localStorage is empty)
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "Symphony of Grace",
+                category: "portrait",
+                price: 4499,
+                hours: "18 Hours",
+                nails: 360,
+                threads: 2400,
+                img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=600",
+                desc: "An intricate monochrome portrait that utilizes varying degrees of string thickness and shadows to generate a photorealistic depth. Highly recommended as a premium personalized masterpiece."
+            },
+            {
+                id: 2,
+                name: "Eternal Lotus Mandala",
+                category: "mandala",
+                price: 6999,
+                hours: "28 Hours",
+                nails: 500,
+                threads: 4000,
+                img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=600",
+                desc: "A mesmerizing sacred mandala formulated with gold & bronze metallic wire threads. Symbolizes absolute calmness and symmetry."
+            },
+            {
+                id: 3,
+                name: "Corporate Crest Legacy",
+                category: "custom",
+                price: 9999,
+                hours: "35 Hours",
+                nails: 650,
+                threads: 5200,
+                img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600",
+                desc: "Specialized corporate logo art handcrafted on obsidian-coated premium pine wood sheets. Built to command prestige inside business spaces."
+            }
+        ];
+
+        const defaultReviews = [
+            {
+                name: "Aarav K.",
+                rating: 5,
+                text: "The precision is absolutely breathtaking. Seeing thousands of threads make a portrait is pure magic. Packing was museum-grade."
+            },
+            {
+                name: "Rhea Sharma",
+                rating: 5,
+                text: "Unbelievable craftsmanship! Gifted a portrait to my parents, and the reaction was priceless. Extremely luxurious wood quality."
+            }
+        ];
+
+        // State variables
+        let products = JSON.parse(localStorage.getItem('sc03_products')) || defaultProducts;
+        let reviews = JSON.parse(localStorage.getItem('sc03_reviews')) || defaultReviews;
+        let cart = JSON.parse(localStorage.getItem('sc03_cart')) || [];
+
+        // Save collections helper
+        function saveToStorage() {
+            localStorage.setItem('sc03_products', JSON.stringify(products));
+            localStorage.setItem('sc03_reviews', JSON.stringify(reviews));
+            localStorage.setItem('sc03_cart', JSON.stringify(cart));
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('sc03_products')) {
+                saveToStorage();
+            }
+            renderGallery();
+            renderReviews();
+            updateLiveStudio();
+            updateCartCount();
+        });
+
+        // Search Handlers
+        function toggleSearch() {
+            document.getElementById('search-overlay').classList.toggle('hidden');
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = document.getElementById('search-input').value.toLowerCase();
+                const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+                renderGalleryGrid(filtered);
+                toggleSearch();
+                document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Gallery Rendering & Filter
+        function renderGallery() {
+            renderGalleryGrid(products);
+        }
+
+        function renderGalleryGrid(items) {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            
+            if (items.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+                return;
+            }
+
+            items.forEach(p => {
+                const card = document.createElement('div');
+                card.className = `gallery-item ${p.category} glass-card group overflow-hidden relative transition-all duration-300`;
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer" onclick="openProductModal(${p.id})">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest">Handcrafted</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-xl text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer" onclick="openProductModal(${p.id})">${p.name}</h3>
+                        <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-1">${p.nails} Nails • ${p.hours} • ${p.threads}m Thread</p>
+                        <div class="flex justify-between items-center mt-6">
+                            <span class="text-luxuryGold font-serif text-lg font-bold">₹${p.price.toLocaleString('en-IN')}</span>
+                            <div class="flex space-x-2">
+                                <button onclick="addToCart(${p.id})" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition">
+                                    Add to Bag
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterGallery(category) {
+            // Manage Active Filter Styles
+            const buttons = document.querySelectorAll('.gallery-filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-luxuryGold/10', 'text-luxuryGold', 'border-luxuryGold');
+                btn.classList.add('border-transparent', 'text-gray-400');
+            });
+            event.target.classList.add('active', 'bg-luxuryGold/10', 'text-luxuryGold', 'border-luxuryGold');
+            event.target.classList.remove('border-transparent', 'text-gray-400');
+
+            if (category === 'all') {
+                renderGalleryGrid(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderGalleryGrid(filtered);
+            }
+        }
+
+        // Live Custom Studio Calculations
+        function updateLiveStudio() {
+            const sizeSelector = document.getElementById('custom-size');
+            const sizeOption = sizeSelector.options[sizeSelector.selectedIndex];
+            
+            const frameSelector = document.getElementById('custom-frame');
+            const frameOption = frameSelector.options[frameSelector.selectedIndex];
+            
+            const threadSelector = document.getElementById('custom-thread');
+            const threadOption = threadSelector.options[threadSelector.selectedIndex];
+
+            const basePrice = parseInt(sizeOption.getAttribute('data-price'));
+            const framePrice = parseInt(frameOption.getAttribute('data-price'));
+            const threadPrice = parseInt(threadOption.getAttribute('data-price'));
+
+            const nailsCount = sizeOption.getAttribute('data-nails');
+            const threadsCount = sizeOption.getAttribute('data-threads');
+
+            const total = basePrice + framePrice + threadPrice;
+
+            document.getElementById('studio-price').innerText = `₹${total.toLocaleString('en-IN')}`;
+            document.getElementById('studio-nails').innerText = `${nailsCount} Nails`;
+            document.getElementById('studio-threads').innerText = `~${threadsCount} Meters`;
+
+            // Frame Styling Preview
+            const previewBorder = document.getElementById('mockup-frame-border');
+            const frameVal = frameSelector.value;
+            if (frameVal === 'black') {
+                previewBorder.style.borderColor = '#111';
+            } else if (frameVal === 'gold') {
+                previewBorder.style.borderColor = '#d4af37';
+            } else if (frameVal === 'white') {
+                previewBorder.style.borderColor = '#eaeaea';
+            } else {
+                previewBorder.style.borderColor = '#333';
+            }
+        }
+
+        function handleMockupUpload(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('mockup-img');
+                    const placeholder = document.getElementById('mockup-placeholder');
+                    const overlay = document.getElementById('mockup-svg-overlay');
+
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                    overlay.classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function dispatchCustomOrder() {
+            const size = document.getElementById('custom-size').value;
+            const frame = document.getElementById('custom-frame').value;
+            const thread = document.getElementById('custom-thread').value;
+            const finalPrice = document.getElementById('studio-price').innerText;
+
+            const msg = `Hello String Creations 03! I would like to design and order a Custom Masterpiece:\n\n` + 
+                        `• Canvas size style: ${size}\n` +
+                        `• Frame selection: ${frame}\n` +
+                        `• Thread Style: ${thread}\n` +
+                        `• Approximate Price: ${finalPrice}\n\n` +
+                        `Please instruct me on how to supply high-resolution photos for threading evaluation.`;
+            
+            window.open(`https://wa.me/918140125772?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Tracking Simulation
+        function trackArtwork() {
+            const id = document.getElementById('order-track-id').value.trim();
+            if (!id) {
+                alert('Please enter an Order ID.');
+                return;
+            }
+
+            document.getElementById('track-display-id').innerText = id;
+            document.getElementById('track-result').classList.remove('hidden');
+        }
+
+        // Product Details Modal
+        function openProductModal(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-img').src = item.img;
+            document.getElementById('modal-title').innerText = item.name;
+            document.getElementById('modal-price').innerText = `₹${item.price.toLocaleString('en-IN')}`;
+            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-nails').innerText = item.nails;
+            document.getElementById('modal-hours').innerText = item.hours;
+            document.getElementById('modal-threads').innerText = `${item.threads} Meters`;
+
+            const addBtn = document.getElementById('modal-add-to-cart-btn');
+            addBtn.onclick = () => { addToCart(item.id); closeProductModal(); };
+
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        // Cart Drawer Operations
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('translate-x-full');
+            renderCart();
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            const exists = cart.find(cartItem => cartItem.id === id);
+            if (!exists) {
+                cart.push(item);
+                saveToStorage();
+                updateCartCount();
+                alert(`"${item.name}" added to your shopping container.`);
+            } else {
+                alert('Item is already added.');
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveToStorage();
+            updateCartCount();
+            renderCart();
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('cart-empty-msg');
+            const totalVal = document.getElementById('cart-total-price');
+
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                container.appendChild(emptyMsg);
+                totalVal.innerText = '₹0';
+                return;
+            }
+
+            emptyMsg.classList.add('hidden');
+            let sum = 0;
+
+            cart.forEach(item => {
+                sum += item.price;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-luxuryBlack/40 p-4 border border-luxuryGold/10';
+                div.innerHTML = `
+                    <div>
+                        <h4 class="text-xs uppercase font-bold text-luxuryCream tracking-wider">${item.name}</h4>
+                        <p class="text-xs text-luxuryGold font-serif font-semibold mt-1">₹${item.price.toLocaleString('en-IN')}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-regular fa-trash-can"></i></button>
+                `;
+                container.appendChild(div);
+            });
+
+            totalVal.innerText = `₹${sum.toLocaleString('en-IN')}`;
+        }
+
+        function dispatchCartCheckout() {
+            if (cart.length === 0) {
+                alert('Cart is empty.');
+                return;
+            }
+
+            let orderList = cart.map(item => `• ${item.name} (₹${item.price.toLocaleString('en-IN')})`).join('\n');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            const msg = `Greetings String Creations 03! I would like to order the following pre-designed masterpieces:\n\n` + 
+                        `${orderList}\n\n` + 
+                        `Grand Total Value: ₹${total.toLocaleString('en-IN')}\n\n` + 
+                        `Please verify the delivery time and payment specifications.`;
+            
+            window.open(`https://wa.me/918140125772?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Reviews System
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = '';
+
+            reviews.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-8 space-y-4';
+                
+                let stars = '';
+                for (let i = 0; i < r.rating; i++) stars += '<i class="fa-solid fa-star"></i>';
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex text-luxuryGold gap-1 text-xs">${stars}</div>
+                        <span class="text-[9px] uppercase tracking-widest text-emerald-500 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Verified</span>
+                    </div>
+                    <p class="font-serif text-base text-gray-300 italic">"${r.text}"</p>
+                    <div>
+                        <h4 class="text-xs uppercase tracking-wider font-bold">${r.name}</h4>
+                        <p class="text-[9px] text-gray-500">Verified Collector</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleReviewSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('review-form-name').value;
+            const rating = parseInt(document.getElementById('review-form-rating').value);
+            const text = document.getElementById('review-form-text').value;
+
+            reviews.push({ name, rating, text });
+            saveToStorage();
+            renderReviews();
+
+            document.getElementById('review-form-name').value = '';
+            document.getElementById('review-form-text').value = '';
+            alert('Review submitted successfully.');
+        }
+
+        // Admin Security Console Access
+        function requestAdminAccess() {
+            const password = prompt('Please enter your Admin Console Password:');
+            if (password === 'admin123') {
+                toggleAdminPanel();
+            } else {
+                alert('Access Denied. Incorrect credentials.');
+            }
+        }
+
+        function toggleAdminPanel() {
+            const admin = document.getElementById('admin-modal');
+            admin.classList.toggle('hidden');
+            if (!admin.classList.contains('hidden')) {
+                renderAdminProducts();
+            }
+        }
+
+        function renderAdminProducts() {
+            const list = document.getElementById('admin-products-list');
+            list.innerHTML = '';
+
+            products.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-luxuryBlack/50 p-3 border border-luxuryGold/15';
+                div.innerHTML = `
+                    <div>
+                        <h4 class="text-xs font-bold">${p.name}</h4>
+                        <p class="text-[10px] text-luxuryGold">₹${p.price}</p>
+                    </div>
+                    <button onclick="deleteProductFromAdmin(${p.id})" class="text-red-500 hover:text-red-700 text-xs uppercase font-bold tracking-wider">Delete</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function handleAdminAddProduct(event) {
+            event.preventDefault();
+            const name = document.getElementById('admin-p-name').value;
+            const category = document.getElementById('admin-p-cat').value;
+            const price = parseInt(document.getElementById('admin-p-price').value);
+            const hours = document.getElementById('admin-p-hours').value;
+            const nails = parseInt(document.getElementById('admin-p-nails').value);
+            const threads = parseInt(document.getElementById('admin-p-threads').value);
+            const img = document.getElementById('admin-p-img').value;
+            const desc = document.getElementById('admin-p-desc').value;
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                category,
+                price,
+                hours,
+                nails,
+                threads,
+                img,
+                desc
+            };
+
+            products.push(newProduct);
+            saveToStorage();
+            renderGallery();
+            renderAdminProducts();
+
+            // Clear Form
+            event.target.reset();
+            alert('New creation successfully published to the live portfolio grid.');
+        }
+
+        function deleteProductFromAdmin(id) {
+            if (confirm('Are you sure you want to remove this art piece from your live catalog?')) {
+                products = products.filter(p => p.id !== id);
+                saveToStorage();
+                renderGallery();
+                renderAdminProducts();
+            }
+        }
+    </script>
+</body>
+</html>
