@@ -99,23 +99,18 @@
         .marquee-content:hover {
             animation-play-state: paused;
         }
-        /* Steps progressive fade-in animation style */
-        .process-step-card {
-            opacity: 0.15;
-            transform: scale(0.95);
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border-color: rgba(212, 175, 55, 0.05);
+        /* Looping sequential transitions for step modules */
+        .process-step-card, .heritage-step-card {
+            display: none !important;
         }
-        .process-step-card.active-reveal {
-            opacity: 1;
-            transform: scale(1.03);
-            border-color: rgba(212, 175, 55, 0.7);
-            box-shadow: 0 12px 30px -5px rgba(212, 175, 55, 0.25);
-        }
-        .process-step-card.past-reveal {
-            opacity: 0.85;
-            transform: scale(1);
-            border-color: rgba(212, 175, 55, 0.15);
+        .process-step-card.active-reveal, .heritage-step-card.active-reveal {
+            display: block !important;
+            margin: 0 auto;
+            opacity: 1 !important;
+            transform: scale(1) !important;
+            animation: fadeIn 0.5s ease-in-out;
+            grid-column: 1 / -1; 
+            max-width: 450px;
         }
     </style>
 </head>
@@ -158,7 +153,7 @@
                         <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
                     </select>
                 </div>
-                <!-- Relocated Track Order Link in Header Action Area -->
+                <!-- Track Order Trigger Link -->
                 <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition">
                     <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
                 </button>
@@ -255,7 +250,7 @@
                     <button onclick="showCustomSpecsTab()" id="btn-proc-2" class="process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">15-Step Master Craftsmanship</button>
                 </div>
 
-                <!-- 7-Step Premium Web UX Journey with dynamic progressive classes -->
+                <!-- Tab Content 1: The 7-Step Journey with dynamic progressive classes -->
                 <div id="process-tab-content-1" class="animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <!-- Step 1 -->
@@ -313,63 +308,63 @@
                 <!-- Tab Content 2: 15-Step Professional Heritage Checklist -->
                 <div id="process-tab-content-2" class="hidden animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="glass-card p-6 border-l-2 border-brandTeal/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 1: Design Mapping</h4>
                             <p class="text-xs text-gray-400 mt-2">Converting design structures mathematically into high-density coordinates.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandBlue/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandBlue/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 2: Base Selection</h4>
                             <p class="text-xs text-gray-400 mt-2">Selecting premium warp-resistant MDF or sustainable natural pine wood sheets.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-[#d4af37]/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-[#d4af37]/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 3: Surface Treatment</h4>
                             <p class="text-xs text-gray-400 mt-2">Executing precision sanding followed by matte obsidian prime coat applications.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandTeal/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 4: Grid Transfer</h4>
                             <p class="text-xs text-gray-400 mt-2">Securing vector alignments onto wood boards to guide nail insertion maps.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandBlue/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandBlue/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 5: Nail Calibration</h4>
                             <p class="text-xs text-gray-400 mt-2">Individually hammering nails to matching depth parameters.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-[#d4af37]/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-[#d4af37]/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 6: Fiber Formulation</h4>
                             <p class="text-xs text-gray-400 mt-2">Choosing cotton, metallic wires, or silk strings to match aesthetic guidelines.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandTeal/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 7: Structural Anchoring</h4>
                             <p class="text-xs text-gray-400 mt-2">Securing the base starter knot onto anchor nails.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandBlue/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandBlue/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 8: Geometric Weaving</h4>
                             <p class="text-xs text-gray-400 mt-2">Interlacing threads across coordinates over long artisan sessions.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-[#d4af37]/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-[#d4af37]/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 9: Layer Splitting</h4>
                             <p class="text-xs text-gray-400 mt-2">Individually overlaying dark and light layers to finalize shadow densities.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandTeal/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 10: Tension Realignment</h4>
                             <p class="text-xs text-gray-400 mt-2">Tightening loose strands and concealing final structural knots.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandBlue/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandBlue/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 11: Surface Restoration</h4>
                             <p class="text-xs text-gray-400 mt-2">Vacuuming lint and applying finishing polishes onto wood margins.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-[#d4af37]/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-[#d4af37]/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 12: Protective Framing</h4>
                             <p class="text-xs text-gray-400 mt-2">Encasing the board with premium custom wooden configurations.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandTeal/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 13: Mounting Setup</h4>
                             <p class="text-xs text-gray-400 mt-2">Affixing heavy-duty steel mounting fixtures and hanging wires.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-brandBlue/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-brandBlue/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 14: Certificate Registry</h4>
                             <p class="text-xs text-gray-400 mt-2">Validating thread tightness and pasting the signed Certificate of Authenticity seal.</p>
                         </div>
-                        <div class="glass-card p-6 border-l-2 border-[#d4af37]/35">
+                        <div class="heritage-step-card glass-card p-6 border-l-2 border-[#d4af37]/35">
                             <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 15: Museum Packing</h4>
                             <p class="text-xs text-gray-400 mt-2">Wrapping in protective paper layers and shipping in secure, shockproof boxing.</p>
                         </div>
@@ -517,10 +512,20 @@
                     </div>
                 </div>
 
+                <!-- Reference File Upload Selection Block -->
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Upload Reference Portrait</label>
+                    <div class="border border-dashed border-luxuryGold/20 hover:border-luxuryGold p-6 text-center cursor-pointer relative transition duration-300 bg-luxuryBlack/50">
+                        <input type="file" id="custom-image-input" accept="image/*" onchange="handleFileSelection(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <i class="fa-solid fa-cloud-arrow-up text-luxuryGold text-2xl mb-2"></i>
+                        <p id="file-upload-label" class="text-[10px] text-gray-400 uppercase tracking-widest">Select Image File</p>
+                    </div>
+                </div>
+
                 <!-- Additional Message Details Textarea -->
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Additional Custom Details & Instructions</label>
-                    <textarea id="custom-details-msg" rows="4" placeholder="Enter custom names, dates, references or specific color gradient requirements here..." class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600"></textarea>
+                    <textarea id="custom-details-msg" rows="4" placeholder="Enter custom names, dates, references or specific color requirements here..." class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600"></textarea>
                 </div>
 
                 <div class="border-t border-luxuryGold/10 pt-4">
@@ -545,7 +550,7 @@
                 </div>
                 
                 <div id="string-art-index-accordion" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                    <!-- Populated dynamically with sub-buttons -->
+                    <!-- Populated dynamically with sub-buttons and real sample photos -->
                 </div>
             </div>
         </div>
@@ -621,10 +626,6 @@
                             <label class="block text-[10px] uppercase text-gray-400">Thread Length (meters)</label>
                             <input type="number" id="admin-p-threads" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
                         </div>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] uppercase text-gray-400">Image URL</label>
-                        <input type="text" id="admin-p-img" required placeholder="https://images.unsplash.com/... or base64" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
                     </div>
                     <div>
                         <label class="block text-[10px] uppercase text-gray-400">Description</label>
@@ -709,7 +710,7 @@
         <div class="glass-card max-w-xl w-full p-6 sm:p-8 relative text-center space-y-6 border border-luxuryGold/30 rounded-lg">
             <button onclick="toggleArtClassModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
             <h3 id="class-modal-title" class="font-serif text-2xl text-luxuryGold uppercase tracking-wider">Geometric Art</h3>
-            <p id="class-modal-desc" class="text-xs text-gray-300 leading-relaxed max-w-md mx-auto">Sample specification parameters and luxury string pattern previews.</p>
+            <p id="class-modal-desc" class="text-xs text-gray-300 leading-relaxed max-w-md mx-auto">Beautiful custom-engineered fibers and manual coordinate configurations mapped with pristine tension details.</p>
             
             <!-- Real visual sample photo displayed in high resolution in modal popup -->
             <div class="w-full max-h-[300px] aspect-video sm:aspect-square sm:max-h-[360px] mx-auto rounded overflow-hidden bg-neutral-900 border border-luxuryGold/20 shadow-2xl flex items-center justify-center">
@@ -776,20 +777,93 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
+    <!-- Footer -->
+    <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+            
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 group">
+                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                    </div>
+                    <div class="font-serif text-base lg:text-lg font-bold tracking-[0.08em] flex items-center space-x-1 logo-glowing-effect">
+                        <span class="brand-string">STRING</span>
+                        <span class="brand-creations italic font-normal">Creations</span>
+                        <span class="brand-03">03</span>
+                    </div>
+                </div>
+                <p class="text-[11px] text-gray-500 leading-relaxed">International-caliber handcrafted luxury string art pieces based out of India, crafted for modern interiors and elite collectors.</p>
+                <div class="text-[11px] text-gray-400 space-y-1">
+                    <p><i class="fa-solid fa-envelope text-luxuryGold mr-2"></i> <a href="mailto:stringcreations03@gmail.com" class="hover:text-luxuryGold">stringcreations03@gmail.com</a></p>
+                    <p><i class="fa-solid fa-phone text-luxuryGold mr-2"></i> <a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold">+91 81401 25772</a></p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Aesthetics Directory</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Custom Portraits</a></li>
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Sacred Mandala Art</a></li>
+                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Couple Milestones</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Collector Support</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#" onclick="toggleTrackModal()" class="hover:text-luxuryGold">Track Order</a></li>
+                    <li><a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold font-semibold text-luxuryGold"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Inquiry</a></li>
+                    <li><button onclick="requestAdminAccess()" class="hover:text-luxuryGold text-left focus:outline-none">🔒 Admin Console</button></li>
+                </ul>
+            </div>
+            
+            <!-- Instagram Connect Box with QR Code -->
+            <div class="space-y-4">
+                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">Follow Our Art</h4>
+                <div class="flex items-start space-x-4">
+                    <div class="w-20 h-20 bg-white p-1 rounded-md shadow-lg flex items-center justify-center shrink-0">
+                        <img src="instagram_qr.jpg" alt="Scan Instagram QR Code" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/150/ffffff/000000?text=Instagram'">
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 leading-tight">Scan the QR code with your camera or click below to explore reels & daily designs.</p>
+                        <a href="https://instagram.com/stringcreations03" target="_blank" class="inline-flex items-center space-x-1 text-xs text-luxuryGold hover:text-luxuryGoldHover font-semibold mt-2">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                            <span>@string_creations03</span>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-500 pt-2">© 2026 String Creations 03. All Rights Reserved.</p>
+            </div>
+            
+        </div>
+    </footer>
+
     <!-- JavaScript Core Script -->
     <script>
         // Dimensions Matrix - Ranging purely from 3 Feet (36 Inches) up to 8 Feet (96 Inches)
         const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96];
         
-        // Comprehensive String Art Types Category and Subtype Database (Rule 2) with real sample photo matching
+        // Exact requested thread types list
+        const threadTypes = [
+            "Cotton Thread",
+            "Silk Thread",
+            "Polyester Thread",
+            "Embroidery Thread",
+            "Metallic Thread",
+            "Jute Thread",
+            "Nylon Thread",
+            "Glow in the Dark Thread"
+        ];
+
+        // Comprehensive Hierarchical String Art Types Database (Rule 2) with real high-resolution sample photos
         const artTypesDirectory = [
             {
                 category: "Geometric String Art",
                 subtypes: [
                     { name: "Triangle", img: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&q=80&w=600" },
                     { name: "Square", img: "https://images.unsplash.com/photo-1508898578281-774ac4893c0c?auto=format&fit=crop&q=80&w=600" },
-                    { name: "Polygon", img: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=600" },
-                    { name: "Hexagon", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=600" }
+                    { name: "Polygon", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Hexagon", img: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=600" }
                 ]
             },
             {
@@ -846,7 +920,7 @@
                 category: "Heart & Love String Art",
                 subtypes: [
                     { name: "Double Heart", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600" },
-                    { name: "Love Quote Background", "img": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=600" }
+                    { name: "Love Quote Background", img: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=600" }
                 ]
             },
             {
@@ -1006,6 +1080,52 @@
             localStorage.setItem('sc03_cart', JSON.stringify(cart));
         }
 
+        let processLoopInterval = null;
+        let heritageLoopInterval = null;
+
+        // ૧. Philosophy (૭ સ્ટેપ્સ) માટેનું લૂપ ફંક્શન
+        function startPhilosophyLoop() {
+            stopAllProcessLoops();
+            const cards = document.querySelectorAll('.process-step-card');
+            if (cards.length === 0) return;
+
+            // શરૂઆતમાં બધા સ્ટેપ્સ ગાયબ કરો
+            cards.forEach(card => card.classList.remove('active-reveal', 'past-reveal'));
+
+            let index = 0;
+            cards[index].classList.add('active-reveal'); // પહેલું સ્ટેપ બતાવો
+
+            processLoopInterval = setInterval(() => {
+                cards[index].classList.remove('active-reveal');
+                index = (index + 1) % cards.length; // છેલ્લે પહોંચીને ફરી ૧ થી શરૂ થશે
+                cards[index].classList.add('active-reveal');
+            }, 2500); // દર ૨.૫ સેકન્ડે બદલાશે
+        }
+
+        // ૨. 15-Step Master Craftsmanship (૧૫ સ્ટેપ્સ) માટેનું લૂપ ફંક્શન
+        function startHeritageLoop() {
+            stopAllProcessLoops();
+            const cards = document.querySelectorAll('.heritage-step-card');
+            if (cards.length === 0) return;
+
+            cards.forEach(card => card.classList.remove('active-reveal', 'past-reveal'));
+
+            let index = 0;
+            cards[index].classList.add('active-reveal');
+
+            heritageLoopInterval = setInterval(() => {
+                cards[index].classList.remove('active-reveal');
+                index = (index + 1) % cards.length;
+                cards[index].classList.add('active-reveal');
+            }, 2500);
+        }
+
+        // ૩. બેકગ્રાઉન્ડમાં ચાલતા જૂના લૂપ બંધ કરવા માટેનું સેફ્ટી ફંક્શન
+        function stopAllProcessLoops() {
+            if (processLoopInterval) clearInterval(processLoopInterval);
+            if (heritageLoopInterval) clearInterval(heritageLoopInterval);
+        }
+
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             if (!localStorage.getItem('sc03_products')) {
@@ -1017,18 +1137,8 @@
             renderStringArtDirectory();
             updateCartCount();
 
-            // Scroll Detection for Sequential Reveal Animation
-            const processSection = document.getElementById('process-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        startProcessSequentialReveal();
-                        observer.unobserve(processSection); 
-                    }
-                });
-            }, { threshold: 0.15 });
-
-            if (processSection) observer.observe(processSection);
+            // શરૂઆતમાં Philosophy લૂપ એક્ટિવ કરો
+            startPhilosophyLoop();
         });
 
         // Format Inches to Feet (Helper)
@@ -1078,41 +1188,22 @@
             });
         }
 
-        // ૧. સ્ટેપ્સને એક પછી એક ૨.૫ સેકન્ડના સમય અંતરે હાઇલાઇટ કરવાનું ફંક્શન
-        function startProcessSequentialReveal() {
-            const cards = document.querySelectorAll('.process-step-card');
-            if (cards.length === 0) return;
-
-            // શરૂઆતમાં બધાને ડિમ (ઝાંખા) કરો
-            cards.forEach(card => {
-                card.classList.remove('active-reveal', 'past-reveal');
-            });
-
-            let index = 0;
-
-            function nextStep() {
-                // અગાઉના સ્ટેપને સેમી-હાઇલાઇટેડ રાખો
-                if (index > 0) {
-                    cards[index - 1].classList.remove('active-reveal');
-                    cards[index - 1].classList.add('past-reveal');
-                }
-
-                // ચાલુ સ્ટેપને ફૂલ ગોલ્ડન ગ્લો સાથે હાઇલાઇટ કરો
-                if (index < cards.length) {
-                    cards[index].classList.add('active-reveal');
-                    index++;
-                    setTimeout(nextStep, 2500); // ૨.૫ સેકન્ડનો સમયગાળો
-                } else {
-                    // તમામ સ્ટેપ પૂર્ણ થયા પછી બધાને કમ્પ્લીટ વિઝીબલ રાખો જેથી યુઝર સરળતાથી વાંચી શકે
-                    cards.forEach(card => {
-                        card.classList.add('past-reveal');
-                    });
-                }
+        // ફાઇલનું નામ ટ્રેક કરવા માટેનું ફંક્શન
+        let selectedFileName = "";
+        function handleFileSelection(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFileName = file.name;
+                document.getElementById('file-upload-label').innerText = `Selected: ${file.name}`;
+                document.getElementById('file-upload-label').classList.remove('text-gray-400');
+                document.getElementById('file-upload-label').classList.add('text-luxuryGold', 'font-bold');
+            } else {
+                selectedFileName = "";
+                document.getElementById('file-upload-label').innerText = "Select Image File";
             }
-            nextStep();
         }
 
-        // ૨. નવું સુધારેલું dispatchCustomOrder ફંક્શન (WhatsApp બટન માટે)
+        // નવું સુધારેલું dispatchCustomOrder ફંક્શન (WhatsApp બટન માટે)
         function dispatchCustomOrder() {
             const sizeSelector = document.getElementById('custom-size');
             const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
@@ -1131,11 +1222,15 @@
             // વધારાની વિગતો મેળવો
             const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra details provided.";
 
+            // ઈમેજ ફાઈલનું નામ અને સૂચના
+            const imageInfo = selectedFileName ? `• Selected Reference File: ${selectedFileName}\n⚠️ Please attach this photo in this chat! ⚠️` : "• Selected Reference File: None";
+
             const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece with these configurations:\n\n` + 
                         `• Dimension: ${sizeText}\n` +
                         `• Frame Style: ${frameText}\n` +
                         `• Thread Formulation(s): ${selectedThreadsText}\n` +
-                        `• Color Selection(s): ${selectedColorsText}\n\n` +
+                        `• Color Selection(s): ${selectedColorsText}\n` +
+                        `${imageInfo}\n\n` +
                         `• Extra Custom Details:\n"${customDetails}"\n\n` +
                         `Please calculate the pricing structure and design layout based on these parameters.`;
             
@@ -1349,6 +1444,17 @@
             renderCart();
         }
 
+        // Admin Security Access & Panel Logic
+        function requestAdminAccess() {
+            const password = prompt('Please enter your Admin Console Password:');
+            if (password === 'admin123') {
+                showSection('admin-view');
+                renderAdminProducts();
+            } else {
+                alert('Access Denied. Incorrect credentials.');
+            }
+        }
+
         function addToCart(id) {
             const item = products.find(p => p.id === id);
             if (!item) return;
@@ -1479,7 +1585,7 @@
             
             document.getElementById('btn-proc-1').className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
             document.getElementById('btn-proc-2').className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
-            startProcessSequentialReveal();
+            startPhilosophyLoop();
         }
 
         function showCustomSpecsTab() {
@@ -1488,17 +1594,7 @@
             
             document.getElementById('btn-proc-1').className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
             document.getElementById('btn-proc-2').className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
-        }
-
-        // Admin Security Access & Panel Logic
-        function requestAdminAccess() {
-            const password = prompt('Please enter your Admin Console Password:');
-            if (password === 'admin123') {
-                showSection('admin-view');
-                renderAdminProducts();
-            } else {
-                alert('Access Denied. Incorrect credentials.');
-            }
+            startHeritageLoop();
         }
 
         function renderAdminProducts() {
@@ -1617,4 +1713,3 @@
     </script>
 </body>
 </html>
-```
