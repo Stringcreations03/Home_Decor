@@ -99,6 +99,24 @@
         .marquee-content:hover {
             animation-play-state: paused;
         }
+        /* Steps progressive fade-in animation style */
+.process-step-card {
+    opacity: 0.15;
+    transform: scale(0.95);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-color: rgba(212, 175, 55, 0.05);
+}
+.process-step-card.active-reveal {
+    opacity: 1;
+    transform: scale(1.03);
+    border-color: rgba(212, 175, 55, 0.7);
+    box-shadow: 0 12px 30px -5px rgba(212, 175, 55, 0.25);
+}
+.process-step-card.past-reveal {
+    opacity: 0.85;
+    transform: scale(1);
+    border-color: rgba(212, 175, 55, 0.15);
+}
     </style>
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
@@ -237,61 +255,58 @@
                     <button onclick="showCustomSpecsTab()" id="btn-proc-2" class="process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">15-Step Master Craftsmanship</button>
                 </div>
 
-                <!-- Tab Content 1: The 7-Step Journey (Workflow chart screenshot removed as requested) -->
-                <div id="process-tab-content-1" class="space-y-16 animate-fadeIn">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Step 1 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-brandTeal font-light">01</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-camera-retro"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">1. Upload Photo</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Provide your favorite high-resolution photo or corporate logo vector file.</p>
-                        </div>
-                        <!-- Step 2 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-brandBlue font-light">02</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">2. Design Verification</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Our design team mathematically constructs and refines your custom string art preview grid.</p>
-                        </div>
-                        <!-- Step 3 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-luxuryGold font-light">03</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-hammer"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">3. Precision Hammering</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Nails are placed and manually aligned on premium hardwood bases with absolute spatial accuracy.</p>
-                        </div>
-                        <!-- Step 4 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-brandTeal font-light">04</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-ring"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">4. Hand Weaving Process</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Thousands of structural thread loops are hand-woven to build photorealistic gradients.</p>
-                        </div>
-                        <!-- Step 5 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-brandBlue font-light">05</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-crop-simple"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">5. Premium Framing</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">The final artwork is enclosed within a hand-crafted wooden or engineered luxury outer frame.</p>
-                        </div>
-                        <!-- Step 6 -->
-                        <div class="glass-card p-6 relative space-y-3">
-                            <span class="font-serif text-4xl text-luxuryGold font-light">06</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-box-open"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">6. Museum Packaging</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Secured with anti-static layers, foam protectors, and rigid multi-ply structural boxing.</p>
-                        </div>
-                        <!-- Step 7 -->
-                        <div class="glass-card p-6 relative col-span-1 md:col-span-2 lg:col-span-2 space-y-3 border-l-2 border-brandTeal/40">
-                            <span class="font-serif text-4xl text-[#3ad5e0] font-light">07</span>
-                            <div class="text-luxuryGold text-lg"><i class="fa-solid fa-truck-fast"></i></div>
-                            <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">7. Doorstep Logistics</h4>
-                            <p class="text-xs text-gray-400 leading-relaxed">Shipped worldwide via elite cargo couriers complete with dynamic tracking numbers.</p>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- 7-Step Premium Web UX Journey with dynamic progressive classes -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Step 1 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-brandTeal font-light">01</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-camera-retro"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">1. Upload Photo</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Provide your favorite high-resolution photo or corporate logo vector file.</p>
+    </div>
+    <!-- Step 2 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-brandBlue font-light">02</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">2. Design Verification</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Our design team mathematically constructs and refines your custom string art preview grid.</p>
+    </div>
+    <!-- Step 3 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-luxuryGold font-light">03</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-hammer"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">3. Precision Hammering</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Nails are placed and manually aligned on premium hardwood bases with absolute spatial accuracy.</p>
+    </div>
+    <!-- Step 4 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-brandTeal font-light">04</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-ring"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">4. Hand Weaving Process</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Thousands of structural thread loops are hand-woven to build photorealistic gradients.</p>
+    </div>
+    <!-- Step 5 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-brandBlue font-light">05</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-crop-simple"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">5. Premium Framing</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">The final artwork is enclosed within a hand-crafted wooden or engineered luxury outer frame.</p>
+    </div>
+    <!-- Step 6 -->
+    <div class="process-step-card glass-card p-6 relative space-y-3">
+        <span class="font-serif text-4xl text-luxuryGold font-light">06</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-box-open"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">6. Museum Packaging</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Secured with anti-static layers, foam protectors, and rigid multi-ply structural boxing.</p>
+    </div>
+    <!-- Step 7 (Merged/Span 2 columns) -->
+    <div class="process-step-card glass-card p-6 relative col-span-1 md:col-span-2 lg:col-span-2 space-y-3 border-l-2 border-brandTeal/40">
+        <span class="font-serif text-4xl text-[#3ad5e0] font-light">07</span>
+        <div class="text-luxuryGold text-lg"><i class="fa-solid fa-truck-fast"></i></div>
+        <h4 class="font-serif text-lg text-luxuryCream uppercase tracking-wider">7. Doorstep Logistics</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">Shipped worldwide via elite cargo couriers complete with dynamic tracking numbers.</p>
+    </div>
+</div>
                 <!-- Tab Content 2: 15-Step Professional Heritage Checklist -->
                 <div id="process-tab-content-2" class="hidden animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -1178,6 +1193,62 @@
                 threadSelector.appendChild(option);
             });
         }
+        // ૧. સ્ટેપ્સને એક પછી એક ૨.૫ સેકન્ડના સમય અંતરે હાઇલાઇટ કરવાનું ફંક્શન
+function startProcessSequentialReveal() {
+    const cards = document.querySelectorAll('.process-step-card');
+    if (cards.length === 0) return;
+
+    // શરૂઆતમાં બધાને ડિમ (ઝાંખા) કરો
+    cards.forEach(card => {
+        card.classList.remove('active-reveal', 'past-reveal');
+    });
+
+    let index = 0;
+
+    function nextStep() {
+        // અગાઉના સ્ટેપને સેમી-હાઇલાઇટેડ રાખો
+        if (index > 0) {
+            cards[index - 1].classList.remove('active-reveal');
+            cards[index - 1].classList.add('past-reveal');
+        }
+
+        // ચાલુ સ્ટેપને ફૂલ ગોલ્ડન ગ્લો સાથે હાઇલાઇટ કરો
+        if (index < cards.length) {
+            cards[index].classList.add('active-reveal');
+            index++;
+            setTimeout(nextStep, 2500); // ૨.૫ સેકન્ડનો સમયગાળો
+        } else {
+            // તમામ સ્ટેપ પૂર્ણ થયા પછી બધાને કમ્પ્લીટ વિઝીબલ રાખો જેથી યુઝર સરળતાથી વાંચી શકે
+            cards.forEach(card => {
+                card.classList.add('past-reveal');
+            });
+        }
+    }
+    nextStep();
+}
+
+// ૨. પેજ લોડ થતા જ અને ટેબ ચેન્જ થાય ત્યારે એનિમેશન આપોઆપ રન થશે
+window.addEventListener('DOMContentLoaded', () => {
+    // Scroll Detection (જ્યારે યુઝર Creation Process સેક્શન પર પહોંચે ત્યારે એનિમેશન શરૂ થશે)
+    const processSection = document.getElementById('process-section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startProcessSequentialReveal();
+                observer.unobserve(processSection); // એકવાર એનિમેશન પૂરું થયા પછી ફરીથી લોડ નહિ થાય
+            }
+        });
+    }, { threshold: 0.15 });
+
+    if (processSection) observer.observe(processSection);
+});
+
+// ૩. ટેબ સ્વિચિંગ ફંક્શન (જ્યારે યુઝર "Creation Philosophy" બટન ક્લિક કરે ત્યારે એનિમેશન ફરી રન થશે)
+const originalSwitchProcessTab = switchProcessTab;
+switchProcessTab = function(tabName) {
+    originalSwitchProcessTab(tabName);
+    startProcessSequentialReveal();
+}
         
         // Currency Switcher Logic
         function switchCurrency() {
