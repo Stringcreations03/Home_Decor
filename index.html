@@ -82,10 +82,6 @@
             background: #1a82e2;
         }
         /* Continuous Infinite Horizontal Scrolling Reviews */
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
         .marquee-container {
             overflow: hidden;
             white-space: nowrap;
@@ -98,6 +94,10 @@
         }
         .marquee-content:hover {
             animation-play-state: paused;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         /* Steps progressive loop transitions */
         .process-step-card, .heritage-step-card {
@@ -144,13 +144,13 @@
                 <a href="#reviews-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition" data-i18n="nav_reviews">Reviews</a>
             </nav>
 
-            <div class="flex items-center space-x-3 lg:space-x-4">
+            <div class="flex items-center space-x-4 lg:space-x-6">
                 <!-- Language Switcher -->
                 <div class="flex items-center space-x-1 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-3">
                     <select id="language-switcher" onchange="switchLanguage()" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer font-bold">
                         <option value="EN" class="bg-luxuryBlack">🇺🇸 EN</option>
                         <option value="GU" class="bg-luxuryBlack">🇮🇳 ગુજ</option>
-                        <option value="HI" class="bg-luxuryBlack">🇮🇳 हिन्डी</option>
+                        <option value="HI" class="bg-luxuryBlack">🇮🇳 હિન્દી</option>
                     </select>
                 </div>
                 <!-- Currency Switchers -->
@@ -230,20 +230,20 @@
                     <div class="w-16 h-[1px] bg-luxuryGold mx-auto mt-4"></div>
                 </div>
 
-                <!-- Filter Controls with "More Art Styles" Dropdown inside gallery -->
+                <!-- Filter Controls with Dropdown in Gallery -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12 items-center">
                     <button onclick="filterGallery('all')" class="gallery-filter-btn active px-6 py-2 border border-luxuryGold text-[11px] uppercase tracking-widest text-luxuryGold bg-luxuryGold/10 transition" data-i18n="filter_all">All Masterpieces</button>
                     <button onclick="filterGallery('portrait')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition" data-i18n="filter_portraits">Portraits</button>
                     <button onclick="filterGallery('mandala')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition" data-i18n="filter_mandalas">Mandalas</button>
                     <button onclick="filterGallery('custom')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition" data-i18n="filter_corporate">Corporate & Custom</button>
                     
-                    <!-- More Art Styles Dropdown Button Container -->
+                    <!-- Dropdown Trigger button placed directly after corporate & custom (Rule 1) -->
                     <div class="relative inline-block text-left" id="more-styles-wrapper">
                         <button onclick="toggleMoreStylesDropdown(event)" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition flex items-center gap-1.5 focus:outline-none">
                             <span data-i18n="more_styles">More Art Styles</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform duration-200" id="dropdown-arrow"></i>
                         </button>
                         <div id="more-styles-dropdown" class="hidden absolute left-0 sm:right-0 mt-3 w-72 sm:w-80 max-h-96 overflow-y-auto bg-luxuryCharcoal border border-luxuryGold/25 rounded-md shadow-2xl z-50 p-4 space-y-4">
-                            <!-- Populated via JavaScript dynamically -->
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
                 </div>
@@ -262,13 +262,13 @@
                     <div class="w-16 h-[1px] bg-luxuryGold mx-auto mt-4"></div>
                 </div>
 
-                <!-- Luxury Sub-Tabs for Process Navigation -->
+                <!-- Process Sub-Tabs Navigation -->
                 <div class="flex justify-center gap-4 mb-12">
                     <button onclick="switchProcessTab('step-by-step')" id="btn-proc-1" class="process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition" data-i18n="philosophy_btn">Creation Philosophy</button>
                     <button onclick="showCustomSpecsTab()" id="btn-proc-2" class="process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition" data-i18n="mastery_btn">15-Step Master Craftsmanship</button>
                 </div>
 
-                <!-- Tab Content 1: The 7-Step Journey with dynamic progressive loop classes -->
+                <!-- Tab Content 1: The 7-Step Journey with dynamic progressive classes -->
                 <div id="process-tab-content-1" class="animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <!-- Step 1 -->
@@ -323,7 +323,7 @@
                     </div>
                 </div>
 
-                <!-- Tab Content 2: 15-Step Professional Heritage Checklist with Loop Animation classes -->
+                <!-- Tab Content 2: 15-Step Master Craftsmanship with Loop animation classes -->
                 <div id="process-tab-content-2" class="hidden animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <div class="heritage-step-card glass-card p-6 border-l-2 border-brandTeal/35">
@@ -391,7 +391,7 @@
             </div>
         </section>
 
-        <!-- Verified Reviews (Smooth Auto-Marquee scrolling Right-to-Left) -->
+        <!-- Verified Reviews (Automatic Continuous Horizontal Scrolling) -->
         <section id="reviews-section" class="py-24 bg-luxuryCharcoal/30 border-t border-luxuryGold/10 overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="text-center mb-16 space-y-2">
@@ -408,7 +408,7 @@
                 </div>
             </div>
 
-            <!-- Write Review button below marquee line -->
+            <!-- Submit Review Action Button -->
             <div class="text-center mt-12">
                 <button onclick="toggleReviewModal()" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack px-8 py-3 text-xs uppercase tracking-widest font-bold transition" data-i18n="write_review">
                     <i class="fa-solid fa-pen-nib mr-2"></i> Submit Your Experience
@@ -936,174 +936,14 @@
             }
         ];
 
-        // Translation Dictionary (Rule 2)
-        const translations = {
-            "EN": {
-                "tagline": "Masterpiece In Every Thread",
-                "hero_title": "Luxury Handmade <br><span class=\"italic font-light\">String Art</span>",
-                "hero_desc": "Crafting timeless portraits and abstract designs with thousands of threads and unwavering passion.",
-                "explore_coll": "Explore Collection",
-                "commission_art": "Commission Artwork",
-                "gallery_title": "The Masterpiece Gallery",
-                "gallery_subtitle": "Curated Catalog",
-                "filter_all": "All Masterpieces",
-                "filter_portraits": "Portraits",
-                "filter_mandalas": "Mandalas",
-                "filter_corporate": "Corporate & Custom",
-                "more_styles": "More Art Styles",
-                "precision_label": "THE ART OF PRECISION",
-                "process_title": "Our Creation Process",
-                "philosophy_btn": "Creation Philosophy",
-                "mastery_btn": "15-Step Master Craftsmanship",
-                "collector_stories_sub": "Collector Testimonials",
-                "reviews_title": "Collector Stories",
-                "write_review": "Submit Your Experience",
-                "track_order_btn": "Track Order",
-                "custom_studio_nav": "Custom Studio",
-                "studio_sub": "THREAD VISUALIZATION STUDIO",
-                "specs_title": "Configure Specifications",
-                "size_label": "Canvas Archetype & Size (From 3ft to 8ft)",
-                "frame_label": "Frame Aesthetics",
-                "thread_label": "Select Thread Types (Multiple Select)",
-                "color_label": "Select Art Colors (Multiple Select)",
-                "details_label": "Additional Custom Details & Instructions",
-                "details_placeholder": "Enter custom names, dates, references or specific color requirements here...",
-                "pricing_form": "Pricing Formulation:",
-                "pricing_val": "Custom Quote on WhatsApp",
-                "submit_to_artist": "Submit Design to Artist",
-                "directory_title": "Main Types of String Art",
-                "interactive_index": "Interactive Index",
-                "search_title": "Search Curated Creations",
-                "search_placeholder": "Search by name, category, size...",
-                "search_hint": "Press Enter to search",
-                "nav_home": "Home",
-                "nav_gallery": "Gallery",
-                "nav_process": "Our Process",
-                "nav_reviews": "Reviews",
-                "track_modal_title": "Track Order Phase",
-                "track_modal_subtitle": "Enter reference code to view spatial loops",
-                "verify_btn": "Verify Status",
-                "form_name": "Your Name",
-                "form_rating": "Stars Selection",
-                "form_review": "Your Review",
-                "publish_btn": "Publish Experience",
-                "dismiss_btn": "Dismiss Preview",
-                "selected_masterpieces": "Selected Masterpieces",
-                "cart_empty": "Your collection container is empty.",
-                "cart_total_label": "Value:",
-                "proceed_checkout": "Proceed Order to WhatsApp"
-            },
-            "GU": {
-                "tagline": "દરેક દોરામાં એક ઉત્કૃષ્ટ કૃતિ",
-                "hero_title": "લક્ઝરી હેન્ડમેડ <br><span class=\"italic font-light\">સ્ટ્રિંગ આર્ટ</span>",
-                "hero_desc": "હજારો દોરાઓ અને અખંડ જુસ્સા સાથે કાલાતીત પોટ્રેટ અને અમૂર્ત ડિઝાઇન બનાવવી.",
-                "explore_coll": "કલેક્શન જુઓ",
-                "commission_art": "કસ્ટમ આર્ટ ઓર્ડર કરો",
-                "gallery_title": "માસ્ટરપીસ ગેલેરી",
-                "gallery_subtitle": "પસંદગીનું કલેક્શન",
-                "filter_all": "બધી કલાકૃતિઓ",
-                "filter_portraits": "પોટ્રેટ આર્ટ",
-                "filter_mandalas": "મંડલા આર્ટ",
-                "filter_corporate": "કોર્પોરેટ અને કસ્ટમ",
-                "more_styles": "વધુ આર્ટ સ્ટાઇલ્સ",
-                "precision_label": "ચોકસાઈની કળા",
-                "process_title": "અમારી નિર્માણ પ્રક્રિયા",
-                "philosophy_btn": "નિર્માણ ફિલસૂફી",
-                "mastery_btn": "૧૫-પગલાંની કારીગરી",
-                "collector_stories_sub": "ગ્રાહકોના પ્રતિભાવો",
-                "reviews_title": "ગ્રાહકોના અનુભવો",
-                "write_review": "તમારો અનુભવ શેર કરો",
-                "track_order_btn": "ઓર્ડર ટ્રેક કરો",
-                "custom_studio_nav": "કસ્ટમ સ્ટુડિયો",
-                "studio_sub": "દોરા વિઝ્યુલાઇઝેશન સ્ટુડિયો",
-                "specs_title": "પસંદગી કન્ફિગર કરો",
-                "size_label": "કેનવાસ પ્રકાર અને કદ (૩ ફૂટ થી ૮ ફૂટ)",
-                "frame_label": "ફ્રેમ લુક અને કલર",
-                "thread_label": "દોરાના પ્રકાર પસંદ કરો (મલ્ટીપલ)",
-                "color_label": "આર્ટના રંગો પસંદ કરો (મલ્ટીપલ)",
-                "details_label": "વધારાની કસ્ટમ વિગતો અને સૂચનાઓ",
-                "details_placeholder": "કસ્ટમ નામ, તારીખો, રેફરન્સ અથવા ખાસ કલર ગ્રેડિયન્ટ વિગતો લખો...",
-                "pricing_form": "કિંમત ગણતરી:",
-                "pricing_val": "વોટ્સએપ પર કસ્ટમ ક્વોટ",
-                "submit_to_artist": "ડિઝાઇન આર્ટિસ્ટને મોકલો",
-                "directory_title": "સ્ટ્રિંગ આર્ટના મુખ્ય પ્રકારો",
-                "interactive_index": "ઇન્ટરેક્ટિવ ઇન્ડેક્સ",
-                "search_title": "કલાકૃતિ શોધો",
-                "search_placeholder": "નામ, કેટેગરી, કદ દ્વારા શોધો...",
-                "search_hint": "શોધવા માટે Enter દબાવો",
-                "nav_home": "હોમ",
-                "nav_gallery": "ગેલેરી",
-                "nav_process": "નિર્માણ પ્રક્રિયા",
-                "nav_reviews": "રિવ્યુઝ",
-                "track_modal_title": "ઓર્ડર સ્ટેટસ તપાસો",
-                "track_modal_subtitle": "રીયલ-ટાઇમ અપડેટ જોવા માટે આઈડી દાખલ કરો",
-                "verify_btn": "સ્ટેટસ તપાસો",
-                "form_name": "તમારું નામ",
-                "form_rating": "સ્ટાર રેટિંગ પસંદ કરો",
-                "form_review": "તમારો પ્રતિભાવ",
-                "publish_btn": "અનુભવ પબ્લિશ કરો",
-                "dismiss_btn": "પ્રીવ્યૂ બંધ કરો",
-                "selected_masterpieces": "પસંદ કરેલી આર્ટવર્ક",
-                "cart_empty": "તમારી બેગ હાલમાં ખાલી છે.",
-                "cart_total_label": "કુલ કિંમત:",
-                "proceed_checkout": "ઓર્ડર વોટ્સએપ પર મોકલો"
-            },
-            "HI": {
-                "tagline": "हर धागे में एक उत्कृष्ट कृति",
-                "hero_title": "लक्जरी हस्तनिर्मित <br><span class=\"italic font-light\">स्ट्रिंग आर्ट</span>",
-                "hero_desc": "हजारों धागों और अटूट जुनून के साथ किया गया उत्कृष्ट काम।",
-                "explore_coll": "कलेक्शन देखें",
-                "commission_art": "कस्टम आर्ट ऑर्डर करें",
-                "gallery_title": "मास्टरपीस गैलरी",
-                "gallery_subtitle": "चुनिंदा कैटलॉग",
-                "filter_all": "सभी कलाकृतियां",
-                "filter_portraits": "पोर्ट्रेट",
-                "filter_mandalas": "मंडला",
-                "filter_corporate": "कॉर्पोरेट और कस्टम",
-                "more_styles": "और अधिक आर्ट शैलियाँ",
-                "precision_label": "सटीकता की कला",
-                "process_title": "हमारी निर्माण प्रक्रिया",
-                "philosophy_btn": "निर्माण दर्शन",
-                "mastery_btn": "१५-चरण मास्टर शिल्प कौशल",
-                "collector_stories_sub": "ग्राहकों की कहानियां",
-                "reviews_title": "ग्राहकों के अनुभव",
-                "write_review": "अपना अनुभव साझा करें",
-                "track_order_btn": "ऑर्डर ट्रैक करें",
-                "custom_studio_nav": "कस्टम स्टूडियो",
-                "studio_sub": "थ्रेड विज़ुअलाइज़ेशन स्टूडियो",
-                "specs_title": "विकल्प चुनें",
-                "size_label": "कैनवास प्रकार और आकार (३ फीट से ८ फीट)",
-                "frame_label": "फ्रेम स्टाइल और लुक",
-                "thread_label": "धागे के प्रकार चुनें (एकाधिक चयन)",
-                "color_label": "कला के रंग चुनें (एकाधिक चयन)",
-                "details_label": "अतिरिक्त विवरण और निर्देश",
-                "details_placeholder": "कस्टम नाम, तिथियां, संदर्भ या विशिष्ट रंग आवश्यकताएं यहां दर्ज करें...",
-                "pricing_form": "मूल्य निर्धारण:",
-                "pricing_val": "व्हाट्सएप पर कस्टम कोट",
-                "submit_to_artist": "डिज़ाइन कलाकार को भेजें",
-                "directory_title": "स्ट्रिंग आर्ट के मुख्य प्रकार",
-                "interactive_index": "इंटरएक्टिव इंडेक्स",
-                "search_title": "कलाकृतियां खोजें",
-                "search_placeholder": "नाम, श्रेणी, आकार द्वारा खोजें...",
-                "search_hint": "खोजने के लिए Enter दबाएं",
-                "nav_home": "होम",
-                "nav_gallery": "गैलरी",
-                "nav_process": "निर्माण प्रक्रिया",
-                "nav_reviews": "समीक्षाएं",
-                "track_modal_title": "ऑर्डर स्थिति ट्रैक करें",
-                "track_modal_subtitle": "रीयल-टाइम स्थिति देखने के लिए आईडी दर्ज करें",
-                "verify_btn": "स्थिति सत्यापित करें",
-                "form_name": "आपका नाम",
-                "form_rating": "स्टार रेटिंग चुनें",
-                "form_review": "आपकी समीक्षा",
-                "publish_btn": "अनुभव साझा करें",
-                "dismiss_btn": "पूर्वावलोकन बंद करें",
-                "selected_masterpieces": "चयनित कलाकृतियां",
-                "cart_empty": "आपकी बैग खाली है।",
-                "cart_total_label": "कुल मूल्य:",
-                "proceed_checkout": "ऑर्डर व्हाट्सएप पर भेजें"
-            }
-        };
+        // Default Reviews
+        const defaultReviews = [
+            { name: "Jaymin Patel", rating: 5, text: "The portrait string art looks remarkably detailed. Perfectly custom crafted and delivered with immense protective packaging." },
+            { name: "Hepin Kumar", rating: 5, text: "Very satisfied with the customer response and final execution. The clean nail patterns are extremely artistic!" },
+            { name: "Rajiv Ji", rating: 4, text: "Highly recommended brand. Outstanding symmetry in the mandala pattern. Premium class look." },
+            { name: "Nakum", rating: 5, text: "The metallic gold string finish catches the light beautifully on the wall. Exceptional quality." },
+            { name: "Kavar K", rating: 5, text: "Immensely detailed couple portrait. Excellent support during photo review selection on WhatsApp." }
+        ];
 
         // State variables
         let products = JSON.parse(localStorage.getItem('sc03_products')) || defaultProducts;
@@ -1144,16 +984,17 @@
         let processLoopInterval = null;
         let heritageLoopInterval = null;
 
-        // Philosophy (૭ સ્ટેપ્સ) લૂપ ફંક્શન
+        // ૧. Philosophy (૭ સ્ટેપ્સ) લૂપ ફંક્શન
         function startPhilosophyLoop() {
             stopAllProcessLoops();
             const cards = document.querySelectorAll('.process-step-card');
             if (cards.length === 0) return;
 
+            // શરૂઆતમાં બધા સ્ટેપ્સ હાઈડ કરો
             cards.forEach(card => card.classList.remove('active-reveal'));
 
             let index = 0;
-            cards[index].classList.add('active-reveal'); 
+            cards[index].classList.add('active-reveal'); // પહેલું સ્ટેપ ઇન્સ્ટન્ટ બતાવો
 
             processLoopInterval = setInterval(() => {
                 cards[index].classList.remove('active-reveal');
@@ -1162,7 +1003,7 @@
             }, 2500); 
         }
 
-        // 15-Step Master Craftsmanship (૧૫ સ્ટેપ્સ) લૂપ ફંક્શન
+        // ૨. 15-Step Master Craftsmanship (૧૫ સ્ટેપ્સ) લૂપ ફંક્શન
         function startHeritageLoop() {
             stopAllProcessLoops();
             const cards = document.querySelectorAll('.heritage-step-card');
@@ -1180,7 +1021,7 @@
             }, 2500);
         }
 
-        // લૂપ બંધ કરવા માટે
+        // ૩. બધા લૂપ્સ બંધ કરવા માટેનું સેફ્ટી ફંક્શન
         function stopAllProcessLoops() {
             if (processLoopInterval) clearInterval(processLoopInterval);
             if (heritageLoopInterval) clearInterval(heritageLoopInterval);
@@ -1201,7 +1042,7 @@
             // શરૂઆતમાં Philosophy લૂપ એક્ટિવ કરો
             startPhilosophyLoop();
 
-            // Multi language default check
+            // Multi language check
             const savedLang = localStorage.getItem('sc03_lang') || 'EN';
             document.getElementById('language-switcher').value = savedLang;
             switchLanguage();
@@ -1256,7 +1097,7 @@
             });
         }
 
-        // Multi Language Switcher Processor (Rule 2)
+        // Multi Language Switcher Processor
         function switchLanguage() {
             const lang = document.getElementById('language-switcher').value;
             localStorage.setItem('sc03_lang', lang);
@@ -1286,6 +1127,7 @@
         // Populate Customization Selectors dynamically
         function populateCustomSelectors() {
             const sizeSelector = document.getElementById('custom-size');
+            if (!sizeSelector) return;
             sizeSelector.innerHTML = '';
             
             let list = [];
