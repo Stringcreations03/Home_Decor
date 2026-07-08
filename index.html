@@ -99,18 +99,18 @@
         .marquee-content:hover {
             animation-play-state: paused;
         }
-        /* Steps progressive fade-in animation style */
+        /* Looping sequential transition reveal for step modules in both tabs */
         .process-step-card, .heritage-step-card {
-            opacity: 0.15;
-            transform: scale(0.96);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            border-color: rgba(212, 175, 55, 0.05);
+            display: none !important;
         }
         .process-step-card.active-reveal, .heritage-step-card.active-reveal {
+            display: block !important;
+            margin: 0 auto;
             opacity: 1 !important;
-            transform: scale(1.03) !important;
-            border-color: rgba(212, 175, 55, 0.7) !important;
-            box-shadow: 0 12px 30px -5px rgba(212, 175, 55, 0.25) !important;
+            transform: scale(1) !important;
+            animation: fadeIn 0.5s ease-in-out;
+            grid-column: 1 / -1; /* આ સિંગલ કાર્ડને આપોઆપ સ્ક્રીનની વચ્ચે સેન્ટર કરશે */
+            max-width: 450px;
         }
     </style>
 </head>
@@ -529,18 +529,15 @@
                 </div>
             </div>
 
-            <!-- Right Half Screen: Detailed Main Types of String Art Directory Section (lg:col-span-6) (Symmetric Split) -->
-            <div class="lg:col-span-6 glass-card p-8 space-y-6 flex flex-col justify-between min-h-[600px]">
-                <div class="space-y-4">
-                    <div class="border-b border-luxuryGold/15 pb-4 flex justify-between items-center">
-                        <h3 class="font-serif text-lg text-luxuryGold uppercase tracking-wider">Main Types of String Art</h3>
-                        <span class="text-[9px] uppercase text-gray-500 tracking-widest">Interactive Index</span>
-                    </div>
-                    <p class="text-xs text-gray-400 leading-relaxed">Explore different handcrafted dynamic patterns. Click on any specific subtype to open its original sample photograph.</p>
+            <!-- Right Half Screen: Detailed Main Types of String Art Directory Section (lg:col-span-6) -->
+            <div class="lg:col-span-6 space-y-6 glass-card p-8">
+                <div class="border-b border-luxuryGold/10 pb-4 flex justify-between items-center">
+                    <h3 class="font-serif text-xl text-luxuryGold uppercase tracking-wide">Main Types of String Art</h3>
+                    <span class="text-[10px] uppercase text-gray-500 tracking-widest">Interactive Index</span>
                 </div>
                 
-                <div id="string-art-index-accordion" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                    <!-- Populated dynamically with sub-buttons and real sample photos -->
+                <div id="string-art-index-accordion" class="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+                    <!-- Populated dynamically with detailed tree below -->
                 </div>
             </div>
         </div>
@@ -767,40 +764,6 @@
         </div>
     </div>
 
-    <!-- Digital Certificate Popup/Modal -->
-    <div id="certificate-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex flex-col items-center justify-center p-6">
-        <button onclick="closeCertificate()" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
-        <div class="max-w-2xl w-full bg-[#fcfbf9] text-[#111111] p-12 border-[12px] border-[#d4af37] shadow-2xl space-y-8 relative font-serif text-center">
-            <div class="absolute top-2 left-2 text-[#d4af37] text-2xl">⚜</div>
-            <div class="absolute top-2 right-2 text-[#d4af37] text-2xl">⚜</div>
-            <div class="absolute bottom-2 left-2 text-[#d4af37] text-2xl">⚜</div>
-            <div class="absolute bottom-2 right-2 text-[#d4af37] text-2xl">⚜</div>
-
-            <h3 class="text-2xl uppercase tracking-[0.2em] text-[#d4af37] font-bold font-cinzel">Certificate of Authenticity</h3>
-            <div class="w-16 h-[2px] bg-[#d4af37] mx-auto"></div>
-            
-            <p class="text-xs uppercase tracking-widest text-gray-500">This certifies that the original thread-mapping creation entitled</p>
-            <h4 id="cert-title" class="text-3xl font-bold my-4">Symphony of Grace</h4>
-            <p class="text-xs max-w-md mx-auto leading-relaxed text-gray-600">is an authentic hand-hammered and woven string art formulation under registry of String Creations 03, incorporating premium threads, custom wooden profiles, and lifetime archival pigments.</p>
-            
-            <div class="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200 text-xs">
-                <div>
-                    <p class="font-sans font-bold text-gray-800" id="cert-registry-id">ID: SC03-38291</p>
-                    <p class="text-[10px] uppercase text-gray-400 mt-1">Registry Seal No</p>
-                </div>
-                <div>
-                    <p class="italic text-base">String Creations 03</p>
-                    <p class="text-[10px] uppercase text-gray-400 mt-1">Artist Signature Stamp</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating WhatsApp Widget connected to 918140125772 -->
-    <a href="https://wa.me/918140125772" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 hover:bg-emerald-600 text-luxuryCream h-14 w-14 rounded-full flex items-center justify-center text-2xl shadow-xl hover:scale-110 transition duration-300 z-40">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
     <!-- JavaScript Core Script -->
     <script>
         // Dimensions Matrix - Ranging purely from 3 Feet (36 Inches) up to 8 Feet (96 Inches)
@@ -959,6 +922,52 @@
                     { name: "Rainbow / UV Reactive Spun", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=600" }
                 ]
             }
+        ];
+
+        // Default Catalog Data Base
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "Symphony of Grace",
+                category: "portrait",
+                price: 4499,
+                hours: "18 Hours",
+                nails: 360,
+                threads: 2400,
+                img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=600",
+                desc: "An intricate monochrome portrait that utilizes varying degrees of string thickness and shadows to generate a photorealistic depth. Highly recommended as a premium personalized masterpiece."
+            },
+            {
+                id: 2,
+                name: "Eternal Lotus Mandala",
+                category: "mandala",
+                price: 6999,
+                hours: "28 Hours",
+                nails: 500,
+                threads: 4000,
+                img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=600",
+                desc: "A mesmerizing sacred mandala formulated with gold & bronze metallic wire threads. Symbolizes absolute calmness and symmetry."
+            },
+            {
+                id: 3,
+                name: "Corporate Crest Legacy",
+                category: "custom",
+                price: 9999,
+                hours: "35 Hours",
+                nails: 650,
+                threads: 5200,
+                img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600",
+                desc: "Specialized corporate logo art handcrafted on obsidian-coated premium pine wood sheets. Built to command prestige inside business spaces."
+            }
+        ];
+
+        // Default reviews
+        const defaultReviews = [
+            { name: "Jaymin Patel", rating: 5, text: "The portrait string art looks remarkably detailed. Perfectly custom crafted and delivered with immense protective packaging." },
+            { name: "Hepin Kumar", rating: 5, text: "Very satisfied with the customer response and final execution. The clean nail patterns are extremely artistic!" },
+            { name: "Rajiv Ji", rating: 4, text: "Highly recommended brand. Outstanding symmetry in the mandala pattern. Premium class look." },
+            { name: "Nakum", rating: 5, text: "The metallic gold string finish catches the light beautifully on the wall. Exceptional quality." },
+            { name: "Kavar K", rating: 5, text: "Immensely detailed couple portrait. Excellent support during photo review selection on WhatsApp." }
         ];
 
         // State variables
@@ -1484,7 +1493,8 @@
             
             document.getElementById('btn-proc-1').className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
             document.getElementById('btn-proc-2').className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
-            startPhilosophyLoop();
+            
+            startPhilosophyLoop(); // Philosophy લૂપ ચાલુ કરો
         }
 
         function showCustomSpecsTab() {
@@ -1493,7 +1503,8 @@
             
             document.getElementById('btn-proc-1').className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
             document.getElementById('btn-proc-2').className = "process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
-            startHeritageLoop();
+            
+            startHeritageLoop(); // 15-Step લૂપ ચાલુ કરો
         }
 
         function renderAdminProducts() {
