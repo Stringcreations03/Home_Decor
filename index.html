@@ -42,7 +42,7 @@
             scroll-behavior: smooth;
         }
         .glass-header {
-            background: rgba(13, 13, 13, 0.9);
+            background: rgba(13, 13, 13, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
@@ -52,6 +52,28 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(212, 175, 55, 0.1);
         }
+        
+        /* Logo Custom Gradient Styles representing the 3D Metallic Teal, Blue & Silver */
+        .brand-string {
+            background: linear-gradient(135deg, #3ad5e0 0%, #1a82e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-creations {
+            background: linear-gradient(135deg, #1a82e2 0%, #7a1ae2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-03 {
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 50%, #71717a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+        .logo-glowing-effect {
+            filter: drop-shadow(0px 2px 8px rgba(26, 130, 226, 0.25));
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -59,23 +81,28 @@
             background: #0d0d0d;
         }
         ::-webkit-scrollbar-thumb {
-            background: #d4af37;
+            background: #1a82e2;
         }
     </style>
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
 
-    <!-- Sticky Header with Round Logo -->
+    <!-- Sticky Header with Round Logo & Metallic Brand Text -->
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center space-x-3">
+            <a href="#" class="flex items-center space-x-3 group">
                 <!-- Round Logo Frame -->
-                <div class="h-12 w-12 rounded-full overflow-hidden border border-luxuryGold/50 bg-luxuryCharcoal flex items-center justify-center">
+                <div class="h-12 w-12 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                     <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-serif text-xl lg:text-2xl tracking-[0.12em] text-luxuryGold font-bold">STRING CREATIONS 03</span>
-                    <span class="text-[8px] tracking-[0.25em] text-gray-400 uppercase">Masterpiece In Every Thread</span>
+                <div class="flex flex-col logo-glowing-effect">
+                    <!-- Exact Logo Palette Match -->
+                    <div class="font-serif text-xl lg:text-2xl font-bold tracking-[0.08em] flex items-center space-x-1.5">
+                        <span class="brand-string">STRING</span>
+                        <span class="brand-creations italic font-normal">Creations</span>
+                        <span class="brand-03">03</span>
+                    </div>
+                    <span class="text-[8px] tracking-[0.25em] text-gray-400 uppercase font-medium">Masterpiece In Every Thread</span>
                 </div>
             </a>
             
@@ -111,15 +138,20 @@
         </div>
     </div>
 
-    <!-- Hero Section (Visual Replica of Screenshot) -->
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         <!-- Background Wallpaper Image with Dark Blur Overlay -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover filter brightness-[0.25] blur-[2px]" alt="Background Art">
-            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent to-luxuryBlack/50"></div>
+            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover filter brightness-[0.22] blur-[1px]" alt="Background Art">
+            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent to-luxuryBlack/55"></div>
         </div>
 
         <div class="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-8">
+            <div class="flex justify-center mb-2">
+                <div class="h-24 w-24 rounded-full overflow-hidden border-2 border-luxuryGold/40 bg-luxuryCharcoal/55 p-1 shadow-2xl">
+                    <img src="logo.jpg" alt="Logo" class="h-full w-full rounded-full object-cover">
+                </div>
+            </div>
             <span class="text-luxuryGold font-serif tracking-[0.4em] text-xs uppercase block">MASTERPIECE IN EVERY THREAD</span>
             <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-luxuryCream leading-none font-medium">
                 Luxury Handmade <br><span class="italic font-light">String Art</span>
@@ -161,7 +193,7 @@
                 <button onclick="filterGallery('custom')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Corporate & Custom</button>
             </div>
 
-            <!-- Dynamic Grid (Updated from local storage if admin updates it) -->
+            <!-- Dynamic Grid -->
             <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Fallback items if storage is empty -->
             </div>
@@ -495,16 +527,21 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Footer with Round Logo & Instagram QR Code Placement -->
+    <!-- Footer with Round Logo, Metallic Text & Instagram QR Code Placement -->
     <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
             
             <div class="space-y-4">
-                <div class="flex items-center space-x-3">
-                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center">
+                <div class="flex items-center space-x-3 group">
+                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                         <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
                     </div>
-                    <span class="font-serif text-lg tracking-[0.1em] text-luxuryGold font-bold">STRING CREATIONS 03</span>
+                    <!-- Footer Title styled identically to match Logo -->
+                    <div class="font-serif text-base lg:text-lg font-bold tracking-[0.08em] flex items-center space-x-1 logo-glowing-effect">
+                        <span class="brand-string">STRING</span>
+                        <span class="brand-creations italic font-normal">Creations</span>
+                        <span class="brand-03">03</span>
+                    </div>
                 </div>
                 <p class="text-[11px] text-gray-500 leading-relaxed">International-caliber handcrafted luxury string art pieces based out of India, crafted for modern interiors and elite collectors.</p>
                 <div class="text-[11px] text-gray-400 space-y-1">
@@ -841,6 +878,7 @@
             document.getElementById('cart-count').innerText = cart.length;
         }
 
+        // Render Cart Details
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             const emptyMsg = document.getElementById('cart-empty-msg');
