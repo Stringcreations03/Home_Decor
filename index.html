@@ -99,18 +99,18 @@
         .marquee-content:hover {
             animation-play-state: paused;
         }
-        /* Looping sequential transitions for step modules */
+        /* Steps progressive fade-in animation style */
         .process-step-card, .heritage-step-card {
-            display: none !important;
+            opacity: 0.15;
+            transform: scale(0.96);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-color: rgba(212, 175, 55, 0.05);
         }
         .process-step-card.active-reveal, .heritage-step-card.active-reveal {
-            display: block !important;
-            margin: 0 auto;
             opacity: 1 !important;
-            transform: scale(1) !important;
-            animation: fadeIn 0.5s ease-in-out;
-            grid-column: 1 / -1; 
-            max-width: 450px;
+            transform: scale(1.03) !important;
+            border-color: rgba(212, 175, 55, 0.7) !important;
+            box-shadow: 0 12px 30px -5px rgba(212, 175, 55, 0.25) !important;
         }
     </style>
 </head>
@@ -153,7 +153,7 @@
                         <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
                     </select>
                 </div>
-                <!-- Track Order Trigger Link -->
+                <!-- Relocated Track Order Link in Header Action Area -->
                 <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition">
                     <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
                 </button>
@@ -512,16 +512,6 @@
                     </div>
                 </div>
 
-                <!-- Reference File Upload Selection Block -->
-                <div>
-                    <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Upload Reference Portrait</label>
-                    <div class="border border-dashed border-luxuryGold/20 hover:border-luxuryGold p-6 text-center cursor-pointer relative transition duration-300 bg-luxuryBlack/50">
-                        <input type="file" id="custom-image-input" accept="image/*" onchange="handleFileSelection(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                        <i class="fa-solid fa-cloud-arrow-up text-luxuryGold text-2xl mb-2"></i>
-                        <p id="file-upload-label" class="text-[10px] text-gray-400 uppercase tracking-widest">Select Image File</p>
-                    </div>
-                </div>
-
                 <!-- Additional Message Details Textarea -->
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Additional Custom Details & Instructions</label>
@@ -705,6 +695,40 @@
         </div>
     </div>
 
+    <!-- Dynamic Product Details Popup Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-luxuryBlack/90 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card max-w-4xl w-full p-6 sm:p-8 relative grid grid-cols-1 md:grid-cols-2 gap-8 my-8 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="flex flex-col items-center justify-center bg-neutral-900 rounded border border-luxuryGold/10 p-2 relative">
+                <img id="modal-img" src="" class="w-full aspect-square object-cover" alt="Art Detail">
+                <button onclick="generateDigitalCertificate()" class="mt-4 text-[10px] uppercase bg-luxuryGold/15 hover:bg-luxuryGold/30 text-luxuryGold border border-luxuryGold/40 py-2 px-4 tracking-widest w-full">
+                    <i class="fa-solid fa-file-signature mr-1"></i> Download Certificate of Authenticity
+                </button>
+            </div>
+            
+            <div class="space-y-6 flex flex-col justify-between">
+                <div>
+                    <span id="modal-tag" class="text-luxuryGold font-serif tracking-widest text-[10px] uppercase">Original Masterpiece</span>
+                    <h3 id="modal-title" class="font-serif text-3xl text-luxuryCream mt-1">Symphony of Grace</h3>
+                    <p id="modal-price" class="text-2xl text-luxuryGold font-bold font-serif mt-2">₹4,499</p>
+                    <p id="modal-desc" class="text-xs text-gray-400 mt-4 leading-relaxed"></p>
+                </div>
+                
+                <div class="border-t border-luxuryGold/10 pt-4 space-y-2 text-[10px] uppercase tracking-wider text-gray-500">
+                    <div class="flex justify-between"><span>Precision Nails:</span><span id="modal-nails" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Threading Hours:</span><span id="modal-hours" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Thread Length:</span><span id="modal-threads" class="text-luxuryCream font-bold"></span></div>
+                    <div class="flex justify-between"><span>Certification:</span><span class="text-emerald-500 font-bold"><i class="fa-solid fa-square-check mr-1"></i> Authentic Signed Seal Included</span></div>
+                </div>
+
+                <div class="flex space-x-4 pt-4 border-t border-luxuryGold/10">
+                    <button id="modal-add-to-cart-btn" class="flex-1 bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Art Style Curated Image Modal (Displays real sample photo requested by user!) -->
     <div id="art-class-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex items-center justify-center p-6">
         <div class="glass-card max-w-xl w-full p-6 sm:p-8 relative text-center space-y-6 border border-luxuryGold/30 rounded-lg">
@@ -777,67 +801,6 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Footer -->
-    <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
-            
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 group">
-                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
-                    </div>
-                    <div class="font-serif text-base lg:text-lg font-bold tracking-[0.08em] flex items-center space-x-1 logo-glowing-effect">
-                        <span class="brand-string">STRING</span>
-                        <span class="brand-creations italic font-normal">Creations</span>
-                        <span class="brand-03">03</span>
-                    </div>
-                </div>
-                <p class="text-[11px] text-gray-500 leading-relaxed">International-caliber handcrafted luxury string art pieces based out of India, crafted for modern interiors and elite collectors.</p>
-                <div class="text-[11px] text-gray-400 space-y-1">
-                    <p><i class="fa-solid fa-envelope text-luxuryGold mr-2"></i> <a href="mailto:stringcreations03@gmail.com" class="hover:text-luxuryGold">stringcreations03@gmail.com</a></p>
-                    <p><i class="fa-solid fa-phone text-luxuryGold mr-2"></i> <a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold">+91 81401 25772</a></p>
-                </div>
-            </div>
-            
-            <div>
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Aesthetics Directory</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Custom Portraits</a></li>
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Sacred Mandala Art</a></li>
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Couple Milestones</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Collector Support</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#" onclick="toggleTrackModal()" class="hover:text-luxuryGold">Track Order</a></li>
-                    <li><a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold font-semibold text-luxuryGold"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Inquiry</a></li>
-                    <li><button onclick="requestAdminAccess()" class="hover:text-luxuryGold text-left focus:outline-none">🔒 Admin Console</button></li>
-                </ul>
-            </div>
-            
-            <!-- Instagram Connect Box with QR Code -->
-            <div class="space-y-4">
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">Follow Our Art</h4>
-                <div class="flex items-start space-x-4">
-                    <div class="w-20 h-20 bg-white p-1 rounded-md shadow-lg flex items-center justify-center shrink-0">
-                        <img src="instagram_qr.jpg" alt="Scan Instagram QR Code" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/150/ffffff/000000?text=Instagram'">
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-gray-400 leading-tight">Scan the QR code with your camera or click below to explore reels & daily designs.</p>
-                        <a href="https://instagram.com/stringcreations03" target="_blank" class="inline-flex items-center space-x-1 text-xs text-luxuryGold hover:text-luxuryGoldHover font-semibold mt-2">
-                            <i class="fa-brands fa-instagram text-sm"></i>
-                            <span>@string_creations03</span>
-                        </a>
-                    </div>
-                </div>
-                <p class="text-[10px] text-gray-500 pt-2">© 2026 String Creations 03. All Rights Reserved.</p>
-            </div>
-            
-        </div>
-    </footer>
-
     <!-- JavaScript Core Script -->
     <script>
         // Dimensions Matrix - Ranging purely from 3 Feet (36 Inches) up to 8 Feet (96 Inches)
@@ -855,7 +818,7 @@
             "Glow in the Dark Thread"
         ];
 
-        // Comprehensive Hierarchical String Art Types Database (Rule 2) with real high-resolution sample photos
+        // Comprehensive Hierarchical String Art Types Database (Rule 2) with real sample photo matching
         const artTypesDirectory = [
             {
                 category: "Geometric String Art",
@@ -998,52 +961,6 @@
             }
         ];
 
-        // Default Catalog Data Base
-        const defaultProducts = [
-            {
-                id: 1,
-                name: "Symphony of Grace",
-                category: "portrait",
-                price: 4499,
-                hours: "18 Hours",
-                nails: 360,
-                threads: 2400,
-                img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=600",
-                desc: "An intricate monochrome portrait that utilizes varying degrees of string thickness and shadows to generate a photorealistic depth. Highly recommended as a premium personalized masterpiece."
-            },
-            {
-                id: 2,
-                name: "Eternal Lotus Mandala",
-                category: "mandala",
-                price: 6999,
-                hours: "28 Hours",
-                nails: 500,
-                threads: 4000,
-                img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=600",
-                desc: "A mesmerizing sacred mandala formulated with gold & bronze metallic wire threads. Symbolizes absolute calmness and symmetry."
-            },
-            {
-                id: 3,
-                name: "Corporate Crest Legacy",
-                category: "custom",
-                price: 9999,
-                hours: "35 Hours",
-                nails: 650,
-                threads: 5200,
-                img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600",
-                desc: "Specialized corporate logo art handcrafted on obsidian-coated premium pine wood sheets. Built to command prestige inside business spaces."
-            }
-        ];
-
-        // Default reviews
-        const defaultReviews = [
-            { name: "Jaymin Patel", rating: 5, text: "The portrait string art looks remarkably detailed. Perfectly custom crafted and delivered with immense protective packaging." },
-            { name: "Hepin Kumar", rating: 5, text: "Very satisfied with the customer response and final execution. The clean nail patterns are extremely artistic!" },
-            { name: "Rajiv Ji", rating: 4, text: "Highly recommended brand. Outstanding symmetry in the mandala pattern. Premium class look." },
-            { name: "Nakum", rating: 5, text: "The metallic gold string finish catches the light beautifully on the wall. Exceptional quality." },
-            { name: "Kavar K", rating: 5, text: "Immensely detailed couple portrait. Excellent support during photo review selection on WhatsApp." }
-        ];
-
         // State variables
         let products = JSON.parse(localStorage.getItem('sc03_products')) || defaultProducts;
         let reviews = JSON.parse(localStorage.getItem('sc03_reviews')) || defaultReviews;
@@ -1090,7 +1007,7 @@
             if (cards.length === 0) return;
 
             // શરૂઆતમાં બધા સ્ટેપ્સ ગાયબ કરો
-            cards.forEach(card => card.classList.remove('active-reveal', 'past-reveal'));
+            cards.forEach(card => card.classList.remove('active-reveal'));
 
             let index = 0;
             cards[index].classList.add('active-reveal'); // પહેલું સ્ટેપ બતાવો
@@ -1108,7 +1025,7 @@
             const cards = document.querySelectorAll('.heritage-step-card');
             if (cards.length === 0) return;
 
-            cards.forEach(card => card.classList.remove('active-reveal', 'past-reveal'));
+            cards.forEach(card => card.classList.remove('active-reveal'));
 
             let index = 0;
             cards[index].classList.add('active-reveal');
@@ -1188,21 +1105,6 @@
             });
         }
 
-        // ફાઇલનું નામ ટ્રેક કરવા માટેનું ફંક્શન
-        let selectedFileName = "";
-        function handleFileSelection(event) {
-            const file = event.target.files[0];
-            if (file) {
-                selectedFileName = file.name;
-                document.getElementById('file-upload-label').innerText = `Selected: ${file.name}`;
-                document.getElementById('file-upload-label').classList.remove('text-gray-400');
-                document.getElementById('file-upload-label').classList.add('text-luxuryGold', 'font-bold');
-            } else {
-                selectedFileName = "";
-                document.getElementById('file-upload-label').innerText = "Select Image File";
-            }
-        }
-
         // નવું સુધારેલું dispatchCustomOrder ફંક્શન (WhatsApp બટન માટે)
         function dispatchCustomOrder() {
             const sizeSelector = document.getElementById('custom-size');
@@ -1222,15 +1124,11 @@
             // વધારાની વિગતો મેળવો
             const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra details provided.";
 
-            // ઈમેજ ફાઈલનું નામ અને સૂચના
-            const imageInfo = selectedFileName ? `• Selected Reference File: ${selectedFileName}\n⚠️ Please attach this photo in this chat! ⚠️` : "• Selected Reference File: None";
-
             const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece with these configurations:\n\n` + 
                         `• Dimension: ${sizeText}\n` +
                         `• Frame Style: ${frameText}\n` +
                         `• Thread Formulation(s): ${selectedThreadsText}\n` +
-                        `• Color Selection(s): ${selectedColorsText}\n` +
-                        `${imageInfo}\n\n` +
+                        `• Color Selection(s): ${selectedColorsText}\n\n` +
                         `• Extra Custom Details:\n"${customDetails}"\n\n` +
                         `Please calculate the pricing structure and design layout based on these parameters.`;
             
@@ -1477,6 +1375,7 @@
             renderCart();
         }
 
+        // Update Cart Indicator Badge Count
         function updateCartCount() {
             document.getElementById('cart-count').innerText = cart.length;
         }
