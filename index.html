@@ -1,135 +1,285 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Website</title>
+    <title>String Creations 03 | Premium Handmade Art</title>
+    <meta name="description" content="International Level Premium String Art & Custom Portraits">
+    
+    <!-- SEO & Open Graph -->
+    <meta property="og:title" content="String Creations 03">
+    <meta property="og:image" content="hero-image-url.jpg">
+
+    <!-- Tailwind CSS (Direct CDN for GitHub) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Animation Library (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#0a0a0a',
+                        gold: '#D4AF37',
+                        darkgray: '#1a1a1a',
+                        cream: '#FDFBF7'
+                    },
+                    fontFamily: {
+                        sans: ['Marcellus', 'serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Smooth Scroll & Custom Scrollbar */
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; }
+        
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        body {
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
+        /* Masonry Gallery */
+        .masonry {
+            column-count: 1;
+            column-gap: 1.5rem;
         }
-
-        header {
-            background: #2c3e50;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
+        @media (min-width: 640px) { .masonry { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry { column-count: 3; } }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
         }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .masonry-item img {
+            width: 100%;
+            transition: transform 0.7s ease;
         }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .masonry-item:hover img {
+            transform: scale(1.05);
         }
-
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-        }
-
-        .skills-list {
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .skills-list li {
-            background: #3498db;
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #2c3e50;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            background: #34495e;
-        }
-
-        footer {
-            text-align: center;
+            align-items: flex-end;
             padding: 20px;
-            background: #2c3e50;
-            color: #fff;
-            margin-top: 40px;
-            font-size: 0.9rem;
         }
+        .masonry-item:hover .overlay { opacity: 1; }
     </style>
 </head>
-<body>
+<body class="bg-black text-cream antialiased selection:bg-gold selection:text-black">
 
-    <header>
-        <h1>नमस्ते, मेरा नाम GAUTAM PATEL है</h1>
-        <p>वेब डेवलपर / क्रिएटर</p>
+    <!-- Sticky Header -->
+    <header class="fixed w-full top-0 z-50 glass-header transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif text-gold tracking-widest uppercase">String Creations 03</a>
+            <nav class="hidden md:flex space-x-8 text-sm tracking-widest text-gray-300">
+                <a href="#home" class="hover:text-gold transition">Home</a>
+                <a href="#gallery" class="hover:text-gold transition">Gallery</a>
+                <a href="#process" class="hover:text-gold transition">Our Process</a>
+                <a href="#custom-order" class="hover:text-gold transition">Custom Order</a>
+            </nav>
+            <div class="flex space-x-4">
+                <a href="#" class="text-gray-300 hover:text-gold"><i class="fas fa-search"></i></a>
+                <a href="#" class="text-gray-300 hover:text-gold"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <section id="about">
-            <h2>मेरे बारे में (About Me)</h2>
-            <p>मैं एक वेब डेवलपर हूँ और मुझे नई तकनीकें सीखना और उनके साथ काम करना पसंद है। यह मेरी पहली वेबसाइट है जिसे मैंने GitHub Pages के माध्यम से होस्ट किया है।</p>
-        </section>
+    <!-- Fullscreen Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-center">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070')] bg-cover bg-center opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+        
+        <div class="relative z-10 px-6 max-w-4xl" data-aos="fade-up" data-aos-duration="1500">
+            <h4 class="text-gold tracking-[0.3em] uppercase text-sm mb-4">Masterpiece in Every Thread</h4>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 text-white leading-tight">Luxury Handmade <br> String Art</h1>
+            <p class="text-gray-300 text-lg md:text-xl mb-10 font-sans">Crafting timeless portraits and abstract designs with thousands of threads and unwavering passion.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#gallery" class="px-8 py-4 bg-gold text-black font-bold uppercase tracking-wider hover:bg-white transition duration-300">Explore Collection</a>
+                <a href="#custom-order" class="px-8 py-4 border border-gold text-gold uppercase tracking-wider hover:bg-gold hover:text-black transition duration-300">Commission Artwork</a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-gold text-2xl"></i>
+        </div>
+    </section>
 
-        <section id="skills">
-            <h2>स्किल्स (Skills)</h2>
-            <ul class="skills-list">
-                <li>HTML5</li>
-                <li>CSS3</li>
-                <li>JavaScript</li>
-                <li>GitHub</li>
-                <li>Responsive Design</li>
-            </ul>
-        </section>
+    <!-- Premium Trust Features -->
+    <section class="py-12 bg-darkgray border-y border-gray-800">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-gem text-gold text-3xl mb-3"></i>
+                <h3 class="text-sm tracking-widest uppercase">Premium Materials</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-palette text-gold text-3xl mb-3"></i>
+                <h3 class="text-sm tracking-widest uppercase">100% Handmade</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-certificate text-gold text-3xl mb-3"></i>
+                <h3 class="text-sm tracking-widest uppercase">Authenticity Certified</h3>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-globe text-gold text-3xl mb-3"></i>
+                <h3 class="text-sm tracking-widest uppercase">Global Shipping</h3>
+            </div>
+        </div>
+    </section>
 
-        <section id="contact">
-            <h2>संपर्क करें (Contact)</h2>
-            <p>यदि आप मुझसे जुड़ना चाहते हैं, तो मुझे ईमेल कर सकते हैं या नीचे दिए गए बटन पर क्लिक कर सकते हैं।</p>
-            <a href="mailto:STRINGCREATIONS03@GMAIL.COM" class="btn">ईमेल भेजें</a>
-        </section>
-    </div>
+    <!-- Masonry Gallery Section -->
+    <section id="gallery" class="py-24 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-in">
+                <h2 class="text-4xl md:text-5xl font-serif text-white mb-4">Curated Gallery</h2>
+                <div class="w-16 h-1 bg-gold mx-auto mb-6"></div>
+                <p class="text-gray-400">Limited edition and custom commissioned artworks.</p>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <button class="text-gold border-b-2 border-gold pb-1 px-2">All</button>
+                    <button class="text-gray-500 hover:text-gold transition px-2">Portraits</button>
+                    <button class="text-gray-500 hover:text-gold transition px-2">Mandala</button>
+                    <button class="text-gray-500 hover:text-gold transition px-2">Logos</button>
+                </div>
+            </div>
 
-    <footer>
-        <p>&copy; 2025 [Aapka Naam]. सर्वाधिकार सुरक्षित।</p>
+            <!-- CSS Masonry Grid -->
+            <div class="masonry">
+                <!-- Art Item 1 -->
+                <div class="masonry-item" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=800" alt="String Art 1">
+                    <div class="overlay">
+                        <div>
+                            <h3 class="text-white text-xl font-serif">Royal Mandala</h3>
+                            <p class="text-gold text-sm">₹8,500 / $105</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Art Item 2 -->
+                <div class="masonry-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1600174297956-c6d4d9998f14?q=80&w=800" alt="String Art 2">
+                    <div class="overlay">
+                        <div>
+                            <h3 class="text-white text-xl font-serif">Custom Couple Portrait</h3>
+                            <p class="text-gold text-sm">Custom Order</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Art Item 3 -->
+                <div class="masonry-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=800" alt="String Art 3">
+                    <div class="overlay">
+                        <div>
+                            <h3 class="text-white text-xl font-serif">Abstract Geometry</h3>
+                            <p class="text-gold text-sm">₹5,000 / $60</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Art Item 4 -->
+                 <div class="masonry-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=800" alt="String Art 4">
+                    <div class="overlay">
+                        <div>
+                            <h3 class="text-white text-xl font-serif">Corporate Logo</h3>
+                            <p class="text-gold text-sm">Custom Order</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border border-gray-600 text-white px-8 py-3 uppercase tracking-widest hover:border-gold hover:text-gold transition">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Order Call to Action -->
+    <section id="custom-order" class="py-24 bg-darkgray relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2" data-aos="fade-right">
+                <h2 class="text-4xl font-serif text-white mb-6">Commission Your Own Masterpiece</h2>
+                <p class="text-gray-400 mb-8 leading-relaxed">Turn your favorite memories, photos, or logos into a stunning, one-of-a-kind string art. Perfect for luxury gifting or premium home decor.</p>
+                <ul class="space-y-4 mb-8 text-gray-300">
+                    <li><i class="fas fa-check text-gold mr-3"></i> AI Pre-visualization Available</li>
+                    <li><i class="fas fa-check text-gold mr-3"></i> Choose Custom Frame & Size</li>
+                    <li><i class="fas fa-check text-gold mr-3"></i> Certificate of Authenticity Included</li>
+                </ul>
+                <a href="https://wa.me/91YOURNUMBER?text=Hello%20String%20Creations%2003,%20I%20want%20to%20place%20a%20custom%20order." class="bg-gold text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-white transition inline-block">Start Custom Order</a>
+            </div>
+            <div class="md:w-1/2" data-aos="fade-left">
+                <div class="border border-gold p-4 relative">
+                    <div class="absolute -inset-4 border border-gray-700"></div>
+                    <img src="https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800" alt="Making Process" class="w-full grayscale hover:grayscale-0 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-serif text-gold tracking-widest uppercase mb-6">String Creations 03</h2>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-gray-500 hover:text-gold text-xl transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-500 hover:text-gold text-xl transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-500 hover:text-gold text-xl transition"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-gray-600 text-sm tracking-widest">© 2024 STRING CREATIONS 03. ALL RIGHTS RESERVED.</p>
+            <p class="text-gray-700 text-xs mt-2">Premium Artworks Shipped Worldwide</p>
+        </div>
     </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/91YOURNUMBER" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-[0_0_15px_rgba(34,197,94,0.5)] hover:scale-110 transition z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Animations
+        AOS.init({
+            once: true, // Animation happens only once
+            offset: 100,
+        });
+
+        // Sticky Header Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if(window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+            }
+        });
+    </script>
 </body>
 </html>
