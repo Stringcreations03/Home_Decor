@@ -42,8 +42,8 @@
         }
     </script>
     
-    <!-- Link to the External Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <!-- Link to the External Custom Style Sheet (No Query strings to support Local file:/// protocol) -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
 
@@ -1035,7 +1035,10 @@
         </div>
     </footer>
 
+    <!-- Google Translate Script Connection (Absolute Protocol Forced) -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <!-- External JavaScript Connections -->
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js"></script>
 </body>
 </html>
