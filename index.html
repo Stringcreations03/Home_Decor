@@ -152,24 +152,27 @@
     <!-- Toast Notification System -->
     <div id="toast-container" class="fixed top-24 right-6 z-50 space-y-3 pointer-events-none"></div>
 
-    <!-- Sticky Header -->
+  <!-- Sticky Upgraded Responsive Header -->
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" onclick="showSection('home-view')" class="flex items-center space-x-3 group">
-                <div class="h-12 w-12 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+            
+            <!-- Logo (Left aligned) -->
+            <a href="#" onclick="showSection('home-view')" class="flex items-center space-x-3 group shrink-0">
+                <div class="h-11 w-11 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                     <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
                 </div>
                 <div class="flex flex-col logo-glowing-effect">
-                    <div class="font-serif text-xl lg:text-2xl font-bold tracking-[0.08em] flex items-center space-x-1.5">
+                    <div class="font-serif text-lg lg:text-xl font-bold tracking-[0.08em] flex items-center space-x-1">
                         <span class="brand-string">STRING</span>
-                        <span class="brand-creations italic font-normal">Creations</span>
+                        <span class="brand-creations italic font-normal text-luxuryCream">Creations</span>
                         <span class="brand-03">03</span>
                     </div>
-                    <span class="text-[8px] tracking-[0.25em] text-gray-400 uppercase font-medium">Masterpiece In Every Thread</span>
+                    <span class="text-[7px] tracking-[0.25em] text-gray-400 uppercase font-medium">Masterpiece In Every Thread</span>
                 </div>
             </a>
             
-            <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.2em] font-medium">
+            <!-- Navigation Links (Centered, Hidden below 1024px) -->
+            <nav class="hidden lg:flex items-center xl:gap-8 lg:gap-4 text-xs uppercase tracking-[0.2em] font-semibold text-center">
                 <a href="#" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Home</a>
                 <a href="#gallery-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Gallery</a>
                 <a href="#" onclick="showSection('custom-view')" class="hover:text-luxuryGold transition text-brandTeal font-bold">Custom Studio</a>
@@ -177,48 +180,132 @@
                 <a href="#reviews-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Reviews</a>
             </nav>
 
-            <div class="flex items-center space-x-4 lg:space-x-6">
-                <!-- International Language Switcher inside header action panel -->
-                <div class="flex items-center space-x-1 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
-                    <span class="text-luxuryGold"><i class="fa-solid fa-globe mr-1"></i> Language</span>
-                    <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer text-[10px] font-bold">
-                        <option value="en" class="bg-luxuryBlack">English</option>
-                        <option value="hi" class="bg-luxuryBlack">Hindi</option>
-                        <option value="zh-CN" class="bg-luxuryBlack">Chinese</option>
-                        <option value="ja" class="bg-luxuryBlack">Japanese</option>
-                        <option value="ko" class="bg-luxuryBlack">Korean</option>
-                        <option value="fr" class="bg-luxuryBlack">French</option>
-                        <option value="de" class="bg-luxuryBlack">German</option>
-                        <option value="es" class="bg-luxuryBlack">Spanish</option>
-                        <option value="ru" class="bg-luxuryBlack">Russian</option>
-                        <option value="ar" class="bg-luxuryBlack">Arabic</option>
-                        <option value="pt" class="bg-luxuryBlack">Portuguese</option>
-                        <option value="it" class="bg-luxuryBlack">Italian</option>
-                    </select>
+            <!-- Utility Controls and Icons Section -->
+            <div class="flex items-center xl:gap-6 lg:gap-3 gap-4">
+                
+                <!-- Utilities Frame (Hidden below laptop layout < 1024px to prevent overlapping) -->
+                <div class="hidden lg:flex items-center xl:gap-5 lg:gap-3">
+                    <!-- International Language Switcher -->
+                    <div class="flex items-center space-x-1.5 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
+                        <span class="text-luxuryGold"><i class="fa-solid fa-globe mr-1"></i> Language</span>
+                        <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer text-[10px] font-bold">
+                            <option value="en" class="bg-luxuryBlack">English</option>
+                            <option value="hi" class="bg-luxuryBlack">Hindi</option>
+                            <option value="zh-CN" class="bg-luxuryBlack">Chinese</option>
+                            <option value="ja" class="bg-luxuryBlack">Japanese</option>
+                            <option value="ko" class="bg-luxuryBlack">Korean</option>
+                            <option value="fr" class="bg-luxuryBlack">French</option>
+                            <option value="de" class="bg-luxuryBlack">German</option>
+                            <option value="es" class="bg-luxuryBlack">Spanish</option>
+                            <option value="ru" class="bg-luxuryBlack">Russian</option>
+                            <option value="ar" class="bg-luxuryBlack">Arabic</option>
+                            <option value="pt" class="bg-luxuryBlack">Portuguese</option>
+                            <option value="it" class="bg-luxuryBlack">Italian</option>
+                        </select>
+                    </div>
+
+                    <!-- Currency Switcher -->
+                    <div class="flex items-center space-x-2 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
+                        <select id="currency-switcher" onchange="switchCurrency()" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer font-bold text-[10px]">
+                            <option value="INR" class="bg-luxuryBlack">₹ INR</option>
+                            <option value="USD" class="bg-luxuryBlack">$ USD</option>
+                            <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
+                        </select>
+                    </div>
+
+                    <!-- Track Order Link Button -->
+                    <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition shrink-0">
+                        <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
+                    </button>
                 </div>
 
-                <!-- Currency Switcher -->
-                <div class="flex items-center space-x-2 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
-                    <select id="currency-switcher" onchange="switchCurrency()" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer font-bold">
-                        <option value="INR" class="bg-luxuryBlack">₹ INR</option>
-                        <option value="USD" class="bg-luxuryBlack">$ USD</option>
-                        <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
-                    </select>
+                <!-- Global Action Icons (Always Visible on Laptop, Tablet & Mobile) -->
+                <div class="flex items-center space-x-4 border-l border-luxuryGold/10 lg:pl-4 pl-0">
+                    <button onclick="toggleSearch()" class="hover:text-luxuryGold transition text-lg">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="relative hover:text-luxuryGold transition text-lg">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-luxuryGold text-luxuryBlack text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                    </button>
+
+                    <!-- Golden Hamburger Menu Button (Only Visible on Mobile & Tablet < 1024px) -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-luxuryGold hover:text-luxuryCream transition text-xl focus:outline-none pl-1">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
-                <!-- Track Order Link -->
-                <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition">
-                    <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
-                </button>
-                <button onclick="toggleSearch()" class="hover:text-luxuryGold transition text-lg">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <button onclick="toggleCart()" class="relative hover:text-luxuryGold transition text-lg">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-luxuryGold text-luxuryBlack text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
-                </button>
+
             </div>
         </div>
     </header>
+    <!-- Slide-over Premium Mobile Navigation Menu Drawer -->
+    <div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-xs bg-luxuryBlack border-l border-luxuryGold/20 z-55 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
+        <div class="p-6 space-y-8 flex-1 overflow-y-auto">
+            
+            <!-- Drawer Header -->
+            <div class="flex justify-between items-center pb-4 border-b border-luxuryGold/10">
+                <span class="font-serif text-lg tracking-widest text-luxuryGold uppercase">Aesthetics Index</span>
+                <button onclick="toggleMobileMenu()" class="text-xl text-gray-400 hover:text-luxuryGold transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <!-- Navigation Links inside Mobile Drawer -->
+            <nav class="flex flex-col gap-6 text-xs uppercase tracking-[0.2em] font-semibold">
+                <a href="#" onclick="showSection('home-view'); toggleMobileMenu();" class="hover:text-luxuryGold transition">Home</a>
+                <a href="#gallery-section" onclick="showSection('home-view'); toggleMobileMenu();" class="hover:text-luxuryGold transition">Gallery</a>
+                <a href="#" onclick="showSection('custom-view'); toggleMobileMenu();" class="hover:text-luxuryGold transition text-brandTeal font-bold">Custom Studio</a>
+                <a href="#process-section" onclick="showSection('home-view'); toggleMobileMenu();" class="hover:text-luxuryGold transition">Our Process</a>
+                <a href="#reviews-section" onclick="showSection('home-view'); toggleMobileMenu();" class="hover:text-luxuryGold transition">Reviews</a>
+            </nav>
+
+            <!-- Compact Selectors & Links inside Mobile Drawer -->
+            <div class="space-y-6 pt-6 border-t border-luxuryGold/10">
+                <!-- Mobile Language Selector -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-[9px] uppercase text-gray-500 tracking-wider font-semibold">Translation</span>
+                    <div class="bg-luxuryCharcoal border border-luxuryGold/20 px-3 py-2 rounded">
+                        <select id="lang-selector-mobile" onchange="changeLanguage(this.value)" class="bg-transparent text-luxuryCream w-full focus:outline-none text-[11px] font-bold">
+                            <option value="en" class="bg-luxuryBlack">English</option>
+                            <option value="hi" class="bg-luxuryBlack">Hindi</option>
+                            <option value="zh-CN" class="bg-luxuryBlack">Chinese</option>
+                            <option value="ja" class="bg-luxuryBlack">Japanese</option>
+                            <option value="ko" class="bg-luxuryBlack">Korean</option>
+                            <option value="fr" class="bg-luxuryBlack">French</option>
+                            <option value="de" class="bg-luxuryBlack">German</option>
+                            <option value="es" class="bg-luxuryBlack">Spanish</option>
+                            <option value="ru" class="bg-luxuryBlack">Russian</option>
+                            <option value="ar" class="bg-luxuryBlack">Arabic</option>
+                            <option value="pt" class="bg-luxuryBlack">Portuguese</option>
+                            <option value="it" class="bg-luxuryBlack">Italian</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Mobile Currency Selector -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-[9px] uppercase text-gray-500 tracking-wider font-semibold">Valuation Currency</span>
+                    <div class="bg-luxuryCharcoal border border-luxuryGold/20 px-3 py-2 rounded">
+                        <select id="currency-switcher-mobile" onchange="switchCurrencyMobile(this.value)" class="bg-transparent text-luxuryCream w-full focus:outline-none text-[11px] font-bold">
+                            <option value="INR" class="bg-luxuryBlack">₹ INR</option>
+                            <option value="USD" class="bg-luxuryBlack">$ USD</option>
+                            <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Mobile Track Order Trigger Button -->
+                <button onclick="toggleTrackModal(); toggleMobileMenu();" class="w-full bg-luxuryGold/10 hover:bg-luxuryGold/20 border border-luxuryGold/30 text-luxuryGold py-3 rounded text-[10px] uppercase tracking-widest font-bold transition">
+                    <i class="fa-solid fa-truck-fast mr-1"></i> Track Order Status
+                </button>
+            </div>
+
+        </div>
+        <div class="p-6 border-t border-luxuryGold/10 bg-luxuryBlack text-center text-[9px] text-gray-500 uppercase tracking-widest">
+            String Creations 03
+        </div>
+    </div>
+    
+    <!-- Mobile Drawer Backdrop background overlay -->
+    <div id="mobile-menu-backdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300"></div>
 
     <!-- Global Search Overlay -->
     <div id="search-overlay" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex flex-col justify-center items-center px-6">
@@ -1926,8 +2013,13 @@
             }
         }
 
-        // Language Switcher Interface
+       // Language Switcher Interface with Dual Drawer Synchronization
         function changeLanguage(langCode) {
+            const desktopSel = document.getElementById('lang-selector');
+            const mobileSel = document.getElementById('lang-selector-mobile');
+            if (desktopSel) desktopSel.value = langCode;
+            if (mobileSel) mobileSel.value = langCode;
+
             const selectEl = document.querySelector('.goog-te-combo');
             if (selectEl) {
                 selectEl.value = langCode;
@@ -1939,6 +2031,33 @@
                 script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
                 document.body.appendChild(script);
                 setTimeout(() => { changeLanguage(langCode); }, 1200);
+            }
+        }
+
+        // Currency switch converter with Mobile Drawer Synchronization
+        function switchCurrency() {
+            activeCurrency = document.getElementById('currency-switcher').value;
+            const mobileSel = document.getElementById('currency-switcher-mobile');
+            if (mobileSel) mobileSel.value = activeCurrency;
+            
+            renderGallery();
+            renderCart();
+            showToast(`Currency Switched to ${activeCurrency}`);
+        }
+
+        function switchCurrencyMobile(val) {
+            const desktopSel = document.getElementById('currency-switcher');
+            if (desktopSel) desktopSel.value = val;
+            switchCurrency();
+        }
+
+        // Mobile Menu Toggler
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobile-menu-drawer');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            if (drawer && backdrop) {
+                drawer.classList.toggle('translate-x-full');
+                backdrop.classList.toggle('hidden');
             }
         }
 
