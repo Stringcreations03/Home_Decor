@@ -52,7 +52,7 @@ const stringArtTypes = [
     { title: "Fractal Mathematical Art", content: "Never-ending geometrical designs built from highly complex, recursive nail configurations.", img: "https://images.unsplash.com/photo-1507208773393-4001fc56622d?auto=format&fit=crop&q=80&w=400" }
 ];
 
-// Complete specifications default database (fallback)
+// Complete specifications metadata mapping (Unified default data set)
 const defaultProducts = [
     {
         id: "p1",
@@ -192,7 +192,7 @@ let currentStep15 = 0;
 let step7Interval = null;
 let step15Interval = null;
 
-// IndexedDB Core Configuration
+// IndexedDB Core Configuration to Prevent Loading Hangs (Always Resolving Safely)
 const dbName = "StringCreations03_IndexedDB";
 const dbVersion = 1;
 let db = null;
@@ -201,7 +201,7 @@ function initDB() {
     return new Promise((resolve, reject) => {
         try {
             if (!window.indexedDB) {
-                reject("IndexedDB not supported in this browser.");
+                reject("IndexedDB not supported.");
                 return;
             }
             const request = indexedDB.open(dbName, dbVersion);
@@ -216,10 +216,10 @@ function initDB() {
                 resolve(db);
             };
             request.onerror = function () {
-                reject("Local Database blocked or failed to initialize.");
+                reject("IndexedDB blocked.");
             };
         } catch (error) {
-            reject("IndexedDB blocked by security policy.");
+            reject("IndexedDB Security policy restrict.");
         }
     });
 }
@@ -227,36 +227,57 @@ function initDB() {
 function getAllProductsFromDB() {
     return new Promise((resolve) => {
         if (!db) return resolve([]);
-        const transaction = db.transaction(["products"], "readonly");
-        const store = transaction.objectStore("products");
-        const request = store.getAll();
-        request.onsuccess = function () {
-            resolve(request.result);
-        };
+        try {
+            const transaction = db.transaction(["products"], "readonly");
+            const store = transaction.objectStore("products");
+            const request = store.getAll();
+            request.onsuccess = function () {
+                resolve(request.result);
+            };
+            request.onerror = function () {
+                resolve([]);
+            };
+        } catch (e) {
+            resolve([]);
+        }
     });
 }
 
 function saveProductToDB(product) {
     return new Promise((resolve) => {
         if (!db) return resolve();
-        const transaction = db.transaction(["products"], "readwrite");
-        const store = transaction.objectStore("products");
-        const request = store.put(product);
-        request.onsuccess = function () {
+        try {
+            const transaction = db.transaction(["products"], "readwrite");
+            const store = transaction.objectStore("products");
+            const request = store.put(product);
+            request.onsuccess = function () {
+                resolve();
+            };
+            request.onerror = function () {
+                resolve(); // Resolve anyway on error to prevent hanging spinner
+            };
+        } catch (e) {
             resolve();
-        };
+        }
     });
 }
 
 function deleteProductFromDB(id) {
     return new Promise((resolve) => {
         if (!db) return resolve();
-        const transaction = db.transaction(["products"], "readwrite");
-        const store = transaction.objectStore("products");
-        const request = store.delete(id);
-        request.onsuccess = function () {
+        try {
+            const transaction = db.transaction(["products"], "readwrite");
+            const store = transaction.objectStore("products");
+            const request = store.delete(id);
+            request.onsuccess = function () {
+                resolve();
+            };
+            request.onerror = function () {
+                resolve();
+            };
+        } catch (e) {
             resolve();
-        };
+        }
     });
 }
 
@@ -290,7 +311,7 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = 'glass-card text-xs text-luxuryGold font-medium px-5 py-3 shadow-2xl uppercase tracking-widest animate-fadeIn pointer-events-auto';
     if (type === 'error') {
-        toast.className = 'glass-card text-xs text-red-400 font-medium px-5 py-3 shadow-2xl uppercase tracking-widest animate-fadeIn pointer-events-auto border-red-500/50';
+        toast.className = 'glass-card text-xs text-red-400 font-medium px-5 py-3 shadow-2xl uppercase tracking-widest animate-fadeIn pointer-events-auto border border-red-500/50';
     }
     toast.innerText = message;
     container.appendChild(toast);
@@ -300,7 +321,7 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Router
+// Section Router
 function showSection(viewId) {
     const views = document.querySelectorAll('.app-route-view');
     views.forEach(v => v.classList.add('hidden'));
@@ -368,13 +389,15 @@ function readVideoPromise(file) {
     });
 }
 
-// Initialize on Loaded DOM Content
+// Initialize Core Functions
 window.addEventListener('DOMContentLoaded', async () => {
     await loadProductsAndInit();
     renderReviews();
     renderStringArtDirectory();
     updateCartCount();
     renderSearchableLists();
+    
+    // Loop Step Timers Initialization
     startProcessSequentialReveal();
 });
 
@@ -383,7 +406,7 @@ function formatToFt(inch) {
     return Number.isInteger(ft) ? `${ft}ft` : `${ft.toFixed(1)}ft`;
 }
 
-// Process Steps Auto Loop System
+// Process Steps Auto Loop Functionality (Rule 3)
 function startProcessSequentialReveal() {
     const cards7 = document.querySelectorAll('#process-tab-content-1 .process-step-card');
     const cards15 = document.querySelectorAll('#process-tab-content-2 .heritage-step-card');
@@ -413,6 +436,7 @@ function startProcessSequentialReveal() {
     }
 }
 
+// Tab Switchers for Our Process Section
 function switchProcessTab(tabName) {
     const tab1 = document.getElementById('process-tab-content-1');
     const tab2 = document.getElementById('process-tab-content-2');
@@ -437,7 +461,7 @@ function showCustomSpecsTab() {
     switchProcessTab('checklist');
 }
 
-// Currency Swappers
+// Currency switch converter
 function switchCurrency() {
     activeCurrency = document.getElementById('currency-switcher').value;
     const mobileSel = document.getElementById('currency-switcher-mobile');
@@ -541,6 +565,7 @@ function filterGallery(category) {
     }
 }
 
+// Upgraded Auto Scrolling Gallery Matrix (10 Cards Desktop Rows)
 function renderGallery() {
     renderGalleryGrid(products);
 }
@@ -551,7 +576,35 @@ function renderGalleryGrid(items) {
     container.innerHTML = '';
 
     if (items.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+        container.innerHTML = `<p class="text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+        return;
+    }
+
+    // Protection Threshold: If total unique items are less than 4, render normal centered grids instead of auto looping marquees to avoid layout voids
+    if (items.length < 4) {
+        const flexGrid = document.createElement('div');
+        flexGrid.className = "flex flex-wrap justify-center gap-8 py-6 w-full max-w-7xl mx-auto";
+        flexGrid.innerHTML = items.map(p => `
+            <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 select-none">
+                <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
+                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
+                    <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest rounded font-semibold">${p.artType || 'String Art'}</div>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed truncate mt-1">${p.desc || ''}</p>
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-2">${p.nails || '360'} Nails • ${p.hours || '18 Hours'} Crafted</p>
+                    <div class="flex justify-between items-center mt-5">
+                        <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
+                        <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
+                            Add to Bag
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        container.appendChild(flexGrid);
         return;
     }
 
@@ -562,12 +615,24 @@ function renderGalleryGrid(items) {
     }
 
     rows.forEach((rowItems, rowIndex) => {
+        const rowId = `marquee-row-${rowIndex}`;
         const rowWrapper = document.createElement('div');
         rowWrapper.className = "gallery-marquee-container py-2 relative";
         
+        const constantSpeedFactor = 4.2; 
+        const calculatedDuration = Math.max(15, rowItems.length * constantSpeedFactor);
+
+        // Overlay manual arrow control buttons
+        rowWrapper.innerHTML = `
+            <button class="marquee-arrow-btn marquee-arrow-left" onclick="shiftMarquee('${rowId}', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="marquee-arrow-btn marquee-arrow-right" onclick="shiftMarquee('${rowId}', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
+        `;
+
         const doubleList = [...rowItems, ...rowItems, ...rowItems];
         const contentDiv = document.createElement('div');
+        contentDiv.id = rowId;
         contentDiv.className = "gallery-marquee-content space-x-6";
+        contentDiv.style.animationDuration = `${calculatedDuration}s`; 
         
         contentDiv.innerHTML = doubleList.map(p => `
             <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
@@ -595,6 +660,7 @@ function renderGalleryGrid(items) {
     });
 }
 
+// HTML5 Drag and Drop Sorting Controller
 function renderAdminDragList() {
     const container = document.getElementById('admin-drag-container');
     if (!container) return;
@@ -684,7 +750,7 @@ function toggleArtClassModal() {
     document.getElementById('art-class-modal').classList.toggle('hidden');
 }
 
-// Searchable Custom lists Builder
+// Custom Studio Lists Setup
 function renderSearchableLists() {
     const threadList = document.getElementById('thread-list');
     const colorList = document.getElementById('color-list');
@@ -725,29 +791,27 @@ function filterSearchableList(type) {
     }
 }
 
-function dispatchCustomOrder() {
-    const sizeSelector = document.getElementById('custom-size');
-    const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
-    const frameSelector = document.getElementById('custom-frame');
-    const frameText = frameSelector.options[frameSelector.selectedIndex].text;
-    
-    const checkedThreads = Array.from(document.querySelectorAll('input[name="custom-threads"]:checked')).map(el => el.value);
-    const selectedThreadsText = checkedThreads.length > 0 ? checkedThreads.join(", ") : "Standard Thread Formulation";
+// Arrow Shifter Logic
+let marqueeManualOffsets = {};
+function shiftMarquee(rowId, direction) {
+    const track = document.getElementById(rowId);
+    if (!track) return;
 
-    const checkedColors = Array.from(document.querySelectorAll('input[name="custom-colors"]:checked')).map(el => el.value);
-    const selectedColorsText = checkedColors.length > 0 ? checkedColors.join(", ") : "Standard Dynamic Palette";
+    track.style.animationPlayState = 'paused';
 
-    const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra instructions provided.";
+    if (!marqueeManualOffsets[rowId]) {
+        marqueeManualOffsets[rowId] = 0;
+    }
 
-    const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece:\n\n` + 
-                `• Dimension: ${sizeText}\n` +
-                `• Frame Style: ${frameText}\n` +
-                `• Thread Formulation(s): ${selectedThreadsText}\n` +
-                `• Color Selection(s): ${selectedColorsText}\n\n` +
-                `• Extra Instructions:\n"${customDetails}"\n\n` +
-                `Please calculate the pricing structure and design layout based on these parameters.`;
-    
-    window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
+    const shiftLength = 300; 
+    if (direction === 'left') {
+        marqueeManualOffsets[rowId] += shiftLength;
+    } else {
+        marqueeManualOffsets[rowId] -= shiftLength;
+    }
+
+    track.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+    track.style.transform = `translateX(${marqueeManualOffsets[rowId]}px)`;
 }
 
 // Media Slide Popup Modal
@@ -759,7 +823,6 @@ function openProductModal(id) {
     const item = products[currentIdx];
     activeProductForCertificate = item;
 
-    // Reset slide frames
     const imgFrame = document.getElementById('modal-img');
     imgFrame.src = item.img;
     imgFrame.classList.remove('hidden');
@@ -767,33 +830,17 @@ function openProductModal(id) {
     videoFrame.classList.add('hidden');
     videoFrame.src = "";
 
-   // 4-Channel Inquiry and Chat Links Trigger (WhatsApp, Telegram, Email, Insta)
-            document.getElementById('modal-whatsapp-btn').onclick = () => {
-                const text = `Hello! I would like to inquire about "${item.name}" [ID: ${item.id}] valued at ${formatVal(item.price)}. Let's configure custom layout specifications.`;
-                window.open(`https://wa.me/918140125772?text=${encodeURIComponent(text)}`, '_blank');
-            };
+    document.getElementById('modal-title').innerText = item.name;
+    document.getElementById('modal-price').innerText = formatVal(item.price);
+    document.getElementById('modal-discount-price').innerText = item.discountPrice ? formatVal(item.discountPrice) : "";
+    document.getElementById('modal-desc').innerText = item.desc || "";
 
-            document.getElementById('modal-telegram-btn').onclick = () => {
-                const text = `Inquiry of ${item.name} from web registry.`;
-                window.open(`https://telegram.me/stringcreations03_placeholder?text=${encodeURIComponent(text)}`, '_blank');
-            };
-
-            document.getElementById('modal-email-btn').onclick = () => {
-                window.open(`mailto:stringcreations03@gmail.com?subject=Collector Inquiry for ${item.name}&body=Hello String Creations 03! I would like to initiate an inquiry for "${item.name}". Please share the pricing framework.`, '_blank');
-            };
-
-            document.getElementById('modal-instagram-btn').onclick = () => {
-                window.open(`https://instagram.com/string_creations03`, '_blank');
-            };
-
-    // Stars rating indicator
     const starsContainer = document.getElementById('modal-stars-container');
     let starsHTML = '';
     const rating = item.rating || 5;
     for (let i = 0; i < rating; i++) starsHTML += '<i class="fa-solid fa-star"></i>';
     starsContainer.innerHTML = starsHTML;
 
-    // Bullet points description
     const bulletContainer = document.getElementById('modal-bullet-list');
     bulletContainer.innerHTML = '';
     if (item.bullets) {
@@ -804,7 +851,6 @@ function openProductModal(id) {
         bulletContainer.innerHTML = `<li>100% Manual Weaving Setup</li><li>Lifetime Archival Quality Guarantee</li>`;
     }
 
-    // Dynamic 17-field specs table
     const specsTable = document.getElementById('specs-table-body');
     const specsData = [
         { k: "Product Name", v: item.name },
@@ -833,7 +879,6 @@ function openProductModal(id) {
         </tr>
     `).join('');
 
-    // Previews loader
     const previewsContainer = document.getElementById('modal-media-previews');
     previewsContainer.innerHTML = '';
 
@@ -861,7 +906,6 @@ function openProductModal(id) {
         addPreviewDot('video', item.video, true);
     }
 
-    // Previous and Next Masterpieces binding
     const prevBtn = document.getElementById('prev-product-btn');
     const nextBtn = document.getElementById('next-product-btn');
     
@@ -875,6 +919,15 @@ function openProductModal(id) {
     document.getElementById('modal-whatsapp-btn').onclick = () => {
         const text = `Greetings! I am interested in inquiring about "${item.name}" valued at ${formatVal(item.price)}. Let's configure customized dimensions options.`;
         window.open(`https://wa.me/918140125772?text=${encodeURIComponent(text)}`, '_blank');
+    };
+
+    document.getElementById('modal-telegram-btn').onclick = () => {
+        const text = `Inquiry of ${item.name} from web registry.`;
+        window.open(`https://telegram.me/stringcreations03_placeholder?text=${encodeURIComponent(text)}`, '_blank');
+    };
+
+    document.getElementById('modal-email-btn').onclick = () => {
+        window.open(`mailto:stringcreations03@gmail.com?subject=Inquiry: ${encodeURIComponent(item.name)}&body=I would like to customize this design.`, '_blank');
     };
 
     document.getElementById('modal-instagram-btn').onclick = () => {
@@ -917,7 +970,7 @@ function changeModalMedia(type, url) {
         if (url.startsWith('data:video/') || url.endsWith('.mp4')) {
             localVideoFrame.src = url;
             localVideoFrame.classList.remove('hidden');
-            localVideoFrame.play();
+            if (localVideoFrame.play) localVideoFrame.play();
         } else {
             videoFrame.src = url;
             videoFrame.classList.remove('hidden');
@@ -1099,34 +1152,7 @@ function renderReviews() {
     const container = document.getElementById('reviews-container');
     if (!container) return;
     container.innerHTML = '';
-    const doubleList = [...reviews, ...reviews, ...reviews];
-    doubleList.forEach(r => {
-        const card = document.createElement('div');
-        card.className = 'glass-card p-8 space-y-4 shrink-0 w-80 inline-block whitespace-normal rounded';
-        
-        let stars = '';
-        for (let i = 0; i < r.rating; i++) stars += '<i class="fa-solid fa-star"></i>';
-        card.innerHTML = `
-            <div class="flex items-center justify-between">
-                <div class="flex text-luxuryGold gap-1 text-xs">${stars}</div>
-                <span class="text-[9px] uppercase tracking-widest text-emerald-500 flex items-center gap-1 font-semibold"><i class="fa-solid fa-circle-check"></i> Verified</span>
-            </div>
-            <p class="font-serif text-base text-gray-300 italic">"${r.text}"</p>
-            <div>
-                <h4 class="text-xs uppercase tracking-wider font-bold">${r.name}</h4>
-                <p class="text-[9px] text-gray-500">Verified Collector</p>
-            </div>
-        `;
-        container.appendChild(card);
-    });
-}
-// Continuous Infinite Testimonials Loop with Empty Auto-Restore Safety (Rule 3)
-function renderReviews() {
-    const container = document.getElementById('reviews-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    // Safety fallback trigger to restore reviews array if empty
+    
     if (!reviews || reviews.length === 0) {
         reviews = [...defaultReviews];
         saveToStorage();
@@ -1224,6 +1250,8 @@ function trackArtwork() {
 }
 
 // In Memory Administration Grid Render
+let editingProductId = null;
+
 function renderAdminProducts() {
     const list = document.getElementById('admin-products-list');
     if (!list) return;
@@ -1232,135 +1260,53 @@ function renderAdminProducts() {
         const div = document.createElement('div');
         div.className = 'flex justify-between items-center bg-luxuryBlack/50 p-3 border border-luxuryGold/15 rounded';
         div.innerHTML = `
-            <div>
-                <h4 class="text-xs font-bold text-luxuryCream">${p.name}</h4>
-                <p class="text-[10px] text-luxuryGold">${formatVal(p.price)}</p>
+            <div class="truncate mr-4 flex-1">
+                <h4 class="text-xs font-bold text-luxuryCream truncate uppercase">${p.name}</h4>
+                <p class="text-[9px] text-luxuryGold font-serif font-bold">${formatVal(p.price)}</p>
             </div>
-            <button onclick="deleteProductFromAdmin('${p.id}')" class="text-red-500 hover:text-red-700 text-xs uppercase font-bold tracking-wider"><i class="fa-regular fa-trash-can"></i></button>
+            <div class="flex space-x-2 shrink-0">
+                <button onclick="editProductFromAdmin('${p.id}')" class="text-luxuryGold hover:text-white text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-luxuryCharcoal rounded border border-luxuryGold/20"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+                <button onclick="deleteProductFromAdmin('${p.id}')" class="text-red-500 hover:text-red-700 text-sm px-2"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
         `;
         list.appendChild(div);
     });
 }
 
+function editProductFromAdmin(id) {
+    const item = products.find(p => p.id.toString() === id.toString());
+    if (!item) return;
+
+    editingProductId = id;
+
+    // Populate inputs automatically
+    document.getElementById('admin-p-name').value = item.name;
+    document.getElementById('admin-p-cat').value = item.category;
+    document.getElementById('admin-p-price').value = item.price;
+    document.getElementById('admin-p-hours').value = item.hours;
+    document.getElementById('admin-p-nails').value = item.nails;
+    document.getElementById('admin-p-threads').value = item.threads;
+    document.getElementById('admin-p-desc').value = item.desc || "";
+
+    document.getElementById('admin-p-arttype').value = item.artType || "";
+    document.getElementById('admin-p-boardsize').value = item.boardSize || "";
+    document.getElementById('admin-p-boardcolor').value = item.boardColor || "";
+    document.getElementById('admin-p-frametype').value = item.frameType || "";
+    document.getElementById('admin-p-framecolor').value = item.frameColor || "";
+    document.getElementById('admin-p-threadmaterial').value = item.threadMaterial || "";
+    document.getElementById('admin-p-threadthickness').value = item.threadThickness || "";
+    document.getElementById('admin-p-threadsize').value = item.threadSize || "";
+    document.getElementById('admin-p-threadcolor').value = item.threadColor || "";
+    document.getElementById('admin-p-difficulty').value = item.difficulty || "";
+    document.getElementById('admin-p-availability').value = item.availability || "";
+    document.getElementById('admin-p-bullets').value = item.bullets ? item.bullets.join(', ') : "";
+
+    // Scroll to form inside Admin Panel view
+    document.querySelector('#admin-dashboard-panel form').scrollIntoView({ behavior: 'smooth' });
+    showToast("Specifications loaded to editor console.");
+}
+
 // Local File Media Publisher integration
-// Upgraded Constant-Speed Dynamic Scroll & 50% Blank Space Eliminator Shield (Rule 1 & 6)
-function renderGalleryGrid(items) {
-    const container = document.getElementById('gallery-grid');
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (items.length === 0) {
-        container.innerHTML = `<p class="text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
-        return;
-    }
-
-    // Safety Rule 6: If items are less than 4, render them as centered classic grids instead of scrolling marquee!
-    if (items.length < 4) {
-        const gridWrapper = document.createElement('div');
-        gridWrapper.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center max-w-5xl mx-auto pt-6";
-        
-        gridWrapper.innerHTML = items.map(p => `
-            <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow select-none">
-                <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
-                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest rounded font-semibold">${p.artType || 'String Art'}</div>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
-                    <p class="text-xs text-gray-400 font-light leading-relaxed truncate mt-1">${p.desc || ''}</p>
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-2">${p.nails || '360'} Nails • ${p.hours || '18 Hours'} Crafted</p>
-                    <div class="flex justify-between items-center mt-5">
-                        <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
-                        <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
-                            Add to Bag
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        container.appendChild(gridWrapper);
-        return;
-    }
-
-    // Row splits for Desktop Row sizing 
-    const cardsPerRow = 10;
-    const rows = [];
-    for (let i = 0; i < items.length; i += cardsPerRow) {
-        rows.push(items.slice(i, i + cardsPerRow));
-    }
-
-    rows.forEach((rowItems, rowIndex) => {
-        const rowId = `marquee-row-${rowIndex}`;
-        const rowWrapper = document.createElement('div');
-        rowWrapper.className = "gallery-marquee-container py-2 relative";
-        
-        // Safety Speed calculation (Secures same speed regardless of filtered quantities)
-        const constantSpeedFactor = 4.2; // Speed calibrator
-        const calculatedDuration = Math.max(15, rowItems.length * constantSpeedFactor);
-
-        // Overlay manual arrow control buttons (Rule 2)
-        rowWrapper.innerHTML = `
-            <button class="marquee-arrow-btn marquee-arrow-left" onclick="shiftMarquee('${rowId}', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="marquee-arrow-btn marquee-arrow-right" onclick="shiftMarquee('${rowId}', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
-        `;
-
-        const doubleList = [...rowItems, ...rowItems, ...rowItems];
-        const contentDiv = document.createElement('div');
-        contentDiv.id = rowId;
-        contentDiv.className = "gallery-marquee-content space-x-6";
-        contentDiv.style.animationDuration = `${calculatedDuration}s`; // Constant Speed Applied dynamically!
-        
-        contentDiv.innerHTML = doubleList.map(p => `
-            <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
-                <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
-                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest rounded font-semibold">${p.artType || 'String Art'}</div>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
-                    <p class="text-xs text-gray-400 font-light leading-relaxed truncate mt-1">${p.desc || ''}</p>
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-2">${p.nails || '360'} Nails • ${p.hours || '18 Hours'} Crafted</p>
-                    <div class="flex justify-between items-center mt-5">
-                        <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
-                        <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
-                            Add to Bag
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-
-        rowWrapper.appendChild(contentDiv);
-        container.appendChild(rowWrapper);
-    });
-}
-// Manual Arrow Shifter logic to pause auto-marquee and slide cards manual (Rule 2)
-let marqueeManualOffsets = {};
-function shiftMarquee(rowId, direction) {
-    const track = document.getElementById(rowId);
-    if (!track) return;
-
-    // Pause animation to allow manual control
-    track.style.animationPlayState = 'paused';
-
-    if (!marqueeManualOffsets[rowId]) {
-        marqueeManualOffsets[rowId] = 0;
-    }
-
-    const shiftLength = 300; // Slide single card width with gap
-    if (direction === 'left') {
-        marqueeManualOffsets[rowId] += shiftLength;
-    } else {
-        marqueeManualOffsets[rowId] -= shiftLength;
-    }
-
-    // Apply smooth hardware-accelerated transitions
-    track.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
-    track.style.transform = `translateX(${marqueeManualOffsets[rowId]}px)`;
-}
-// Advanced Async Local Media Publisher with 17 Customizable Specs
 async function handleAdminAddProduct(event) {
     event.preventDefault();
 
@@ -1372,7 +1318,6 @@ async function handleAdminAddProduct(event) {
     const threads = parseInt(document.getElementById('admin-p-threads').value);
     const desc = document.getElementById('admin-p-desc').value;
 
-    // Read Newly added optional spec values manually
     const artType = document.getElementById('admin-p-arttype').value.trim() || "Custom Selected Aesthetics";
     const boardSize = document.getElementById('admin-p-boardsize').value.trim() || "Tailored to Order";
     const boardColor = document.getElementById('admin-p-boardcolor').value.trim() || "Obsidian Velvet Matte Black";
@@ -1388,19 +1333,37 @@ async function handleAdminAddProduct(event) {
     const bulletsRaw = document.getElementById('admin-p-bullets').value.trim();
     const bullets = bulletsRaw ? bulletsRaw.split(',').map(b => b.trim()) : ["Custom built specifically to your scale", "Lifetime anti-fade thread filament warranty"];
 
-    // Media references
     const primaryImgFile = document.getElementById('admin-p-img-file').files[0];
     const multiImgFiles = document.getElementById('admin-p-multi-images-file').files;
     const videoFile = document.getElementById('admin-p-video-file').files[0];
 
-    if (!primaryImgFile && !videoFile) {
+    // If edit state is inactive, require media
+    if (!editingProductId && !primaryImgFile && !videoFile) {
         alert("Action Required: Please select either a primary display photo or video file.");
         return;
     }
 
     showToast("Publishing local media assets... please wait.");
 
-    try {// If editing Product state is active, replace existing item details instead of creating new
+    try {
+        let primaryImgBase64 = "";
+        if (primaryImgFile) {
+            primaryImgBase64 = await compressImagePromise(primaryImgFile);
+        }
+
+        let multiImagesBase64 = [];
+        if (multiImgFiles.length > 0) {
+            for (let i = 0; i < multiImgFiles.length; i++) {
+                const compressed = await compressImagePromise(multiImgFiles[i]);
+                multiImagesBase64.push(compressed);
+            }
+        }
+
+        let videoBase64 = "";
+        if (videoFile) {
+            videoBase64 = await readVideoPromise(videoFile);
+        }
+
         if (editingProductId) {
             const index = products.findIndex(p => p.id.toString() === editingProductId.toString());
             if (index !== -1) {
@@ -1425,46 +1388,23 @@ async function handleAdminAddProduct(event) {
                 products[index].availability = availability;
                 products[index].bullets = bullets;
 
-                if (primaryImgFile) products[index].img = await compressImagePromise(primaryImgFile);
-                if (multiImgFiles.length > 0) {
-                    let bases = [];
-                    for (let f of multiImgFiles) {
-                        bases.push(await compressImagePromise(f));
-                    }
-                    products[index].multiImages = bases.join(', ');
-                }
-                if (videoFile) products[index].video = await readVideoPromise(videoFile);
+                if (primaryImgFile) products[index].img = primaryImgBase64;
+                if (multiImgFiles.length > 0) products[index].multiImages = multiImagesBase64.join(', ');
+                if (videoFile) products[index].video = videoBase64;
 
                 await saveProductToDB(products[index]);
-                editingProductId = null; // Reset edit state memory
+                editingProductId = null; // reset edit memory
                 saveToStorage();
                 renderGallery();
                 renderAdminProducts();
                 renderAdminDragList();
                 event.target.reset();
-                showToast("Masterpiece portfolio details updated!");
+                showToast("Masterpiece specifications updated!");
                 return;
             }
         }
-        let primaryImgBase64 = "";
-        if (primaryImgFile) {
-            primaryImgBase64 = await compressImagePromise(primaryImgFile);
-        }
 
-        let multiImagesBase64 = [];
-        if (multiImgFiles.length > 0) {
-            for (let i = 0; i < multiImgFiles.length; i++) {
-                const compressed = await compressImagePromise(multiImgFiles[i]);
-                multiImagesBase64.push(compressed);
-            }
-        }
-
-        let videoBase64 = "";
-        if (videoFile) {
-            videoBase64 = await readVideoPromise(videoFile);
-        }
-
-        // Formulate dynamic masterpiece details object (Including custom parameters entered)
+        // Standard New Product Insertion Flow
         const newProduct = {
             id: 'p-' + Date.now(),
             name,
@@ -1474,7 +1414,7 @@ async function handleAdminAddProduct(event) {
             nails,
             threads,
             desc,
-            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=Video+Only",
+            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=SC03",
             multiImages: multiImagesBase64.join(', '),
             video: videoBase64,
             artType,
@@ -1503,72 +1443,7 @@ async function handleAdminAddProduct(event) {
         renderAdminDragList();
 
         event.target.reset();
-        showToast("Masterpiece uploaded with customized parameters!");
-    } catch (err) {
-        alert(err);
-    }
-}
-
-    showToast("Publishing local media assets... please wait.");
-
-    try {
-        let primaryImgBase64 = "";
-        if (primaryImgFile) {
-            primaryImgBase64 = await compressImagePromise(primaryImgFile);
-        }
-
-        let multiImagesBase64 = [];
-        if (multiImgFiles.length > 0) {
-            for (let i = 0; i < multiImgFiles.length; i++) {
-                const compressed = await compressImagePromise(multiImgFiles[i]);
-                multiImagesBase64.push(compressed);
-            }
-        }
-
-        let videoBase64 = "";
-        if (videoFile) {
-            videoBase64 = await readVideoPromise(videoFile);
-        }
-
-        const newProduct = {
-            id: 'p-' + Date.now(),
-            name,
-            category,
-            price,
-            hours,
-            nails,
-            threads,
-            desc,
-            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=SC03",
-            multiImages: multiImagesBase64.join(', '),
-            video: videoBase64,
-            artType: "Custom Selected Aesthetics",
-            boardSize: "Tailored to Order",
-            boardColor: "Obsidian Velvet Matte Black",
-            frameType: "Authentic Stained Hardwood Profile",
-            frameColor: "Aesthetic Vintage Gold Trim",
-            threadMaterial: "German Filament Silk Core",
-            threadThickness: "0.6mm Micro-tension",
-            threadSize: "No. 3 Archival Weft",
-            threadColor: "Concentric Customized Hue",
-            difficulty: "Custom Grade",
-            dateAdded: new Date().toISOString().split('T')[0],
-            tags: ["Direct Upload", "Aesthetics"],
-            rating: 5,
-            availability: "In Stock (Custom Built to Order)",
-            bullets: ["Custom built specifically to your scale", "Lifetime anti-fade thread filament warranty"]
-        };
-
-        await saveProductToDB(newProduct);
-        products.push(newProduct);
-        
-        saveToStorage();
-        renderGallery();
-        renderAdminProducts();
-        renderAdminDragList();
-
-        event.target.reset();
-        showToast("Masterpiece uploaded with offline file assets!");
+        showToast("Masterpiece uploaded successfully!");
     } catch (err) {
         alert(err);
     }
@@ -1653,59 +1528,4 @@ function importCatalog(event) {
         }
     };
     reader.readAsText(file);
-}
-let editingProductId = null; // Memory tag to store active edit item
-
-function renderAdminProducts() {
-    const list = document.getElementById('admin-products-list');
-    if (!list) return;
-    list.innerHTML = '';
-    products.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'flex justify-between items-center bg-luxuryBlack/50 p-3 border border-luxuryGold/15 rounded';
-        div.innerHTML = `
-            <div class="truncate mr-4">
-                <h4 class="text-xs font-bold text-luxuryCream truncate uppercase">${p.name}</h4>
-                <p class="text-[9px] text-luxuryGold">${formatVal(p.price)}</p>
-            </div>
-            <div class="flex space-x-2 shrink-0">
-                <button onclick="editProductFromAdmin('${p.id}')" class="text-luxuryGold hover:text-white text-xs uppercase font-bold tracking-wider px-2 py-1 bg-luxuryCharcoal rounded border border-luxuryGold/20"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-                <button onclick="deleteProductFromAdmin('${p.id}')" class="text-red-500 hover:text-red-700 text-sm px-2"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-        `;
-        list.appendChild(div);
-    });
-}
-// Active Edit Handler (Reads current post specifications into forms)
-function editProductFromAdmin(id) {
-    const item = products.find(p => p.id.toString() === id.toString());
-    if (!item) return;
-
-    editingProductId = id;
-
-    // Populate inputs automatically
-    document.getElementById('admin-p-name').value = item.name;
-    document.getElementById('admin-p-cat').value = item.category;
-    document.getElementById('admin-p-price').value = item.price;
-    document.getElementById('admin-p-hours').value = item.hours;
-    document.getElementById('admin-p-nails').value = item.nails;
-    document.getElementById('admin-p-threads').value = item.threads;
-    document.getElementById('admin-p-desc').value = item.desc || "";
-
-    document.getElementById('admin-p-arttype').value = item.artType || "";
-    document.getElementById('admin-p-boardsize').value = item.boardSize || "";
-    document.getElementById('admin-p-boardcolor').value = item.boardColor || "";
-    document.getElementById('admin-p-frametype').value = item.frameType || "";
-    document.getElementById('admin-p-framecolor').value = item.frameColor || "";
-    document.getElementById('admin-p-threadmaterial').value = item.threadMaterial || "";
-    document.getElementById('admin-p-threadthickness').value = item.threadThickness || "";
-    document.getElementById('admin-p-threadsize').value = item.threadSize || "";
-    document.getElementById('admin-p-threadcolor').value = item.threadColor || "";
-    document.getElementById('admin-p-difficulty').value = item.difficulty || "";
-    document.getElementById('admin-p-availability').value = item.availability || "";
-    document.getElementById('admin-p-bullets').value = item.bullets ? item.bullets.join(', ') : "";
-
-    // Scroll to Top form view
-    document.querySelector('#admin-dashboard-panel form').scrollIntoView({ behavior: 'smooth' });
-    showToast("Masterpiece specifications loaded to editor console.");
 }
