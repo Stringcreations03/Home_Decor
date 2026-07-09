@@ -27,7 +27,9 @@
                         luxuryCharcoal: '#161616',
                         luxuryGold: '#d4af37',
                         luxuryGoldHover: '#b89428',
-                        luxuryCream: '#fbf9f5'
+                        luxuryCream: '#fbf9f5',
+                        brandTeal: '#3ad5e0',
+                        brandBlue: '#1a82e2'
                     },
                     fontFamily: {
                         serif: ['Cormorant Garamond', 'serif'],
@@ -124,7 +126,7 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#" onclick="showSection('home-view')" class="flex items-center space-x-3 group">
                 <div class="h-12 w-12 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                    <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                    <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
                 </div>
                 <div class="flex flex-col logo-glowing-effect">
                     <div class="font-serif text-xl lg:text-2xl font-bold tracking-[0.08em] flex items-center space-x-1.5">
@@ -153,7 +155,7 @@
                         <option value="EUR" class="bg-luxuryBlack">€ EUR</option>
                     </select>
                 </div>
-                <!-- Relocated Track Order Link in Header Action Area -->
+                <!-- Track Order Link in Header Action Area -->
                 <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition">
                     <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
                 </button>
@@ -192,7 +194,7 @@
             <div class="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-8">
                 <div class="flex justify-center mb-2">
                     <div class="h-24 w-24 rounded-full overflow-hidden border-2 border-luxuryGold/40 bg-luxuryCharcoal/55 p-1 shadow-2xl">
-                        <img src="logo.jpg" alt="Logo" class="h-full w-full rounded-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                        <img src="logo.jpg" alt="Logo" class="h-full w-full rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
                     </div>
                 </div>
                 <span class="text-luxuryGold font-serif tracking-[0.4em] text-xs uppercase block">MASTERPIECE IN EVERY THREAD</span>
@@ -224,10 +226,10 @@
 
                 <!-- Filter Controls -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <button onclick="filterGallery('all')" class="gallery-filter-btn active px-6 py-2 border border-luxuryGold text-[11px] uppercase tracking-widest text-luxuryGold bg-luxuryGold/10 transition">All Masterpieces</button>
-                    <button onclick="filterGallery('portrait')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Portraits</button>
-                    <button onclick="filterGallery('mandala')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Mandalas</button>
-                    <button onclick="filterGallery('custom')" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Corporate & Custom</button>
+                    <button onclick="filterGallery('all')" id="filter-all" class="gallery-filter-btn px-6 py-2 border border-luxuryGold text-[11px] uppercase tracking-widest text-luxuryGold bg-luxuryGold/10 transition">All Masterpieces</button>
+                    <button onclick="filterGallery('portrait')" id="filter-portrait" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Portraits</button>
+                    <button onclick="filterGallery('mandala')" id="filter-mandala" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Mandalas</button>
+                    <button onclick="filterGallery('custom')" id="filter-custom" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Corporate & Custom</button>
                 </div>
 
                 <!-- Dynamic Grid -->
@@ -246,8 +248,8 @@
 
                 <!-- Luxury Sub-Tabs for Process Navigation -->
                 <div class="flex justify-center gap-4 mb-12">
-                    <button onclick="switchProcessTab('step-by-step')" id="btn-proc-1" class="process-tab-btn active px-5 py-2 border border-[#1a82e2] text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition">Creation Philosophy</button>
-                    <button onclick="showCustomSpecsTab()" id="btn-proc-2" class="process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">15-Step Master Craftsmanship</button>
+                    <button onclick="switchProcessTab('step-by-step')" id="btn-proc-1" class="process-tab-btn active px-5 py-2 border border-brandTeal text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition">Creation Philosophy</button>
+                    <button onclick="switchProcessTab('checklist')" id="btn-proc-2" class="process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">15-Step Master Craftsmanship</button>
                 </div>
 
                 <!-- Tab Content 1: The 7-Step Journey with dynamic progressive classes -->
@@ -386,7 +388,7 @@
             <!-- Horizontal Infinite Marquee Wrapper -->
             <div class="marquee-container w-full py-4">
                 <div class="marquee-content space-x-8" id="reviews-container">
-                    <!-- Loaded dynamically in loop via JavaScript -->
+                    <!-- Loaded dynamically via JavaScript -->
                 </div>
             </div>
 
@@ -415,7 +417,7 @@
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Canvas Archetype & Size (From 3ft to 8ft)</label>
                     <select id="custom-size" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
-                        <!-- Populated dynamically via JS loop -->
+                        <!-- Populated dynamically via JS -->
                     </select>
                 </div>
 
@@ -529,7 +531,7 @@
                 </div>
             </div>
 
-            <!-- Detailed Main Types of String Art Directory Section (Side-by-Side with specs panel) -->
+            <!-- Detailed Main Types of String Art Directory Section -->
             <div class="lg:col-span-6 space-y-6 glass-card p-8">
                 <div class="border-b border-luxuryGold/10 pb-4 flex justify-between items-center">
                     <h3 class="font-serif text-xl text-luxuryGold uppercase tracking-wide">Main Types of String Art</h3>
@@ -537,7 +539,7 @@
                 </div>
                 
                 <div id="string-art-index-accordion" class="space-y-3 max-h-[600px] overflow-y-auto pr-2">
-                    <!-- Populated dynamically with detailed tree below -->
+                    <!-- Populated dynamically with detailed accordion below -->
                 </div>
             </div>
         </div>
@@ -616,7 +618,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] uppercase text-gray-400">Image URL</label>
-                        <input type="text" id="admin-p-img" required placeholder="https://images.unsplash.com/... or base64" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
+                        <input type="text" id="admin-p-img" required placeholder="https://images.unsplash.com/..." class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
                     </div>
                     <div>
                         <label class="block text-[10px] uppercase text-gray-400">Description</label>
@@ -636,13 +638,13 @@
         </div>
     </div>
 
-    <!-- Interactive Track Order Popup Modal (Rule 1) -->
+    <!-- Track Order Popup Modal (Completed and Fixed) -->
     <div id="track-modal" class="fixed inset-0 bg-luxuryBlack/90 z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card max-w-lg w-full p-8 relative space-y-6 rounded-lg border border-luxuryGold/20">
+        <div class="glass-card max-w-lg w-full p-8 relative space-y-6 rounded-lg border border-luxuryGold/20 animate-fadeIn">
             <button onclick="toggleTrackModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
             <div class="text-center space-y-2">
                 <h3 class="font-serif text-2xl text-luxuryGold uppercase tracking-widest">Track Order Phase</h3>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Enter reference code to view spatial loops</p>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Enter reference code to view production state</p>
             </div>
             
             <div class="space-y-4">
@@ -653,4 +655,794 @@
             <!-- Dynamic Track Results -->
             <div id="track-result" class="hidden glass-card p-4 space-y-4 border border-luxuryGold/20 rounded">
                 <div class="flex justify-between text-xs pb-2 border-b border-luxuryGold/10">
-                    <span class="text
+                    <span class="text-gray-400">Order ID:</span>
+                    <span id="track-order-id" class="text-luxuryGold font-bold"></span>
+                </div>
+                <div class="flex justify-between text-xs pb-2 border-b border-luxuryGold/10">
+                    <span class="text-gray-400">Current Phase:</span>
+                    <span id="track-phase" class="text-luxuryCream font-medium"></span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Estimated Delivery:</span>
+                    <span id="track-delivery" class="text-luxuryCream font-medium"></span>
+                </div>
+                <!-- Progress Line -->
+                <div class="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mt-2">
+                    <div id="track-progress-bar" class="bg-luxuryGold h-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Drawer Overlay -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-luxuryBlack/95 z-50 transform translate-x-full transition-transform duration-300 ease-in-out border-l border-luxuryGold/20 flex flex-col">
+        <!-- Cart Header -->
+        <div class="p-6 border-b border-luxuryGold/15 flex justify-between items-center">
+            <h3 class="font-serif text-xl text-luxuryGold uppercase tracking-wider">Your Art Bag</h3>
+            <button onclick="toggleCart()" class="text-xl text-gray-400 hover:text-luxuryGold transition"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <!-- Cart Items Scroll Area -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Dynamic Items -->
+        </div>
+        <!-- Cart Footer -->
+        <div class="p-6 border-t border-luxuryGold/15 bg-luxuryCharcoal/50 space-y-4">
+            <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-400 uppercase tracking-widest text-xs">Subtotal:</span>
+                <span id="cart-subtotal" class="font-serif text-lg text-luxuryGold font-bold">₹0</span>
+            </div>
+            <p class="text-[10px] text-gray-500">Shipping and custom framing updates are finalized during WhatsApp consultation.</p>
+            <button onclick="checkoutCart()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-3.5 text-xs uppercase tracking-widest font-bold transition">
+                Checkout on WhatsApp
+            </button>
+        </div>
+    </div>
+    <!-- Drawer backdrop overlay -->
+    <div id="cart-backdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- Review Submission Modal -->
+    <div id="review-modal" class="fixed inset-0 bg-luxuryBlack/90 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full p-8 relative space-y-6 rounded-lg border border-luxuryGold/20">
+            <button onclick="toggleReviewModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-2xl text-luxuryGold uppercase tracking-widest">Share Your Experience</h3>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Help us continue our legacy of precision craftsmanship</p>
+            </div>
+            <form id="review-form" onsubmit="handleReviewSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1">Your Name</label>
+                    <input type="text" id="review-author" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1">Rating</label>
+                    <select id="review-rating" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
+                        <option value="5">★★★★★ (5 Stars)</option>
+                        <option value="4">★★★★☆ (4 Stars)</option>
+                        <option value="3">★★★☆☆ (3 Stars)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1">Your Review</label>
+                    <textarea id="review-text" required rows="4" placeholder="How did the artwork transform your space?" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Luxury Footer -->
+    <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4">
+                <div class="font-serif text-lg font-bold tracking-wider text-luxuryGold">STRING CREATIONS 03</div>
+                <p class="text-xs text-gray-500 leading-relaxed font-light">
+                    Crafting museum-quality luxury string art commissions for elite homes, collectors, and corporate spaces worldwide. Handcrafted with passion, mathematical precision, and pure dedication in India.
+                </p>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-xs uppercase tracking-widest text-luxuryGold font-bold">Discover</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">The Masterpiece Gallery</a></li>
+                    <li><a href="#" onclick="showSection('custom-view')" class="hover:text-luxuryGold transition">Interactive Design Studio</a></li>
+                    <li><a href="#process-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Our Production Line</a></li>
+                </ul>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-xs uppercase tracking-widest text-luxuryGold font-bold">Inquiries & Support</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    Have custom sizes or international exhibition plans? Connect with our Lead Curator directly on WhatsApp.<br>
+                    <span class="text-luxuryGold font-semibold"><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</span>
+                </p>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-xs uppercase tracking-widest text-luxuryGold font-bold">Operator Portal</h4>
+                <p class="text-xs text-gray-500">Access administrative catalog management and custom inventory configuration panels.</p>
+                <button onclick="showSection('admin-view')" class="text-[10px] uppercase tracking-widest text-luxuryGold font-bold hover:text-luxuryCream transition flex items-center space-x-1.5 border border-luxuryGold/20 px-3 py-1.5">
+                    <i class="fa-solid fa-user-shield"></i> <span>Secure Executive Panel</span>
+                </button>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-luxuryGold/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 tracking-widest uppercase">
+            <span>© 2026 String Creations 03. All Rights Reserved.</span>
+            <span>Designed with Absolute Precision</span>
+        </div>
+    </footer>
+
+    <!-- MAIN APP CONTROLLER JAVASCRIPT -->
+    <script>
+        // Static and Persistent Database Arrays
+        const defaultProducts = [
+            {
+                id: "p1",
+                name: "The Sacred Devotion (Radha Krishna)",
+                category: "portrait",
+                price: 32000,
+                hours: "48 Hours",
+                nails: 3200,
+                threads: 4500,
+                img: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=800",
+                desc: "Over 4,500 meters of continuous dark silk thread woven meticulously around 3,200 silver pins on premium deep matte wood base."
+            },
+            {
+                id: "p2",
+                name: "Vedic Mandala of Harmony",
+                category: "mandala",
+                price: 24500,
+                hours: "35 Hours",
+                nails: 2800,
+                threads: 3800,
+                img: "https://images.unsplash.com/photo-1507208773393-4001fc56622d?auto=format&fit=crop&q=80&w=800",
+                desc: "Symmetrical geometric mandala woven in dual gold and copper metallic threads. Perfect statement piece for main reception rooms."
+            },
+            {
+                id: "p3",
+                name: "Corporate Linear Identity Art",
+                category: "custom",
+                price: 45000,
+                hours: "60 Hours",
+                nails: 4100,
+                threads: 6000,
+                img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800",
+                desc: "High-density string projection of contemporary branding architecture on warp-resistant reinforced luxury backing panel."
+            },
+            {
+                id: "p4",
+                name: "Ethereal Monochrome Portrait",
+                category: "portrait",
+                price: 29000,
+                hours: "42 Hours",
+                nails: 3000,
+                threads: 4000,
+                img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800",
+                desc: "Monochromatic micro-threads layered to cast soft, continuous shadow tones resembling dynamic fine-art graphite portraits."
+            },
+            {
+                id: "p5",
+                name: "Cosmic Aura Sphere Mandala",
+                category: "mandala",
+                price: 18500,
+                hours: "22 Hours",
+                nails: 1800,
+                threads: 2500,
+                img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800",
+                desc: "Intricately spun multi-color canvas displaying geometric refraction vectors that transition gracefully under changing light conditions."
+            }
+        ];
+
+        const defaultReviews = [
+            { name: "Aarav Mehta", rating: 5, text: "The portrait of Radha Krishna has transformed our foyer completely. Absolutely breath-taking attention to detail." },
+            { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates. Outstanding!" },
+            { name: "Devansh Patel", rating: 5, text: "Ordered a custom brand mandala for our headquarters. Every client stops to admire the continuous metallic line flow." },
+            { name: "Siddharth Sen", rating: 5, text: "A masterpiece that commands attention. Under spotlight, the gold thread reflects a mesmerizing aura." },
+            { name: "Clara Dupont", rating: 5, text: "Exceptional luxury decor. The custom white frame option matched my minimalist apartment beautifully." }
+        ];
+
+        const sizeSpecs = [
+            { code: "3ft-sq", label: "3ft x 3ft - Collector Square (Approx ₹18,000+)" },
+            { code: "4ft-sq", label: "4ft x 4ft - Grande Square (Approx ₹28,000+)" },
+            { code: "3ft-port", label: "3ft x 4ft - Heritage Portrait Dimension (Approx ₹25,000+)" },
+            { code: "4ft-port", label: "4ft x 5ft - Museum Portrait Dimension (Approx ₹42,000+)" },
+            { code: "5ft-sq", label: "5ft x 5ft - Signature Monumental Canvas (Approx ₹60,000+)" },
+            { code: "8ft-wide", label: "8ft x 4ft - Sovereign Panoramic Statement (Approx ₹95,000+)" }
+        ];
+
+        const stringArtTypes = [
+            {
+                title: "Portrait String Art (મોનોક્રોમ પોટ્રેટ્સ)",
+                content: "આ કલા ઉત્કૃષ્ટ ફોટોગ્રાફ્સને હજારો ઝીણા કાળા અને સફેદ રેશમી તાંતણાઓના પરસ્પર જોડાણથી અદભુત ચિત્રમાં પરિવર્તિત કરે છે. બોર્ડ પર હજારો ખીલીઓ લગાવીને આ મોનોક્રોમ ડેન્સિટી મેળવવામાં આવે છે જે જીવંત ચિત્ર રજૂ કરે છે."
+            },
+            {
+                title: "Sacred Geometry & Mandalas (પવિત્ર ભૌમિતિક મંડલા)",
+                content: "ગોળાકાર પેટર્નમાં સુવર્ણ, તાંબા અને સિલ્વર રંગના ધાતુના વાયર્સ અથવા રેશમી દોરાનો ઉપયોગ કરીને બ્રહ્માંડ અને આધ્યાત્મિક શાંતિના પ્રતિક સમી પવિત્ર જ્યોમેટ્રી બનાવવામાં આવે છે. આ પેટર્ન આસપાસના વાતાવરણમાં સકારાત્મક ઉર્જા ફેલાવે છે."
+            },
+            {
+                title: "Corporate Icons & Custom Typography (કંપની લોગો અને નામ)",
+                content: "વ્યાવસાયિક સ્પેસ અથવા ઓફિસો માટે વિશેષ બ્રાન્ડ લોગો અને આધુનિક ફોન્ટ્સ સાથે તૈયાર થતી આ થ્રેડ આર્ટ અદભુત આકર્ષણ ઊભું કરે છે. તેમાં ચોક્કસ એન્ગલ પર અને ચોક્કસ થીમ પ્રમાણે દોરાઓ વણવામાં આવે છે."
+            },
+            {
+                title: "Multi-Layered Color Art (મલ્ટી લેયર કલર આર્ટ)",
+                content: "અલગ અલગ રંગીન દોરાઓના મિશ્રણથી બનતી રેઈન્બો અથવા થ્રી-ડી ઈફેક્ટ ધરાવતી આર્ટ ક્રાફ્ટ છે, જે વિવિધ લાઈટિંગ કન્ડિશનમાં અલગ દ્રશ્યમાન આભા ઉભી કરે છે. આ એક અત્યંત જટિલ અને લાંબી કારીગરી ધરાવતી પ્રક્રિયા છે."
+            }
+        ];
+
+        // State variables
+        let products = [];
+        let reviews = [];
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Load Initial State
+        window.onload = function() {
+            if (!localStorage.getItem('sc03_products')) {
+                localStorage.setItem('sc03_products', JSON.stringify(defaultProducts));
+            }
+            if (!localStorage.getItem('sc03_reviews')) {
+                localStorage.setItem('sc03_reviews', JSON.stringify(defaultReviews));
+            }
+            if (!localStorage.getItem('sc03_cart')) {
+                localStorage.setItem('sc03_cart', JSON.stringify([]));
+            }
+
+            products = JSON.parse(localStorage.getItem('sc03_products'));
+            reviews = JSON.parse(localStorage.getItem('sc03_reviews'));
+            cart = JSON.parse(localStorage.getItem('sc03_cart'));
+
+            // Initializing View Displays
+            renderGallery();
+            renderReviews();
+            renderCart();
+            populateCustomSelectors();
+            populateStringArtAccordion();
+            renderAdminProducts();
+
+            // Run automated process timeline highlights
+            startProcessAnimationCycle();
+        };
+
+        // Routing System
+        function showSection(sectionId) {
+            document.querySelectorAll('.app-route-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            const targeted = document.getElementById(sectionId);
+            if (targeted) {
+                targeted.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Price formatting helper
+        function formatPrice(amountInINR) {
+            const currency = document.getElementById('currency-switcher').value;
+            if (currency === 'USD') {
+                return '$' + (amountInINR * 0.012).toFixed(2);
+            } else if (currency === 'EUR') {
+                return '€' + (amountInINR * 0.011).toFixed(2);
+            } else {
+                return '₹' + amountInINR.toLocaleString('en-IN');
+            }
+        }
+
+        function switchCurrency() {
+            renderGallery();
+            renderCart();
+            showToast("Currency converted to " + document.getElementById('currency-switcher').value);
+        }
+
+        // Render Masterpiece Gallery Grid
+        function renderGallery(filterQuery = '') {
+            const grid = document.getElementById('gallery-grid');
+            if (!grid) return;
+
+            let displayed = products;
+            if (currentFilter !== 'all') {
+                displayed = products.filter(p => p.category === currentFilter);
+            }
+
+            if (filterQuery) {
+                displayed = displayed.filter(p => 
+                    p.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
+                    p.desc.toLowerCase().includes(filterQuery.toLowerCase())
+                );
+            }
+
+            if (displayed.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500 uppercase tracking-widest text-xs">No matching masterpieces found in this collection</div>`;
+                return;
+            }
+
+            grid.innerHTML = displayed.map(p => `
+                <div class="glass-card group relative overflow-hidden flex flex-col justify-between h-full transition duration-500 hover:shadow-2xl hover:border-luxuryGold/40">
+                    <div class="relative overflow-hidden h-80">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400'">
+                        <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 px-3 py-1.5 text-[10px] uppercase tracking-widest text-luxuryGold font-semibold">
+                            ${p.hours} Crafted
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-xl tracking-wider text-luxuryCream group-hover:text-luxuryGold transition duration-300">${p.name}</h3>
+                            <p class="text-xs text-gray-400 font-light leading-relaxed">${p.desc}</p>
+                            <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-500 uppercase tracking-widest pt-2">
+                                <span><i class="fa-solid fa-circle-dot mr-1"></i> ${p.nails.toLocaleString()} Nails</span>
+                                <span><i class="fa-solid fa-bezier-curve mr-1"></i> ${p.threads.toLocaleString()}m Thread</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-luxuryGold/10 flex justify-between items-center mt-auto">
+                            <span class="font-serif text-lg font-bold text-luxuryGold">${formatPrice(p.price)}</span>
+                            <button onclick="addToCart('${p.id}')" class="bg-transparent border border-luxuryGold/30 hover:border-luxuryGold text-luxuryGold hover:text-luxuryBlack hover:bg-luxuryGold px-4 py-2 text-[10px] uppercase tracking-widest font-bold transition duration-300">
+                                Acquire Artwork
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Controls
+        function filterGallery(category, query = '') {
+            currentFilter = category;
+            document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+                btn.className = "gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
+            });
+            
+            const activeBtn = document.getElementById(`filter-${category}`) || document.getElementById('filter-all');
+            if (activeBtn) {
+                activeBtn.className = "gallery-filter-btn px-6 py-2 border border-luxuryGold text-[11px] uppercase tracking-widest text-luxuryGold bg-luxuryGold/10 transition";
+            }
+
+            renderGallery(query);
+        }
+
+        // Global Search overlay toggler
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            if (overlay) {
+                overlay.classList.toggle('hidden');
+                if (!overlay.classList.contains('hidden')) {
+                    document.getElementById('search-input').focus();
+                }
+            }
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = document.getElementById('search-input').value.trim();
+                toggleSearch();
+                showSection('home-view');
+                document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+                filterGallery('all', query);
+            }
+        }
+
+        // Cart Drawer Logic
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            if (drawer && backdrop) {
+                drawer.classList.toggle('translate-x-full');
+                backdrop.classList.toggle('hidden');
+            }
+        }
+
+        function addToCart(productId) {
+            const p = products.find(prod => prod.id === productId);
+            if (!p) return;
+            cart.push(p);
+            localStorage.setItem('sc03_cart', JSON.stringify(cart));
+            renderCart();
+            showToast(`${p.name} added to your art bag.`);
+            // Open cart drawer for premium response confirmation
+            toggleCart();
+        }
+
+        function removeFromCart(index) {
+            const removedItem = cart[index];
+            cart.splice(index, 1);
+            localStorage.setItem('sc03_cart', JSON.stringify(cart));
+            renderCart();
+            showToast(`Removed from art bag.`);
+        }
+
+        function renderCart() {
+            const countSpan = document.getElementById('cart-count');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartSubtotalSpan = document.getElementById('cart-subtotal');
+            
+            if (countSpan) countSpan.textContent = cart.length;
+            if (!cartItemsContainer) return;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-48 space-y-3">
+                        <i class="fa-solid fa-box-open text-gray-600 text-3xl"></i>
+                        <p class="text-xs uppercase tracking-widest text-gray-500">Your bag is empty</p>
+                    </div>
+                `;
+                cartSubtotalSpan.textContent = formatPrice(0);
+                return;
+            }
+
+            let subtotal = 0;
+            cartItemsContainer.innerHTML = cart.map((item, idx) => {
+                subtotal += item.price;
+                return `
+                    <div class="flex items-center space-x-4 pb-4 border-b border-luxuryGold/10">
+                        <img src="${item.img}" alt="${item.name}" class="h-16 w-16 object-cover rounded border border-luxuryGold/20" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-semibold text-luxuryCream truncate uppercase tracking-wider">${item.name}</h4>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest">${item.category}</p>
+                            <p class="text-xs text-luxuryGold font-serif font-bold mt-1">${formatPrice(item.price)}</p>
+                        </div>
+                        <button onclick="removeFromCart(${idx})" class="text-gray-500 hover:text-red-400 transition"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+            }).join('');
+
+            cartSubtotalSpan.textContent = formatPrice(subtotal);
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showToast("Your art bag is empty!", "error");
+                return;
+            }
+            let text = `नमस्कार String Creations 03! 🛍️\n\nહું તમારી ગેલેરીમાંથી નીચેના આર્ટવર્ક ખરીદવા માંગુ છું:\n\n`;
+            let total = 0;
+            cart.forEach((item, index) => {
+                text += `👉 *${index + 1}. ${item.name}*\n   - કિંમત: ${formatPrice(item.price)}\n   - શ્રેણી: ${item.category}\n\n`;
+                total += item.price;
+            });
+            text += `💰 *કુલ અંદાજિત કિંમત:* ${formatPrice(total)}\n\nકૃપા કરીને મારો ઓર્ડર કન્ફર્મ કરવા અને પેમેન્ટ તથા ડિલિવરી વિગતો શેર કરવા વિનંતી.`;
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/919876543210?text=${encodedText}`;
+            window.open(waUrl, '_blank');
+            showToast("Order summary prepared! Redirecting to WhatsApp...");
+        }
+
+        // Custom visualization studio config
+        function populateCustomSelectors() {
+            const customSizeSel = document.getElementById('custom-size');
+            if (customSizeSel) {
+                customSizeSel.innerHTML = sizeSpecs.map(s => `
+                    <option value="${s.label}" class="bg-luxuryBlack">${s.label}</option>
+                `).join('');
+            }
+        }
+
+        function populateStringArtAccordion() {
+            const accordion = document.getElementById('string-art-index-accordion');
+            if (!accordion) return;
+
+            accordion.innerHTML = stringArtTypes.map((t, idx) => `
+                <div class="border border-luxuryGold/10 rounded overflow-hidden">
+                    <button onclick="toggleAccordion(${idx})" class="w-full bg-luxuryCharcoal/50 hover:bg-luxuryCharcoal text-left px-5 py-4 flex justify-between items-center transition focus:outline-none">
+                        <span class="font-serif text-sm text-luxuryGold uppercase tracking-wider">${t.title}</span>
+                        <i id="acc-icon-${idx}" class="fa-solid fa-chevron-down text-xs text-luxuryGold transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc-body-${idx}" class="hidden p-5 bg-luxuryBlack/40 text-xs text-gray-400 leading-relaxed border-t border-luxuryGold/5">
+                        ${t.content}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAccordion(index) {
+            const body = document.getElementById(`acc-body-${index}`);
+            const icon = document.getElementById(`acc-icon-${index}`);
+            if (body && icon) {
+                body.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+        }
+
+        function dispatchCustomOrder() {
+            const sizeVal = document.getElementById('custom-size').value;
+            const frameVal = document.getElementById('custom-frame').value;
+            
+            const threadCheckboxes = document.querySelectorAll('input[name="custom-threads"]:checked');
+            let threads = Array.from(threadCheckboxes).map(cb => cb.value).join(', ');
+            
+            const colorCheckboxes = document.querySelectorAll('input[name="custom-colors"]:checked');
+            let colors = Array.from(colorCheckboxes).map(cb => cb.value).join(', ');
+            
+            const detailsMsg = document.getElementById('custom-details-msg').value.trim();
+            
+            if (!threads) threads = "Standard Silk/Cotton Thread";
+            if (!colors) colors = "Standard Theme Colors";
+            
+            const text = `नमस्कार String Creations 03! 🎨✨\n\nહું એક નવું કસ્ટમ આર્ટવર્ક ઓર્ડર કરવા માંગુ છું:\n\n📍 *Canvas Size:* ${sizeVal}\n📍 *Frame Style:* ${frameVal}\n📍 *Thread Selection:* ${threads}\n📍 *Selected Colors:* ${colors}\n📝 *Extra Instructions:* ${detailsMsg || "None"}\n\nકૃપા કરીને મને આ સ્પષ્ટીકરણો માટે અંદાજિત કિંમત અને સમય જણાવો. આભાર!`;
+            
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/919876543210?text=${encodedText}`;
+            window.open(waUrl, '_blank');
+            showToast("Design details configured! Redirecting to WhatsApp...");
+        }
+
+        // Sequential Interactive Process Highlighting
+        let currentHighlightIdx = 0;
+        function startProcessAnimationCycle() {
+            setInterval(() => {
+                const stepCards = document.querySelectorAll('.process-step-card');
+                if (stepCards.length === 0) return;
+                
+                stepCards.forEach(card => card.classList.remove('active-reveal'));
+                stepCards[currentHighlightIdx].classList.add('active-reveal');
+                
+                currentHighlightIdx = (currentHighlightIdx + 1) % stepCards.length;
+            }, 3000);
+        }
+
+        function switchProcessTab(tabType) {
+            const tab1 = document.getElementById('process-tab-content-1');
+            const tab2 = document.getElementById('process-tab-content-2');
+            const btn1 = document.getElementById('btn-proc-1');
+            const btn2 = document.getElementById('btn-proc-2');
+            
+            if (tabType === 'step-by-step') {
+                tab1.classList.remove('hidden');
+                tab2.classList.add('hidden');
+                btn1.className = "process-tab-btn active px-5 py-2 border border-brandTeal text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
+                btn2.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
+            } else {
+                tab1.classList.add('hidden');
+                tab2.classList.remove('hidden');
+                btn2.className = "process-tab-btn active px-5 py-2 border border-brandTeal text-xs uppercase tracking-widest text-brandTeal bg-brandBlue/10 transition";
+                btn1.className = "process-tab-btn px-5 py-2 border border-transparent text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition";
+                
+                // Active status reveal for heritage list
+                const heritageCards = document.querySelectorAll('.heritage-step-card');
+                heritageCards.forEach((hc, index) => {
+                    setTimeout(() => {
+                        hc.classList.add('active-reveal');
+                    }, index * 200);
+                });
+            }
+        }
+
+        // Track Order system
+        function toggleTrackModal() {
+            const modal = document.getElementById('track-modal');
+            if (modal) modal.classList.toggle('hidden');
+        }
+
+        function trackArtwork() {
+            const inputId = document.getElementById('order-track-id').value.trim().toUpperCase();
+            if (!inputId) {
+                showToast("Please enter a valid tracking ID", "error");
+                return;
+            }
+            const trackResult = document.getElementById('track-result');
+            const trackOrderId = document.getElementById('track-order-id');
+            const trackPhase = document.getElementById('track-phase');
+            const trackDelivery = document.getElementById('track-delivery');
+            const trackProgressBar = document.getElementById('track-progress-bar');
+            
+            trackResult.classList.remove('hidden');
+            
+            if (inputId === 'SC03-2415') {
+                trackOrderId.textContent = inputId;
+                trackPhase.textContent = "Phase 4 - Thread Weaving Process";
+                trackDelivery.textContent = "July 16, 2026";
+                trackProgressBar.style.width = "65%";
+                showToast("Live progress loaded.");
+            } else if (inputId === 'SC03-8821') {
+                trackOrderId.textContent = inputId;
+                trackPhase.textContent = "Phase 6 - Quality Certification & Packing";
+                trackDelivery.textContent = "July 12, 2026";
+                trackProgressBar.style.width = "90%";
+                showToast("Live progress loaded.");
+            } else {
+                // Deterministic calculation based on code input
+                let sum = 0;
+                for(let i=0; i<inputId.length; i++) sum += inputId.charCodeAt(i);
+                const phases = [
+                    "Phase 1 - Design Mapping",
+                    "Phase 2 - Frame Custom Treatment",
+                    "Phase 3 - Precision Hardwood Surface Sanding",
+                    "Phase 4 - Geometric Tension Weaving Setup",
+                    "Phase 5 - Outer Luxury Framing Assembly",
+                    "Phase 6 - Quality Inspection Certification"
+                ];
+                const phaseIndex = sum % phases.length;
+                const progressPercent = Math.max(15, Math.min(95, ((phaseIndex + 1) / phases.length) * 100));
+                const deliveryDays = Math.max(3, (8 - phaseIndex) * 2);
+                
+                trackOrderId.textContent = inputId;
+                trackPhase.textContent = phases[phaseIndex];
+                trackDelivery.textContent = `Within ${deliveryDays} Working Days`;
+                trackProgressBar.style.width = `${progressPercent}%`;
+                showToast(`Production simulation loaded for code: ${inputId}`);
+            }
+        }
+
+        // Testimonial Reviews System
+        function toggleReviewModal() {
+            const m = document.getElementById('review-modal');
+            if (m) m.classList.toggle('hidden');
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+            const author = document.getElementById('review-author').value.trim();
+            const rating = parseInt(document.getElementById('review-rating').value);
+            const text = document.getElementById('review-text').value.trim();
+
+            if (!author || !text) {
+                showToast("Please fill all review options", "error");
+                return;
+            }
+
+            reviews.unshift({ name: author, rating, text });
+            localStorage.setItem('sc03_reviews', JSON.stringify(reviews));
+            renderReviews();
+            toggleReviewModal();
+            showToast("Thank you for sharing your experience!");
+            document.getElementById('review-form').reset();
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+
+            // Double/triple the list to keep infinite loop continuous inside marquee
+            const extendedList = [...reviews, ...reviews, ...reviews];
+            container.innerHTML = extendedList.map(r => `
+                <div class="glass-card p-6 w-80 shrink-0 space-y-3 rounded-lg border border-luxuryGold/10 inline-block whitespace-normal">
+                    <div class="flex items-center space-x-1 text-luxuryGold text-xs">
+                        ${Array(r.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+                        ${Array(5 - r.rating).fill('<i class="fa-regular fa-star"></i>').join('')}
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed italic font-light">"${r.text}"</p>
+                    <div class="flex justify-between items-center text-[10px] text-gray-500 font-semibold tracking-wider uppercase">
+                        <span>— ${r.name}</span>
+                        <span class="text-luxuryGold/60">Verified Collector</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // SECURED ADMINISTRATIVE CONTROL CENTRE LOGIC
+        function handleAdminAddProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('admin-p-name').value.trim();
+            const category = document.getElementById('admin-p-cat').value;
+            const price = parseFloat(document.getElementById('admin-p-price').value);
+            const hours = document.getElementById('admin-p-hours').value.trim();
+            const nails = parseInt(document.getElementById('admin-p-nails').value);
+            const threads = parseInt(document.getElementById('admin-p-threads').value);
+            const img = document.getElementById('admin-p-img').value.trim();
+            const desc = document.getElementById('admin-p-desc').value.trim();
+
+            const newId = 'p-' + Date.now();
+            const newProd = { id: newId, name, category, price, hours, nails, threads, img, desc };
+            
+            products.push(newProd);
+            localStorage.setItem('sc03_products', JSON.stringify(products));
+            
+            renderGallery();
+            renderAdminProducts();
+            showToast(`${name} added to the curated catalog.`);
+            e.target.reset();
+        }
+
+        function deleteAdminProduct(id) {
+            const idx = products.findIndex(p => p.id === id);
+            if (idx === -1) return;
+            const name = products[idx].name;
+            products.splice(idx, 1);
+            localStorage.setItem('sc03_products', JSON.stringify(products));
+            renderGallery();
+            renderAdminProducts();
+            showToast(`${name} deleted from catalog.`);
+        }
+
+        function renderAdminProducts() {
+            const list = document.getElementById('admin-products-list');
+            if (!list) return;
+
+            list.innerHTML = products.map(p => `
+                <div class="flex items-center justify-between p-3 bg-luxuryBlack/60 border border-luxuryGold/10 rounded">
+                    <div class="flex items-center space-x-3 truncate">
+                        <img src="${p.img}" alt="${p.name}" class="h-10 w-10 object-cover rounded" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
+                        <div class="truncate">
+                            <p class="text-xs font-semibold text-luxuryCream truncate uppercase">${p.name}</p>
+                            <p class="text-[9px] text-gray-500 uppercase tracking-widest">${p.category} | ${formatPrice(p.price)}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteAdminProduct('${p.id}')" class="text-red-400 hover:text-red-500 transition px-2"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            `).join('');
+        }
+
+        // CSV Export/Import Configuration
+        function exportCatalog() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "ID,Name,Category,Price,Hours,Nails,Threads,Image,Description\n";
+            products.forEach(p => {
+                let row = `"${p.id}","${p.name}","${p.category}",${p.price},"${p.hours}",${p.nails},${p.threads},"${p.img}","${p.desc.replace(/"/g, '""')}"`;
+                csvContent += row + "\n";
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "string_creations_03_catalog.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Catalog CSV exported.");
+        }
+
+        function triggerCSVImport() {
+            document.getElementById('csv-import-file').click();
+        }
+
+        function importCatalog(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const lines = text.split("\n");
+                let imported = [];
+                // Skip header line
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    let parts = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (parts.length >= 9) {
+                        let id = parts[0].replace(/"/g, '').trim();
+                        let name = parts[1].replace(/"/g, '').trim();
+                        let category = parts[2].replace(/"/g, '').trim();
+                        let price = parseFloat(parts[3]) || 15000;
+                        let hours = parts[4].replace(/"/g, '').trim();
+                        let nails = parseInt(parts[5]) || 2000;
+                        let threads = parseInt(parts[6]) || 3000;
+                        let img = parts[7].replace(/"/g, '').trim();
+                        let desc = parts[8].replace(/"/g, '').trim();
+                        imported.push({ id, name, category, price, hours, nails, threads, img, desc });
+                    }
+                }
+                if (imported.length > 0) {
+                    products = imported;
+                    localStorage.setItem('sc03_products', JSON.stringify(products));
+                    renderGallery();
+                    renderAdminProducts();
+                    showToast(`Successfully imported ${imported.length} items.`);
+                } else {
+                    showToast("No valid CSV lines found.", "error");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Global Toast Notification triggers
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-lg shadow-xl text-xs uppercase tracking-wider font-semibold border transition-all duration-300 transform translate-x-12 opacity-0 flex items-center justify-between space-x-4 pointer-events-auto bg-luxuryCharcoal `;
+            if (type === 'success') {
+                toast.className += 'border-luxuryGold text-luxuryGold';
+            } else {
+                toast.className += 'border-red-500/50 text-red-400';
+            }
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(toast);
+            
+            // Trigger animation in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, 10);
+            
+            // Trigger animation out
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
