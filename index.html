@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind Theme Configuration -->
+    <!-- Tailwind Theme Configuration (Required Inline) -->
     <script>
         tailwind.config = {
             theme: {
@@ -50,11 +50,11 @@
     <!-- Toast Notification System -->
     <div id="toast-container" class="fixed top-24 right-6 z-50 space-y-3 pointer-events-none"></div>
 
-    <!-- Sticky Upgraded Responsive Header (Perfect Breakpoint Matrix) -->
+    <!-- Sticky Upgraded Responsive Header -->
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Logo (Left aligned with safety shrink padding) -->
+            <!-- Logo (Left aligned) -->
             <a href="#" onclick="showSection('home-view')" class="flex items-center space-x-3 group shrink-0 pr-4">
                 <div class="h-11 w-11 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                     <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
@@ -69,7 +69,7 @@
                 </div>
             </a>
             
-            <!-- Navigation Links (Centered, Collapse under laptop view < 1280px) -->
+            <!-- Navigation Links (Centered, Hidden below 1280px) -->
             <nav class="hidden xl:flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.2em] font-semibold text-center whitespace-nowrap px-4">
                 <a href="#" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Home</a>
                 <a href="#gallery-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Gallery</a>
@@ -78,10 +78,10 @@
                 <a href="#reviews-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Reviews</a>
             </nav>
 
-            <!-- Utility Controls and Icons Section (Clean Gaps) -->
+            <!-- Utility Controls and Icons Section -->
             <div class="flex items-center gap-4 xl:gap-6 shrink-0 pl-4">
                 
-                <!-- Utilities Frame (Hidden on < 1280px to protect Logo boundary) -->
+                <!-- Utilities Frame (Hidden on < 1280px) -->
                 <div class="hidden xl:flex items-center gap-4 xl:gap-5 whitespace-nowrap">
                     <!-- International Language Switcher -->
                     <div class="flex items-center space-x-1.5 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4 shrink-0">
@@ -117,7 +117,7 @@
                     </button>
                 </div>
 
-                <!-- Global Action Icons (Always Visible on all Viewports) -->
+                <!-- Global Action Icons (Always Visible) -->
                 <div class="flex items-center space-x-4 border-l border-luxuryGold/10 xl:pl-4 pl-0 shrink-0">
                     <button onclick="toggleSearch()" class="hover:text-luxuryGold transition text-lg">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -137,7 +137,7 @@
         </div>
     </header>
 
-    <!-- Slide-over Premium Mobile Navigation Menu Drawer (xl Collapse compliant) -->
+    <!-- Slide-over Premium Mobile Navigation Menu Drawer -->
     <div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-xs bg-luxuryBlack border-l border-luxuryGold/20 z-55 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
         <div class="p-6 space-y-8 flex-1 overflow-y-auto">
             
@@ -203,7 +203,7 @@
         </div>
     </div>
     
-    <!-- Mobile Drawer Backdrop Layer -->
+    <!-- Mobile Drawer Backdrop Overlay -->
     <div id="mobile-menu-backdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300"></div>
 
     <!-- MAIN APP ROUTING VIEWS -->
@@ -800,7 +800,74 @@
                             <span id="modal-discount-price" class="text-lg text-gray-500 line-through font-serif"></span>
                         </div>
                     </div>
+<!-- INSERT THIS: Optional Advanced Specifications Fields -->
+                        <div class="space-y-3 p-4 bg-luxuryBlack/40 border border-luxuryGold/15 rounded">
+                            <p class="text-[10px] text-luxuryGold uppercase tracking-widest font-bold">Aesthetics Parameters (Optional Specifications)</p>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Art Typology</label>
+                                    <input type="text" id="admin-p-arttype" placeholder="e.g. Geometric Portrait" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Canvas Size</label>
+                                    <input type="text" id="admin-p-boardsize" placeholder="e.g. 36 x 36 Inches" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                            </div>
 
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Board Color</label>
+                                    <input type="text" id="admin-p-boardcolor" placeholder="e.g. Matte Black" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Frame Type</label>
+                                    <input type="text" id="admin-p-frametype" placeholder="e.g. Engineered Wood" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Frame Color</label>
+                                    <input type="text" id="admin-p-framecolor" placeholder="e.g. Metallic Gold" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Thread Material</label>
+                                    <input type="text" id="admin-p-threadmaterial" placeholder="e.g. Silk Filaments" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Thread Thickness</label>
+                                    <input type="text" id="admin-p-threadthickness" placeholder="e.g. 0.6mm" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Thread Size</label>
+                                    <input type="text" id="admin-p-threadsize" placeholder="e.g. No. 4" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Thread Color</label>
+                                    <input type="text" id="admin-p-threadcolor" placeholder="e.g. Silver Gold" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Difficulty Level</label>
+                                    <input type="text" id="admin-p-difficulty" placeholder="e.g. Intermediate (3/5)" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[9px] uppercase text-gray-400 mb-1">Availability</label>
+                                    <input type="text" id="admin-p-availability" placeholder="e.g. In Stock" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[9px] uppercase text-gray-400 mb-1">Key Selling Points (Comma Separated Bullet list)</label>
+                                <input type="text" id="admin-p-bullets" placeholder="Handmade in India, Archival threads, Wall mount ready" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
+                            </div>
+                        </div>
                     <!-- Long Structured Description -->
                     <div class="space-y-3">
                         <p id="modal-desc" class="text-xs text-gray-300 leading-relaxed font-light"></p>
