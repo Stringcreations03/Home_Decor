@@ -1,5 +1,5 @@
-// Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 8 Feet (96 Inches)
-const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96];
+// Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 12 Feet (144 Inches)
+const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144];
 
 // Searchable Thread Selection values
 const availableThreads = [
@@ -52,7 +52,7 @@ const stringArtTypes = [
     { title: "Fractal Mathematical Art", content: "Never-ending geometrical designs built from highly complex, recursive nail configurations.", img: "https://images.unsplash.com/photo-1507208773393-4001fc56622d?auto=format&fit=crop&q=80&w=400" }
 ];
 
-// Complete specifications metadata mapping (Unified default data set)
+// Complete specifications metadata mapping
 const defaultProducts = [
     {
         id: "p1",
@@ -178,9 +178,19 @@ const defaultReviews = [
     { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates. Outstanding!" }
 ];
 
-// State Variables
-let products = [];
-let reviews = JSON.parse(localStorage.getItem('sc03_reviews')) || defaultReviews;
+// 100% Stable Synchronous LocalStorage Engine Loader
+let products = JSON.parse(localStorage.getItem('sc03_products'));
+if (!products || products.length === 0) {
+    products = [...defaultProducts];
+    localStorage.setItem('sc03_products', JSON.stringify(products));
+}
+
+let reviews = JSON.parse(localStorage.getItem('sc03_reviews'));
+if (!reviews || reviews.length === 0) {
+    reviews = [...defaultReviews];
+    localStorage.setItem('sc03_reviews', JSON.stringify(reviews));
+}
+
 let cart = JSON.parse(localStorage.getItem('sc03_cart')) || [];
 let activeCurrency = "INR";
 const currencySymbols = { INR: "₹", USD: "$", EUR: "€" };
@@ -191,118 +201,6 @@ let currentStep7 = 0;
 let currentStep15 = 0;
 let step7Interval = null;
 let step15Interval = null;
-
-// IndexedDB Core Configuration to Prevent Loading Hangs (Always Resolving Safely)
-const dbName = "StringCreations03_IndexedDB";
-const dbVersion = 1;
-let db = null;
-
-function initDB() {
-    return new Promise((resolve, reject) => {
-        try {
-            if (!window.indexedDB) {
-                reject("IndexedDB not supported.");
-                return;
-            }
-            const request = indexedDB.open(dbName, dbVersion);
-            request.onupgradeneeded = function (e) {
-                const database = e.target.result;
-                if (!database.objectStoreNames.contains("products")) {
-                    database.createObjectStore("products", { keyPath: "id" });
-                }
-            };
-            request.onsuccess = function (e) {
-                db = e.target.result;
-                resolve(db);
-            };
-            request.onerror = function () {
-                reject("IndexedDB blocked.");
-            };
-        } catch (error) {
-            reject("IndexedDB Security policy restrict.");
-        }
-    });
-}
-
-function getAllProductsFromDB() {
-    return new Promise((resolve) => {
-        if (!db) return resolve([]);
-        try {
-            const transaction = db.transaction(["products"], "readonly");
-            const store = transaction.objectStore("products");
-            const request = store.getAll();
-            request.onsuccess = function () {
-                resolve(request.result);
-            };
-            request.onerror = function () {
-                resolve([]);
-            };
-        } catch (e) {
-            resolve([]);
-        }
-    });
-}
-
-function saveProductToDB(product) {
-    return new Promise((resolve) => {
-        if (!db) return resolve();
-        try {
-            const transaction = db.transaction(["products"], "readwrite");
-            const store = transaction.objectStore("products");
-            const request = store.put(product);
-            request.onsuccess = function () {
-                resolve();
-            };
-            request.onerror = function () {
-                resolve(); // Resolve anyway on error to prevent hanging spinner
-            };
-        } catch (e) {
-            resolve();
-        }
-    });
-}
-
-function deleteProductFromDB(id) {
-    return new Promise((resolve) => {
-        if (!db) return resolve();
-        try {
-            const transaction = db.transaction(["products"], "readwrite");
-            const store = transaction.objectStore("products");
-            const request = store.delete(id);
-            request.onsuccess = function () {
-                resolve();
-            };
-            request.onerror = function () {
-                resolve();
-            };
-        } catch (e) {
-            resolve();
-        }
-    });
-}
-
-async function loadProductsAndInit() {
-    try {
-        await initDB();
-        let stored = await getAllProductsFromDB();
-        if (!stored || stored.length === 0) {
-            for (let p of defaultProducts) {
-                await saveProductToDB(p);
-            }
-            products = [...defaultProducts];
-        } else {
-            products = stored;
-        }
-        populateCustomSelectors();
-        renderGallery();
-        renderAdminProducts();
-        renderAdminDragList();
-    } catch (err) {
-        products = [...defaultProducts];
-        populateCustomSelectors();
-        renderGallery();
-    }
-}
 
 // Toast Helper
 function showToast(message, type = 'success') {
@@ -331,6 +229,7 @@ function showSection(viewId) {
 }
 
 function saveToStorage() {
+    localStorage.setItem('sc03_products', JSON.stringify(products));
     localStorage.setItem('sc03_reviews', JSON.stringify(reviews));
     localStorage.setItem('sc03_cart', JSON.stringify(cart));
 }
@@ -371,11 +270,11 @@ function compressImagePromise(file) {
     });
 }
 
-// Local Video File converter helper
+// Local Video File converter helper with storage alert limit
 function readVideoPromise(file) {
     return new Promise((resolve, reject) => {
-        if (file.size > 15 * 1024 * 1024) { 
-            reject("Error: Video file size exceeds the 15MB storage safety limit.");
+        if (file.size > 2 * 1024 * 1024) { 
+            reject("Error: Video file is too large! Please compress and use MP4 files below 2MB to prevent LocalStorage overflows.");
             return;
         }
         const reader = new FileReader();
@@ -390,12 +289,14 @@ function readVideoPromise(file) {
 }
 
 // Initialize Core Functions
-window.addEventListener('DOMContentLoaded', async () => {
-    await loadProductsAndInit();
+window.addEventListener('DOMContentLoaded', () => {
+    populateCustomSelectors();
+    renderGallery();
     renderReviews();
     renderStringArtDirectory();
     updateCartCount();
     renderSearchableLists();
+    renderAdminProducts();
     
     // Loop Step Timers Initialization
     startProcessSequentialReveal();
@@ -404,6 +305,32 @@ window.addEventListener('DOMContentLoaded', async () => {
 function formatToFt(inch) {
     const ft = inch / 12;
     return Number.isInteger(ft) ? `${ft}ft` : `${ft.toFixed(1)}ft`;
+}
+
+function populateCustomSelectors() {
+    const sizeSelector = document.getElementById('custom-size');
+    if (!sizeSelector) return;
+    sizeSelector.innerHTML = '';
+    let list = [];
+    dimensions.forEach(h => {
+        dimensions.forEach(l => {
+            const ratio = h / l;
+            if (ratio >= 0.5 && ratio <= 2) {
+                list.push({ h, l, area: h * l });
+            }
+        });
+    });
+    list.sort((a, b) => a.area - b.area);
+    list.forEach(item => {
+        const h = item.h;
+        const l = item.l;
+        const option = document.createElement('option');
+        option.value = `${h}x${l}`;
+        option.className = "bg-luxuryBlack text-luxuryCream";
+        option.innerText = `${h}"x${l}" (${formatToFt(h)} x ${formatToFt(l)}) (H${h}" x L${l})`;
+        if (h === 36 && l === 36) option.selected = true;
+        sizeSelector.appendChild(option);
+    });
 }
 
 // Process Steps Auto Loop Functionality (Rule 3)
@@ -531,6 +458,7 @@ function handleSearch(event) {
     }
 }
 
+// Dropdown Gallery Filter Integration
 function handleDropdownFilter(val) {
     if (!val) return;
     const buttons = document.querySelectorAll('.gallery-filter-btn');
@@ -576,14 +504,14 @@ function renderGalleryGrid(items) {
     container.innerHTML = '';
 
     if (items.length === 0) {
-        container.innerHTML = `<p class="text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+        container.innerHTML = `<p class="col-span-full text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
         return;
     }
 
-    // Protection Threshold: If total unique items are less than 4, render normal centered grids instead of auto looping marquees to avoid layout voids
+    // Protection Threshold: If total unique items are less than 4, render normal centered grids to avoid gaps
     if (items.length < 4) {
         const flexGrid = document.createElement('div');
-        flexGrid.className = "flex flex-wrap justify-center gap-8 py-6 w-full max-w-7xl mx-auto";
+        flexGrid.className = "flex flex-wrap justify-center gap-8 py-6 w-full max-w-7xl mx-auto animate-fadeIn";
         flexGrid.innerHTML = items.map(p => `
             <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 select-none">
                 <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
@@ -684,25 +612,17 @@ function handleDragOver(e) {
     e.preventDefault();
 }
 
-async function handleDragDrop(e, targetIdx) {
+function handleDragDrop(e, targetIdx) {
     e.preventDefault();
     if (dragSourceIdx !== null && dragSourceIdx !== targetIdx) {
         const movedItem = products.splice(dragSourceIdx, 1)[0];
         products.splice(targetIdx, 0, movedItem);
         
-        if (db) {
-            const transaction = db.transaction(["products"], "readwrite");
-            const store = transaction.objectStore("products");
-            store.clear();
-            for (let p of products) {
-                store.put(p);
-            }
-        }
-        
+        saveToStorage();
         renderGallery();
         renderAdminDragList();
         renderAdminProducts();
-        showToast("Display Order rearranged.");
+        showToast("Display Order saved to storage.");
     }
 }
 
@@ -1262,7 +1182,7 @@ function renderAdminProducts() {
         div.innerHTML = `
             <div class="truncate mr-4 flex-1">
                 <h4 class="text-xs font-bold text-luxuryCream truncate uppercase">${p.name}</h4>
-                <p class="text-[9px] text-luxuryGold font-serif font-bold">${formatVal(p.price)}</p>
+                <p class="text-[10px] text-luxuryGold font-serif font-bold">${formatVal(p.price)}</p>
             </div>
             <div class="flex space-x-2 shrink-0">
                 <button onclick="editProductFromAdmin('${p.id}')" class="text-luxuryGold hover:text-white text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-luxuryCharcoal rounded border border-luxuryGold/20"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
@@ -1392,7 +1312,6 @@ async function handleAdminAddProduct(event) {
                 if (multiImgFiles.length > 0) products[index].multiImages = multiImagesBase64.join(', ');
                 if (videoFile) products[index].video = videoBase64;
 
-                await saveProductToDB(products[index]);
                 editingProductId = null; // reset edit memory
                 saveToStorage();
                 renderGallery();
@@ -1434,9 +1353,7 @@ async function handleAdminAddProduct(event) {
             bullets
         };
 
-        await saveProductToDB(newProduct);
         products.push(newProduct);
-        
         saveToStorage();
         renderGallery();
         renderAdminProducts();
@@ -1449,10 +1366,9 @@ async function handleAdminAddProduct(event) {
     }
 }
 
-async function deleteProductFromAdmin(id) {
+function deleteProductFromAdmin(id) {
     if (confirm('Verify: Do you want to wipe this record from your live portfolio catalog?')) {
         products = products.filter(p => p.id.toString() !== id.toString());
-        await deleteProductFromDB(id);
         saveToStorage();
         renderGallery();
         renderAdminProducts();
@@ -1487,7 +1403,7 @@ function importCatalog(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async function(e) {
+    reader.onload = function(e) {
         const text = e.target.result;
         const lines = text.split('\n');
         const importedList = [];
@@ -1512,7 +1428,6 @@ function importCatalog(event) {
                     desc: cols[10] ? cols[10].replace(/"/g, '').trim() : ""
                 };
                 importedList.push(item);
-                await saveProductToDB(item);
             }
         }
         
