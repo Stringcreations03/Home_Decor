@@ -51,6 +51,7 @@
     <div id="toast-container" class="fixed top-24 right-6 z-50 space-y-3 pointer-events-none"></div>
 
     <!-- Sticky Upgraded Responsive Header -->
+   <!-- Sticky Upgraded Responsive Header (Perfect Equal Spacing Matrix) -->
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
             
@@ -59,7 +60,7 @@
                 <div class="h-11 w-11 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                     <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
                 </div>
-                <div class="flex flex-col logo-glowing-effect">
+                <div class="flex flex-col logo-glowing-effect shrink-0">
                     <div class="font-serif text-lg lg:text-xl font-bold tracking-[0.08em] flex items-center space-x-1">
                         <span class="brand-string">STRING</span>
                         <span class="brand-creations italic font-normal text-luxuryCream">Creations</span>
@@ -69,8 +70,8 @@
                 </div>
             </a>
             
-            <!-- Navigation Links (Centered, Hidden below 1024px) -->
-            <nav class="hidden lg:flex items-center xl:gap-8 lg:gap-4 text-xs uppercase tracking-[0.2em] font-semibold text-center">
+            <!-- Navigation Links (Centered, Hidden below 1280px to prevent overlapping) -->
+            <nav class="hidden xl:flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.2em] font-semibold text-center whitespace-nowrap">
                 <a href="#" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Home</a>
                 <a href="#gallery-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Gallery</a>
                 <a href="#" onclick="showSection('custom-view')" class="hover:text-luxuryGold transition text-brandTeal font-bold">Custom Studio</a>
@@ -78,13 +79,13 @@
                 <a href="#reviews-section" onclick="showSection('home-view')" class="hover:text-luxuryGold transition">Reviews</a>
             </nav>
 
-            <!-- Utility Controls and Icons Section -->
-            <div class="flex items-center xl:gap-6 lg:gap-3 gap-4">
+            <!-- Utility Controls and Icons Section (Perfect Spacing via Gap) -->
+            <div class="flex items-center gap-4 xl:gap-6 shrink-0">
                 
-                <!-- Utilities Frame (Hidden below laptop layout < 1024px) -->
-                <div class="hidden lg:flex items-center xl:gap-5 lg:gap-3">
+                <!-- Utilities Frame (Hidden below laptop layout < 1280px) -->
+                <div class="hidden xl:flex items-center gap-4 xl:gap-5 whitespace-nowrap">
                     <!-- International Language Switcher -->
-                    <div class="flex items-center space-x-1.5 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
+                    <div class="flex items-center space-x-1.5 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4 shrink-0">
                         <span class="text-luxuryGold"><i class="fa-solid fa-globe mr-1"></i> Language</span>
                         <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer text-[10px] font-bold">
                             <option value="en" class="bg-luxuryBlack">English</option>
@@ -103,7 +104,7 @@
                     </div>
 
                     <!-- Currency Switcher -->
-                    <div class="flex items-center space-x-2 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4">
+                    <div class="flex items-center space-x-2 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4 shrink-0">
                         <select id="currency-switcher" onchange="switchCurrency()" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer font-bold text-[10px]">
                             <option value="INR" class="bg-luxuryBlack">₹ INR</option>
                             <option value="USD" class="bg-luxuryBlack">$ USD</option>
@@ -118,7 +119,7 @@
                 </div>
 
                 <!-- Global Action Icons (Always Visible on Laptop, Tablet & Mobile) -->
-                <div class="flex items-center space-x-4 border-l border-luxuryGold/10 lg:pl-4 pl-0">
+                <div class="flex items-center space-x-4 border-l border-luxuryGold/10 xl:pl-4 pl-0 shrink-0">
                     <button onclick="toggleSearch()" class="hover:text-luxuryGold transition text-lg">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -127,8 +128,8 @@
                         <span id="cart-count" class="absolute -top-2 -right-2 bg-luxuryGold text-luxuryBlack text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
                     </button>
 
-                    <!-- Golden Hamburger Menu Button (Only Visible on Mobile & Tablet < 1024px) -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden text-luxuryGold hover:text-luxuryCream transition text-xl focus:outline-none pl-1">
+                    <!-- Golden Hamburger Menu Button (Only Visible on Screen Layouts < 1280px) -->
+                    <button onclick="toggleMobileMenu()" class="xl:hidden text-luxuryGold hover:text-luxuryCream transition text-xl focus:outline-none pl-1">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
