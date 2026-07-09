@@ -179,7 +179,7 @@ const defaultReviews = [
 ];
 
 // State Variables
-let products = JSON.parse(localStorage.getItem('sc03_products')) || defaultProducts;
+let products = [];
 let reviews = JSON.parse(localStorage.getItem('sc03_reviews')) || defaultReviews;
 let cart = JSON.parse(localStorage.getItem('sc03_cart')) || [];
 let activeCurrency = "INR";
@@ -191,6 +191,91 @@ let currentStep7 = 0;
 let currentStep15 = 0;
 let step7Interval = null;
 let step15Interval = null;
+
+// IndexedDB Database Core Configuration (Rules 5 - Local Storage safety limit bypass)
+const dbName = "StringCreations03_IndexedDB";
+const dbVersion = 1;
+let db = null;
+
+function initDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, dbVersion);
+        request.onupgradeneeded = function (e) {
+            const database = e.target.result;
+            if (!database.objectStoreNames.contains("products")) {
+                database.createObjectStore("products", { keyPath: "id" });
+            }
+        };
+        request.onsuccess = function (e) {
+            db = e.target.result;
+            resolve(db);
+        };
+        request.onerror = function () {
+            reject("Local IndexedDB Database initialization failed.");
+        };
+    });
+}
+
+function getAllProductsFromDB() {
+    return new Promise((resolve) => {
+        const transaction = db.transaction(["products"], "readonly");
+        const store = transaction.objectStore("products");
+        const request = store.getAll();
+        request.onsuccess = function () {
+            resolve(request.result);
+        };
+    });
+}
+
+function saveProductToDB(product) {
+    return new Promise((resolve) => {
+        const transaction = db.transaction(["products"], "readwrite");
+        const store = transaction.objectStore("products");
+        const request = store.put(product);
+        request.onsuccess = function () {
+            resolve();
+        };
+    });
+}
+
+function deleteProductFromDB(id) {
+    return new Promise((resolve) => {
+        const transaction = db.transaction(["products"], "readwrite");
+        const store = transaction.objectStore("products");
+        const request = store.delete(id);
+        request.onsuccess = function () {
+            resolve();
+        };
+    });
+}
+
+// Clean Database Bootloader
+async function loadProductsAndInit() {
+    try {
+        await initDB();
+        let stored = await getAllProductsFromDB();
+        if (!stored || stored.length === 0) {
+            // Seed database with highly stylized default products
+            for (let p of defaultProducts) {
+                await saveProductToDB(p);
+            }
+            products = [...defaultProducts];
+        } else {
+            products = stored;
+        }
+        
+        // Populate view panels
+        populateCustomSelectors();
+        renderGallery();
+        renderAdminProducts();
+        renderAdminDragList();
+    } catch (err) {
+        showToast("Database loading failed. Falling back to default list.");
+        products = [...defaultProducts];
+        populateCustomSelectors();
+        renderGallery();
+    }
+}
 
 // Toast Helper
 function showToast(message) {
@@ -216,12 +301,11 @@ function showSection(viewId) {
 }
 
 function saveToStorage() {
-    localStorage.setItem('sc03_products', JSON.stringify(products));
     localStorage.setItem('sc03_reviews', JSON.stringify(reviews));
     localStorage.setItem('sc03_cart', JSON.stringify(cart));
 }
 
-// Local Image Compression and Downscaling Helper to avoid LocalStorage overload
+// Local Image Compression and Downscaling Helper
 function compressImagePromise(file) {
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -251,7 +335,7 @@ function compressImagePromise(file) {
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
                 
-                // Export as lightweight JPEG to keep localized payload small
+                // Export as lightweight JPEG with 0.65 quality to prevent localstorage crash
                 const dataUrl = canvas.toDataURL('image/jpeg', 0.65);
                 resolve(dataUrl);
             };
@@ -277,18 +361,13 @@ function readVideoPromise(file) {
     });
 }
 
-// Initialize Core Functions on Load
-window.addEventListener('DOMContentLoaded', () => {
-    if (!localStorage.getItem('sc03_products')) {
-        saveToStorage();
-    }
-    populateCustomSelectors();
-    renderGallery();
+// Initialize Core Functions
+window.addEventListener('DOMContentLoaded', async () => {
+    await loadProductsAndInit();
     renderReviews();
     renderStringArtDirectory();
     updateCartCount();
     renderSearchableLists();
-    renderAdminProducts();
     
     // Loop Step Timers Initialization
     startProcessSequentialReveal();
@@ -298,32 +377,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function formatToFt(inch) {
     const ft = inch / 12;
     return Number.isInteger(ft) ? `${ft}ft` : `${ft.toFixed(1)}ft`;
-}
-
-function populateCustomSelectors() {
-    const sizeSelector = document.getElementById('custom-size');
-    if (!sizeSelector) return;
-    sizeSelector.innerHTML = '';
-    let list = [];
-    dimensions.forEach(h => {
-        dimensions.forEach(l => {
-            const ratio = h / l;
-            if (ratio >= 0.5 && ratio <= 2) {
-                list.push({ h, l, area: h * l });
-            }
-        });
-    });
-    list.sort((a, b) => a.area - b.area);
-    list.forEach(item => {
-        const h = item.h;
-        const l = item.l;
-        const option = document.createElement('option');
-        option.value = `${h}x${l}`;
-        option.className = "bg-luxuryBlack text-luxuryCream";
-        option.innerText = `${h}"x${l}" (${formatToFt(h)} x ${formatToFt(l)}) (H${h}" x L${l})`;
-        if (h === 36 && l === 36) option.selected = true;
-        sizeSelector.appendChild(option);
-    });
 }
 
 // Process Steps Auto Loop Functionality (Rule 3)
@@ -470,11 +523,6 @@ function filterGallery(category) {
     }
 }
 
-// Upgraded Auto Scrolling Gallery Matrix (10 Cards Desktop Rows)
-function renderGallery() {
-    renderGalleryGrid(products);
-}
-
 function renderGalleryGrid(items) {
     const container = document.getElementById('gallery-grid');
     if (!container) return;
@@ -551,19 +599,29 @@ function handleDragStart(e, idx) {
 function handleDragOver(e) {
     e.preventDefault();
 }
-function handleDragDrop(e, targetIdx) {
+
+async function handleDragDrop(e, targetIdx) {
     e.preventDefault();
     if (dragSourceIdx !== null && dragSourceIdx !== targetIdx) {
-        // Swap/Reorder array indexes
+        // Re-align memory array
         const movedItem = products.splice(dragSourceIdx, 1)[0];
         products.splice(targetIdx, 0, movedItem);
-        saveToStorage();
         
-        // Re-render components live
+        // Sync re-arranged items recursively to IndexedDB in target sorting loop
+        if (db) {
+            const transaction = db.transaction(["products"], "readwrite");
+            const store = transaction.objectStore("products");
+            store.clear();
+            for (let p of products) {
+                store.put(p);
+            }
+        }
+        
+        // Refresh views
         renderGallery();
         renderAdminDragList();
         renderAdminProducts();
-        showToast("Display Order saved to LocalStorage.");
+        showToast("Display Order rearranged.");
     }
 }
 
@@ -598,11 +656,7 @@ function toggleAccordionSection(idx) {
     const block = document.getElementById(`accordion-content-${idx}`);
     const icon = document.getElementById(`accordion-icon-${idx}`);
     block.classList.toggle('hidden');
-    if (block.classList.contains('hidden')) {
-        icon.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
-    } else {
-        icon.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
-    }
+    icon.innerHTML = block.classList.contains('hidden') ? '<i class="fa-solid fa-chevron-down"></i>' : '<i class="fa-solid fa-chevron-up"></i>';
 }
 
 function triggerArtClassPreview(title) {
@@ -617,70 +671,25 @@ function toggleArtClassModal() {
 
 // Custom Studio Searchable Lists Framework
 function renderSearchableLists() {
-    const threadContainer = document.getElementById('thread-list');
-    const colorContainer = document.getElementById('color-list');
+    const threadList = document.getElementById('thread-list');
+    const colorList = document.getElementById('color-list');
     
-    if (threadContainer) {
-        threadContainer.innerHTML = availableThreads.map(t => `
+    if (threadList) {
+        threadList.innerHTML = availableThreads.map(t => `
             <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-thread">
                 <input type="checkbox" name="custom-threads" value="${t}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
                 <span class="thread-name-span">${t}</span>
             </label>
         `).join('');
     }
-
-    if (colorContainer) {
-        colorContainer.innerHTML = availableColors.map(c => `
+    if (colorList) {
+        colorList.innerHTML = availableColors.map(c => `
             <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-color">
                 <input type="checkbox" name="custom-colors" value="${c}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
                 <span class="color-name-span">${c}</span>
             </label>
         `).join('');
     }
-}
-
-function filterSearchableList(type) {
-    if (type === 'thread') {
-        const query = document.getElementById('thread-search').value.toLowerCase().trim();
-        const items = document.querySelectorAll('.list-item-thread');
-        items.forEach(item => {
-            const text = item.querySelector('.thread-name-span').innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-    } else {
-        const query = document.getElementById('color-search').value.toLowerCase().trim();
-        const items = document.querySelectorAll('.list-item-color');
-        items.forEach(item => {
-            const text = item.querySelector('.color-name-span').innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-    }
-}
-
-// Custom Studio Submission Handler (English Only)
-function dispatchCustomOrder() {
-    const sizeSelector = document.getElementById('custom-size');
-    const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
-    const frameSelector = document.getElementById('custom-frame');
-    const frameText = frameSelector.options[frameSelector.selectedIndex].text;
-    
-    const checkedThreads = Array.from(document.querySelectorAll('input[name="custom-threads"]:checked')).map(el => el.value);
-    const selectedThreadsText = checkedThreads.length > 0 ? checkedThreads.join(", ") : "Standard Thread Formulation";
-
-    const checkedColors = Array.from(document.querySelectorAll('input[name="custom-colors"]:checked')).map(el => el.value);
-    const selectedColorsText = checkedColors.length > 0 ? checkedColors.join(", ") : "Standard Dynamic Palette";
-
-    const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra instructions provided.";
-
-    const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece:\n\n` + 
-                `• Dimension: ${sizeText}\n` +
-                `• Frame Style: ${frameText}\n` +
-                `• Thread Formulation(s): ${selectedThreadsText}\n` +
-                `• Color Selection(s): ${selectedColorsText}\n\n` +
-                `• Extra Instructions:\n"${customDetails}"\n\n` +
-                `Please calculate the pricing structure and design layout based on these parameters.`;
-    
-    window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
 }
 
 // Upgraded Premium Media Slide and Metadata popup controls
@@ -1019,7 +1028,7 @@ function renderReviews() {
     const doubleList = [...reviews, ...reviews, ...reviews];
     doubleList.forEach(r => {
         const card = document.createElement('div');
-        card.className = 'glass-card p-8 space-y-4 shrink-0 w-80 inline-block whitespace-normal rounded';
+        card.className = 'glass-card p-8 space-y-4 shrink-0 w-80 inline-block whitespace-normal';
         
         let stars = '';
         for (let i = 0; i < r.rating; i++) stars += '<i class="fa-solid fa-star"></i>';
@@ -1202,7 +1211,10 @@ async function handleAdminAddProduct(event) {
             bullets: ["Custom built specifically to your scale", "Lifetime anti-fade thread filament warranty"]
         };
 
+        // Save to Database and Array list
+        await saveProductToDB(newProduct);
         products.push(newProduct);
+        
         saveToStorage();
         renderGallery();
         renderAdminProducts();
@@ -1215,9 +1227,10 @@ async function handleAdminAddProduct(event) {
     }
 }
 
-function deleteProductFromAdmin(id) {
+async function deleteProductFromAdmin(id) {
     if (confirm('Verify: Do you want to wipe this record from your live portfolio catalog?')) {
         products = products.filter(p => p.id.toString() !== id.toString());
+        await deleteProductFromDB(id);
         saveToStorage();
         renderGallery();
         renderAdminProducts();
@@ -1252,7 +1265,7 @@ function importCatalog(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         const text = e.target.result;
         const lines = text.split('\n');
         const importedList = [];
@@ -1263,7 +1276,7 @@ function importCatalog(event) {
             
             const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
             if (cols.length >= 8) {
-                importedList.push({
+                const item = {
                     id: cols[0].replace(/"/g, '').trim(),
                     name: cols[1].replace(/"/g, '').trim(),
                     category: cols[2].replace(/"/g, '').trim(),
@@ -1275,7 +1288,9 @@ function importCatalog(event) {
                     multiImages: cols[8] ? cols[8].replace(/"/g, '').trim() : "",
                     video: cols[9] ? cols[9].replace(/"/g, '').trim() : "",
                     desc: cols[10] ? cols[10].replace(/"/g, '').trim() : ""
-                });
+                };
+                importedList.push(item);
+                await saveProductToDB(item);
             }
         }
         
