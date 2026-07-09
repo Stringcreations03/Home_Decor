@@ -1196,6 +1196,7 @@ function renderAdminProducts() {
 }
 
 // Local File Media Publisher integration
+// Advanced Async Local Media Publisher with 17 Customizable Specs
 async function handleAdminAddProduct(event) {
     event.preventDefault();
 
@@ -1207,6 +1208,23 @@ async function handleAdminAddProduct(event) {
     const threads = parseInt(document.getElementById('admin-p-threads').value);
     const desc = document.getElementById('admin-p-desc').value;
 
+    // Read Newly added optional spec values manually
+    const artType = document.getElementById('admin-p-arttype').value.trim() || "Custom Selected Aesthetics";
+    const boardSize = document.getElementById('admin-p-boardsize').value.trim() || "Tailored to Order";
+    const boardColor = document.getElementById('admin-p-boardcolor').value.trim() || "Obsidian Velvet Matte Black";
+    const frameType = document.getElementById('admin-p-frametype').value.trim() || "Authentic Stained Hardwood Profile";
+    const frameColor = document.getElementById('admin-p-framecolor').value.trim() || "Aesthetic Vintage Gold Trim";
+    const threadMaterial = document.getElementById('admin-p-threadmaterial').value.trim() || "German Filament Silk Core";
+    const threadThickness = document.getElementById('admin-p-threadthickness').value.trim() || "0.6mm Micro-tension";
+    const threadSize = document.getElementById('admin-p-threadsize').value.trim() || "No. 3 Archival Weft";
+    const threadColor = document.getElementById('admin-p-threadcolor').value.trim() || "Concentric Customized Hue";
+    const difficulty = document.getElementById('admin-p-difficulty').value.trim() || "Custom Grade";
+    const availability = document.getElementById('admin-p-availability').value.trim() || "In Stock (Custom Built to Order)";
+    
+    const bulletsRaw = document.getElementById('admin-p-bullets').value.trim();
+    const bullets = bulletsRaw ? bulletsRaw.split(',').map(b => b.trim()) : ["Custom built specifically to your scale", "Lifetime anti-fade thread filament warranty"];
+
+    // Media references
     const primaryImgFile = document.getElementById('admin-p-img-file').files[0];
     const multiImgFiles = document.getElementById('admin-p-multi-images-file').files;
     const videoFile = document.getElementById('admin-p-video-file').files[0];
@@ -1215,6 +1233,72 @@ async function handleAdminAddProduct(event) {
         alert("Action Required: Please select either a primary display photo or video file.");
         return;
     }
+
+    showToast("Publishing local media assets... please wait.");
+
+    try {
+        let primaryImgBase64 = "";
+        if (primaryImgFile) {
+            primaryImgBase64 = await compressImagePromise(primaryImgFile);
+        }
+
+        let multiImagesBase64 = [];
+        if (multiImgFiles.length > 0) {
+            for (let i = 0; i < multiImgFiles.length; i++) {
+                const compressed = await compressImagePromise(multiImgFiles[i]);
+                multiImagesBase64.push(compressed);
+            }
+        }
+
+        let videoBase64 = "";
+        if (videoFile) {
+            videoBase64 = await readVideoPromise(videoFile);
+        }
+
+        // Formulate dynamic masterpiece details object (Including custom parameters entered)
+        const newProduct = {
+            id: 'p-' + Date.now(),
+            name,
+            category,
+            price,
+            hours,
+            nails,
+            threads,
+            desc,
+            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=Video+Only",
+            multiImages: multiImagesBase64.join(', '),
+            video: videoBase64,
+            artType,
+            boardSize,
+            boardColor,
+            frameType,
+            frameColor,
+            threadMaterial,
+            threadThickness,
+            threadSize,
+            threadColor,
+            difficulty,
+            dateAdded: new Date().toISOString().split('T')[0],
+            tags: ["Direct Upload", "Aesthetics"],
+            rating: 5,
+            availability,
+            bullets
+        };
+
+        await saveProductToDB(newProduct);
+        products.push(newProduct);
+        
+        saveToStorage();
+        renderGallery();
+        renderAdminProducts();
+        renderAdminDragList();
+
+        event.target.reset();
+        showToast("Masterpiece uploaded with customized parameters!");
+    } catch (err) {
+        alert(err);
+    }
+}
 
     showToast("Publishing local media assets... please wait.");
 
