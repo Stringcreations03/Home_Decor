@@ -42,7 +42,7 @@
         }
     </script>
     
-    <!-- Link to the External Custom Style Sheet (No Query strings to support Local file:/// protocol) -->
+    <!-- Link to the External Custom Style Sheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
@@ -136,6 +136,9 @@
             </div>
         </div>
     </header>
+
+    <!-- Invisible Google Translate Container (Hidden inline to prevent loading blockages) -->
+    <div id="google_translate_element" style="opacity: 0; position: absolute; pointer-events: none; width: 0; height: 0; overflow: hidden;"></div>
 
     <!-- Slide-over Premium Mobile Navigation Menu Drawer -->
     <div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-xs bg-luxuryBlack border-l border-luxuryGold/20 z-55 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
@@ -604,25 +607,8 @@
                                 <option value="portrait">Portrait</option>
                                 <option value="mandala">Mandala</option>
                                 <option value="corporate-logos">Corporate Logos</option>
-                                <option value="company-name-art">Company Name Art</option>
-                                <option value="business-branding">Business Branding</option>
-                                <option value="family-portrait">Family Portrait</option>
-                                <option value="wedding">Wedding Portrait</option>
-                                <option value="baby">Baby Portraits</option>
-                                <option value="pet">Pet String Art</option>
-                                <option value="couple">Couple Portraits</option>
-                                <option value="lord-krishna">Lord Krishna</option>
-                                <option value="shiva">Shiva Art</option>
-                                <option value="ganesh">Ganesh Art</option>
-                                <option value="radha-krishna">Radha Krishna</option>
-                                <option value="mahadev">Mahadev</option>
-                                <option value="motivational-quotes">Motivational Quotes</option>
-                                <option value="typography">Typography</option>
-                                <option value="abstract">Abstract Patterns</option>
-                                <option value="minimal">Minimal Designs</option>
-                                <option value="wall-decor">Wall Decor</option>
-                                <option value="luxury-collection">Luxury Collection</option>
                                 <option value="custom-design">Custom Design</option>
+                                <option value="luxury-collection">Luxury Collection</option>
                             </select>
                         </div>
                         <div class="grid grid-cols-2 gap-2">
@@ -851,7 +837,7 @@
                     <!-- Dynamic Navigation controls (Previous / Next) -->
                     <div class="flex justify-between items-center pt-2">
                         <button id="prev-product-btn" class="text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryGold transition font-bold"><i class="fa-solid fa-chevron-left mr-2"></i> Previous Art</button>
-                        <button id="next-product-btn" class="text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryGold transition font-bold">Next Art <i class="fa-solid fa-chevron-right ml-2"></i></button>
+                        <button id="next-product-btn" class="text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryGold transition font-bold">Next Art <i class="fa-solid fa-chevron-right mr-2"></i></button>
                     </div>
                 </div>
 
@@ -976,7 +962,7 @@
             <div class="space-y-4">
                 <div class="flex items-center space-x-3 group" onclick="openLightbox('logo.jpg')">
                     <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105 cursor-zoom-in">
-                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
                     </div>
                     <div class="font-serif text-base lg:text-lg font-bold tracking-[0.08em] flex items-center space-x-1 logo-glowing-effect cursor-zoom-in">
                         <span class="brand-string">STRING</span>
@@ -1035,7 +1021,7 @@
         </div>
     </footer>
 
-    <!-- Google Translate Script Connection (Absolute Protocol Forced) -->
+    <!-- Google Translate Script Connection -->
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- External JavaScript Connections -->
