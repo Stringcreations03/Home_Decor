@@ -1,5 +1,5 @@
-// Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 12 Feet (144 Inches)
-const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144];
+// Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 8 Feet (96 Inches)
+const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96];
 
 // Searchable Thread Selection values
 const availableThreads = [
@@ -175,7 +175,10 @@ const defaultProducts = [
 const defaultReviews = [
     { name: "Jaymin Patel", rating: 5, text: "The portrait string art looks remarkably detailed. Custom crafted and delivered with immense protective packaging." },
     { name: "Aarav Mehta", rating: 5, text: "The portrait of Radha Krishna has transformed our foyer completely. Absolutely breath-taking attention to detail." },
-    { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates. Outstanding!" }
+    { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates. Outstanding!" },
+    { name: "Siddharth Sen", rating: 5, text: "A masterpiece that commands attention. Under spotlight, the gold thread reflects a mesmerizing aura." },
+    { name: "Clara Dupont", rating: 5, text: "Exceptional luxury decor. The custom white frame option matched my minimalist apartment beautifully." },
+    { name: "Kavar K", rating: 5, text: "Immensely detailed couple portrait. Excellent support during photo review selection on WhatsApp." }
 ];
 
 // 100% Stable Synchronous LocalStorage Engine Loader
@@ -498,13 +501,16 @@ function renderGallery() {
     renderGalleryGrid(products);
 }
 
+// Active auto-scroll tracker registry
+let activeMarqueeScrolls = {};
+
 function renderGalleryGrid(items) {
     const container = document.getElementById('gallery-grid');
     if (!container) return;
     container.innerHTML = '';
 
     if (items.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+        container.innerHTML = `<p class="text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
         return;
     }
 
@@ -545,174 +551,49 @@ function renderGalleryGrid(items) {
     rows.forEach((rowItems, rowIndex) => {
         const rowId = `marquee-row-${rowIndex}`;
         const rowWrapper = document.createElement('div');
-        rowWrapper.className = "gallery-marquee-container py-2 relative";
+        rowWrapper.className = "relative w-full overflow-hidden";
         
-        const constantSpeedFactor = 4.2; 
-        const calculatedDuration = Math.max(15, rowItems.length * constantSpeedFactor);
+        // Double items array list to secure continuous loop spacing with no gaps
+        const doubleList = [...rowItems, ...rowItems, ...rowItems];
 
-        // Overlay manual arrow control buttons
+        // Overlay manual arrow control buttons outside the scrollbox (Rule 2)
         rowWrapper.innerHTML = `
             <button class="marquee-arrow-btn marquee-arrow-left" onclick="shiftMarquee('${rowId}', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="marquee-arrow-btn marquee-arrow-right" onclick="shiftMarquee('${rowId}', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
-        `;
-
-        const doubleList = [...rowItems, ...rowItems, ...rowItems];
-        const contentDiv = document.createElement('div');
-        contentDiv.id = rowId;
-        contentDiv.className = "gallery-marquee-content space-x-6";
-        contentDiv.style.animationDuration = `${calculatedDuration}s`; 
-        
-        contentDiv.innerHTML = doubleList.map(p => `
-            <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
-                <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
-                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
-                    <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest rounded font-semibold">${p.artType || 'String Art'}</div>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
-                    <p class="text-xs text-gray-400 font-light leading-relaxed truncate mt-1">${p.desc || ''}</p>
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-2">${p.nails || '360'} Nails • ${p.hours || '18 Hours'} Crafted</p>
-                    <div class="flex justify-between items-center mt-5">
-                        <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
-                        <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
-                            Add to Bag
-                        </button>
-                    </div>
+            
+            <div id="${rowId}" class="gallery-marquee-container py-2">
+                <div class="gallery-marquee-content">
+                    ${doubleList.map(p => `
+                        <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
+                            <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
+                                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
+                                <div class="absolute top-4 right-4 bg-luxuryBlack/85 border border-luxuryGold/20 text-luxuryGold text-[9px] px-3 py-1 uppercase tracking-widest rounded font-semibold">${p.artType || 'String Art'}</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
+                                <p class="text-xs text-gray-400 font-light leading-relaxed truncate mt-1">${p.desc || ''}</p>
+                                <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-2">${p.nails || '360'} Nails • ${p.hours || '18 Hours'} Crafted</p>
+                                <div class="flex justify-between items-center mt-5">
+                                    <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
+                                    <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
+                                        Add to Bag
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
-        `).join('');
+        `;
 
-        rowWrapper.appendChild(contentDiv);
         container.appendChild(rowWrapper);
-    });
-}
-
-// HTML5 Drag and Drop Sorting Controller
-function renderAdminDragList() {
-    const container = document.getElementById('admin-drag-container');
-    if (!container) return;
-    container.innerHTML = products.map((p, idx) => `
-        <div class="flex items-center space-x-4 p-3 bg-luxuryBlack/50 border border-luxuryGold/10 rounded cursor-grab active:cursor-grabbing hover:border-luxuryGold/40 transition duration-300 select-none" draggable="true" ondragstart="handleDragStart(event, ${idx})" ondragover="handleDragOver(event)" ondrop="handleDragDrop(event, ${idx})">
-            <span class="text-xs text-gray-600 font-bold">#${idx + 1}</span>
-            <img src="${p.img}" class="h-10 w-10 object-cover rounded border border-luxuryGold/20" alt="Drag preview" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
-            <span class="text-xs font-semibold text-luxuryCream flex-1 truncate">${p.name}</span>
-            <span class="text-[10px] text-luxuryGold font-serif font-bold">${formatVal(p.price)}</span>
-            <span class="text-[10px] text-gray-500 uppercase tracking-wider flex items-center gap-1"><i class="fa-solid fa-arrows-up-down"></i> Sort</span>
-        </div>
-    `).join('');
-}
-
-let dragSourceIdx = null;
-function handleDragStart(e, idx) {
-    dragSourceIdx = idx;
-    e.dataTransfer.effectAllowed = 'move';
-}
-function handleDragOver(e) {
-    e.preventDefault();
-}
-
-function handleDragDrop(e, targetIdx) {
-    e.preventDefault();
-    if (dragSourceIdx !== null && dragSourceIdx !== targetIdx) {
-        const movedItem = products.splice(dragSourceIdx, 1)[0];
-        products.splice(targetIdx, 0, movedItem);
         
-        saveToStorage();
-        renderGallery();
-        renderAdminDragList();
-        renderAdminProducts();
-        showToast("Display Order saved to storage.");
-    }
-}
-
-// 35+ Types Accordion
-function renderStringArtDirectory() {
-    const container = document.getElementById('string-art-index-accordion');
-    if (!container) return;
-    container.innerHTML = '';
-    stringArtTypes.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'glass-card p-4 transition-all duration-300 border border-luxuryGold/10 hover:border-luxuryGold/35 rounded';
-        itemDiv.innerHTML = `
-            <div class="flex justify-between items-center cursor-pointer select-none pb-2 border-b border-luxuryGold/5" onclick="toggleAccordionSection(${index})">
-                <span class="font-serif text-base text-luxuryGold font-semibold uppercase tracking-wider">${item.title}</span>
-                <span id="accordion-icon-${index}" class="text-luxuryGold text-xs"><i class="fa-solid fa-chevron-down"></i></span>
-            </div>
-            <div id="accordion-content-${index}" class="hidden pt-4 space-y-4 animate-fadeIn">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                    <img src="${item.img}" class="w-full h-32 object-cover rounded border border-luxuryGold/10" alt="Preview Image" onerror="this.src='https://via.placeholder.com/300/161616/d4af37?text=SC03'">
-                    <p class="text-xs text-gray-400 leading-relaxed">${item.content}</p>
-                </div>
-                <button onclick="triggerArtClassPreview('${item.title}')" class="w-full bg-luxuryGold/15 hover:bg-luxuryGold/30 text-luxuryGold text-[10px] uppercase tracking-widest py-2 font-bold border border-luxuryGold/30 rounded">
-                    Preview Loop Coordinates
-                </button>
-            </div>
-        `;
-        container.appendChild(itemDiv);
+        // Fire continuous auto-scroll interval thread
+        initMarqueeAutoScroll(rowId);
     });
 }
 
-function toggleAccordionSection(idx) {
-    const block = document.getElementById(`accordion-content-${idx}`);
-    const icon = document.getElementById(`accordion-icon-${idx}`);
-    block.classList.toggle('hidden');
-    icon.innerHTML = block.classList.contains('hidden') ? '<i class="fa-solid fa-chevron-down"></i>' : '<i class="fa-solid fa-chevron-up"></i>';
-}
-
-function triggerArtClassPreview(title) {
-    document.getElementById('class-modal-title').innerText = title;
-    document.getElementById('class-modal-desc').innerText = `Handcrafted custom loops specifically calibrated for standard ${title} arrangements. Fully customizable dynamic thread densities.`;
-    document.getElementById('art-class-modal').classList.remove('hidden');
-}
-
-function toggleArtClassModal() {
-    document.getElementById('art-class-modal').classList.toggle('hidden');
-}
-
-// Custom Studio Lists Setup
-function renderSearchableLists() {
-    const threadList = document.getElementById('thread-list');
-    const colorList = document.getElementById('color-list');
-    
-    if (threadList) {
-        threadList.innerHTML = availableThreads.map(t => `
-            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-thread">
-                <input type="checkbox" name="custom-threads" value="${t}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
-                <span class="thread-name-span">${t}</span>
-            </label>
-        `).join('');
-    }
-    if (colorList) {
-        colorList.innerHTML = availableColors.map(c => `
-            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-color">
-                <input type="checkbox" name="custom-colors" value="${c}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
-                <span class="color-name-span">${c}</span>
-            </label>
-        `).join('');
-    }
-}
-
-function filterSearchableList(type) {
-    if (type === 'thread') {
-        const query = document.getElementById('thread-search').value.toLowerCase().trim();
-        const items = document.querySelectorAll('.list-item-thread');
-        items.forEach(item => {
-            const text = item.querySelector('.thread-name-span').innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-    } else {
-        const query = document.getElementById('color-search').value.toLowerCase().trim();
-        const items = document.querySelectorAll('.list-item-color');
-        items.forEach(item => {
-            const text = item.querySelector('.color-name-span').innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
-    }
-}
-
-// Arrow Shifter Logic
-let marqueeManualOffsets = {};
 // Dynamic Asynchronous Smooth Slider loop (Rule 1 & 2)
 function initMarqueeAutoScroll(rowId) {
     const container = document.getElementById(rowId);
@@ -772,21 +653,137 @@ function shiftMarquee(rowId, direction) {
     container.scrollTimeout = setTimeout(() => {
         container.style.scrollBehavior = 'auto';
         activeMarqueeScrolls[rowId] = 'running';
-    }, 1500); 
+    }, 1500); // 1.5 seconds cooldown
 }
 
-    const shiftLength = 300; 
-    if (direction === 'left') {
-        marqueeManualOffsets[rowId] += shiftLength;
-    } else {
-        marqueeManualOffsets[rowId] -= shiftLength;
+// HTML5 Drag and Drop Sorting Controller
+function renderAdminDragList() {
+    const container = document.getElementById('admin-drag-container');
+    if (!container) return;
+    container.innerHTML = products.map((p, idx) => `
+        <div class="flex items-center space-x-4 p-3 bg-luxuryBlack/50 border border-luxuryGold/10 rounded cursor-grab active:cursor-grabbing hover:border-luxuryGold/40 transition duration-300 select-none" draggable="true" ondragstart="handleDragStart(event, ${idx})" ondragover="handleDragOver(event)" ondrop="handleDragDrop(event, ${idx})">
+            <span class="text-xs text-gray-600 font-bold">#${idx + 1}</span>
+            <img src="${p.img}" class="h-10 w-10 object-cover rounded border border-luxuryGold/20" alt="Drag preview" onerror="this.src='https://via.placeholder.com/150/161616/d4af37?text=SC03'">
+            <span class="text-xs font-semibold text-luxuryCream flex-1 truncate">${p.name}</span>
+            <span class="text-[10px] text-luxuryGold font-serif font-bold">${formatVal(p.price)}</span>
+            <span class="text-[10px] text-gray-500 uppercase tracking-wider flex items-center gap-1"><i class="fa-solid fa-arrows-up-down"></i> Sort</span>
+        </div>
+    `).join('');
+}
+
+let dragSourceIdx = null;
+function handleDragStart(e, idx) {
+    dragSourceIdx = idx;
+    e.dataTransfer.effectAllowed = 'move';
+}
+function handleDragOver(e) {
+    e.preventDefault();
+}
+
+function handleDragDrop(e, targetIdx) {
+    e.preventDefault();
+    if (dragSourceIdx !== null && dragSourceIdx !== targetIdx) {
+        const movedItem = products.splice(dragSourceIdx, 1)[0];
+        products.splice(targetIdx, 0, movedItem);
+        
+        saveToStorage();
+        renderGallery();
+        renderAdminDragList();
+        renderAdminProducts();
+        showToast("Display Order saved to LocalStorage.");
     }
-
-    track.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
-    track.style.transform = `translateX(${marqueeManualOffsets[rowId]}px)`;
 }
 
-// Media Slide Popup Modal
+// Advanced 35+ Types Accordion
+function renderStringArtDirectory() {
+    const container = document.getElementById('string-art-index-accordion');
+    if (!container) return;
+    container.innerHTML = '';
+    stringArtTypes.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'glass-card p-4 transition-all duration-300 border border-luxuryGold/10 hover:border-luxuryGold/35 rounded';
+        itemDiv.innerHTML = `
+            <div class="flex justify-between items-center cursor-pointer select-none pb-2 border-b border-luxuryGold/5" onclick="toggleAccordionSection(${index})">
+                <span class="font-serif text-base text-luxuryGold font-semibold uppercase tracking-wider">${item.title}</span>
+                <span id="accordion-icon-${index}" class="text-luxuryGold text-xs"><i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+            <div id="accordion-content-${index}" class="hidden pt-4 space-y-4 animate-fadeIn">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <img src="${item.img}" class="w-full h-32 object-cover rounded border border-luxuryGold/10" alt="Preview Image" onerror="this.src='https://via.placeholder.com/300/161616/d4af37?text=SC03'">
+                    <p class="text-xs text-gray-400 leading-relaxed">${item.content}</p>
+                </div>
+                <button onclick="triggerArtClassPreview('${item.title}')" class="w-full bg-luxuryGold/15 hover:bg-luxuryGold/30 text-luxuryGold text-[10px] uppercase tracking-widest py-2 font-bold border border-luxuryGold/30 rounded">
+                    Preview Loop Coordinates
+                </button>
+            </div>
+        `;
+        container.appendChild(itemDiv);
+    });
+}
+
+function toggleAccordionSection(idx) {
+    const block = document.getElementById(`accordion-content-${idx}`);
+    const icon = document.getElementById(`accordion-icon-${idx}`);
+    block.classList.toggle('hidden');
+    if (block.classList.contains('hidden')) {
+        icon.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+    } else {
+        icon.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+    }
+}
+
+function triggerArtClassPreview(title) {
+    document.getElementById('class-modal-title').innerText = title;
+    document.getElementById('class-modal-desc').innerText = `Handcrafted custom loops specifically calibrated for standard ${title} arrangements. Fully customizable dynamic thread densities.`;
+    document.getElementById('art-class-modal').classList.remove('hidden');
+}
+
+function toggleArtClassModal() {
+    document.getElementById('art-class-modal').classList.toggle('hidden');
+}
+
+// Custom Studio Lists Setup
+function renderSearchableLists() {
+    const threadList = document.getElementById('thread-list');
+    const colorList = document.getElementById('color-list');
+    
+    if (threadList) {
+        threadList.innerHTML = availableThreads.map(t => `
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-thread">
+                <input type="checkbox" name="custom-threads" value="${t}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
+                <span class="thread-name-span">${t}</span>
+            </label>
+        `).join('');
+    }
+    if (colorList) {
+        colorList.innerHTML = availableColors.map(c => `
+            <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-color">
+                <input type="checkbox" name="custom-colors" value="${c}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
+                <span class="color-name-span">${c}</span>
+            </label>
+        `).join('');
+    }
+}
+
+function filterSearchableList(type) {
+    if (type === 'thread') {
+        const query = document.getElementById('thread-search').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.list-item-thread');
+        items.forEach(item => {
+            const text = item.querySelector('.thread-name-span').innerText.toLowerCase();
+            item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+    } else {
+        const query = document.getElementById('color-search').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.list-item-color');
+        items.forEach(item => {
+            const text = item.querySelector('.color-name-span').innerText.toLowerCase();
+            item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+    }
+}
+
+// Upgraded Premium Media Slide and Metadata popup controls
 let activeProductForCertificate = null;
 function openProductModal(id) {
     const currentIdx = products.findIndex(p => p.id.toString() === id.toString());
@@ -795,6 +792,7 @@ function openProductModal(id) {
     const item = products[currentIdx];
     activeProductForCertificate = item;
 
+    // Reset Slide View
     const imgFrame = document.getElementById('modal-img');
     imgFrame.src = item.img;
     imgFrame.classList.remove('hidden');
@@ -807,12 +805,14 @@ function openProductModal(id) {
     document.getElementById('modal-discount-price').innerText = item.discountPrice ? formatVal(item.discountPrice) : "";
     document.getElementById('modal-desc').innerText = item.desc || "";
 
+    // Stars Rating generator
     const starsContainer = document.getElementById('modal-stars-container');
     let starsHTML = '';
     const rating = item.rating || 5;
     for (let i = 0; i < rating; i++) starsHTML += '<i class="fa-solid fa-star"></i>';
     starsContainer.innerHTML = starsHTML;
 
+    // Render Bullet List
     const bulletContainer = document.getElementById('modal-bullet-list');
     bulletContainer.innerHTML = '';
     if (item.bullets) {
@@ -823,6 +823,7 @@ function openProductModal(id) {
         bulletContainer.innerHTML = `<li>100% Manual Weaving Setup</li><li>Lifetime Archival Quality Guarantee</li>`;
     }
 
+    // Specs Table builder (17 Essential metrics)
     const specsTable = document.getElementById('specs-table-body');
     const specsData = [
         { k: "Product Name", v: item.name },
@@ -851,6 +852,7 @@ function openProductModal(id) {
         </tr>
     `).join('');
 
+    // Multi Image Slider dot navigation list
     const previewsContainer = document.getElementById('modal-media-previews');
     previewsContainer.innerHTML = '';
 
@@ -909,6 +911,7 @@ function openProductModal(id) {
     document.getElementById('product-modal').classList.remove('hidden');
 }
 
+// Premium Lightbox Functions
 function openLightbox(src) {
     const lb = document.getElementById('lightbox-modal');
     const lbImg = document.getElementById('lightbox-img');
