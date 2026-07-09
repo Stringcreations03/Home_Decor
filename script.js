@@ -52,7 +52,7 @@ const stringArtTypes = [
     { title: "Fractal Mathematical Art", content: "Never-ending geometrical designs built from highly complex, recursive nail configurations.", img: "https://images.unsplash.com/photo-1507208773393-4001fc56622d?auto=format&fit=crop&q=80&w=400" }
 ];
 
-// Complete specifications metadata mapping (Unified default data set)
+// Complete specifications default database (fallback)
 const defaultProducts = [
     {
         id: "p1",
@@ -192,32 +192,41 @@ let currentStep15 = 0;
 let step7Interval = null;
 let step15Interval = null;
 
-// IndexedDB Database Core Configuration (Rules 5 - Local Storage safety limit bypass)
+// IndexedDB Core Configuration
 const dbName = "StringCreations03_IndexedDB";
 const dbVersion = 1;
 let db = null;
 
 function initDB() {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open(dbName, dbVersion);
-        request.onupgradeneeded = function (e) {
-            const database = e.target.result;
-            if (!database.objectStoreNames.contains("products")) {
-                database.createObjectStore("products", { keyPath: "id" });
+        try {
+            if (!window.indexedDB) {
+                reject("IndexedDB not supported in this browser.");
+                return;
             }
-        };
-        request.onsuccess = function (e) {
-            db = e.target.result;
-            resolve(db);
-        };
-        request.onerror = function () {
-            reject("Local IndexedDB Database initialization failed.");
-        };
+            const request = indexedDB.open(dbName, dbVersion);
+            request.onupgradeneeded = function (e) {
+                const database = e.target.result;
+                if (!database.objectStoreNames.contains("products")) {
+                    database.createObjectStore("products", { keyPath: "id" });
+                }
+            };
+            request.onsuccess = function (e) {
+                db = e.target.result;
+                resolve(db);
+            };
+            request.onerror = function () {
+                reject("Local Database blocked or failed to initialize.");
+            };
+        } catch (error) {
+            reject("IndexedDB blocked by security policy.");
+        }
     });
 }
 
 function getAllProductsFromDB() {
     return new Promise((resolve) => {
+        if (!db) return resolve([]);
         const transaction = db.transaction(["products"], "readonly");
         const store = transaction.objectStore("products");
         const request = store.getAll();
@@ -229,6 +238,7 @@ function getAllProductsFromDB() {
 
 function saveProductToDB(product) {
     return new Promise((resolve) => {
+        if (!db) return resolve();
         const transaction = db.transaction(["products"], "readwrite");
         const store = transaction.objectStore("products");
         const request = store.put(product);
@@ -240,6 +250,7 @@ function saveProductToDB(product) {
 
 function deleteProductFromDB(id) {
     return new Promise((resolve) => {
+        if (!db) return resolve();
         const transaction = db.transaction(["products"], "readwrite");
         const store = transaction.objectStore("products");
         const request = store.delete(id);
@@ -249,13 +260,11 @@ function deleteProductFromDB(id) {
     });
 }
 
-// Clean Database Bootloader
 async function loadProductsAndInit() {
     try {
         await initDB();
         let stored = await getAllProductsFromDB();
         if (!stored || stored.length === 0) {
-            // Seed database with highly stylized default products
             for (let p of defaultProducts) {
                 await saveProductToDB(p);
             }
@@ -263,14 +272,11 @@ async function loadProductsAndInit() {
         } else {
             products = stored;
         }
-        
-        // Populate view panels
         populateCustomSelectors();
         renderGallery();
         renderAdminProducts();
         renderAdminDragList();
     } catch (err) {
-        showToast("Database loading failed. Falling back to default list.");
         products = [...defaultProducts];
         populateCustomSelectors();
         renderGallery();
@@ -278,11 +284,14 @@ async function loadProductsAndInit() {
 }
 
 // Toast Helper
-function showToast(message) {
+function showToast(message, type = 'success') {
     const container = document.getElementById('toast-container');
     if (!container) return;
     const toast = document.createElement('div');
     toast.className = 'glass-card text-xs text-luxuryGold font-medium px-5 py-3 shadow-2xl uppercase tracking-widest animate-fadeIn pointer-events-auto';
+    if (type === 'error') {
+        toast.className = 'glass-card text-xs text-red-400 font-medium px-5 py-3 shadow-2xl uppercase tracking-widest animate-fadeIn pointer-events-auto border-red-500/50';
+    }
     toast.innerText = message;
     container.appendChild(toast);
     setTimeout(() => {
@@ -291,7 +300,7 @@ function showToast(message) {
     }, 3000);
 }
 
-// Section Router
+// Router
 function showSection(viewId) {
     const views = document.querySelectorAll('.app-route-view');
     views.forEach(v => v.classList.add('hidden'));
@@ -319,7 +328,7 @@ function compressImagePromise(file) {
                 
                 let width = img.width;
                 let height = img.height;
-                const max_size = 900; // Optimal HD resolution for web marquee sliders
+                const max_size = 900; 
                 if (width > height) {
                     if (width > max_size) {
                         height *= max_size / width;
@@ -334,8 +343,6 @@ function compressImagePromise(file) {
                 canvas.width = width;
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
-                
-                // Export as lightweight JPEG with 0.65 quality to prevent localstorage crash
                 const dataUrl = canvas.toDataURL('image/jpeg', 0.65);
                 resolve(dataUrl);
             };
@@ -346,8 +353,8 @@ function compressImagePromise(file) {
 // Local Video File converter helper
 function readVideoPromise(file) {
     return new Promise((resolve, reject) => {
-        if (file.size > 15 * 1024 * 1024) { // 15MB Size safety validation
-            reject("Error: Video file is too large! Please limit size to 15MB to secure Storage space.");
+        if (file.size > 15 * 1024 * 1024) { 
+            reject("Error: Video file size exceeds the 15MB storage safety limit.");
             return;
         }
         const reader = new FileReader();
@@ -356,30 +363,27 @@ function readVideoPromise(file) {
             resolve(e.target.result);
         };
         reader.onerror = function () {
-            reject("Failed to read video format data.");
+            reject("Failed to parse local video data.");
         };
     });
 }
 
-// Initialize Core Functions
+// Initialize on Loaded DOM Content
 window.addEventListener('DOMContentLoaded', async () => {
     await loadProductsAndInit();
     renderReviews();
     renderStringArtDirectory();
     updateCartCount();
     renderSearchableLists();
-    
-    // Loop Step Timers Initialization
     startProcessSequentialReveal();
 });
 
-// Format Dimensions Helper
 function formatToFt(inch) {
     const ft = inch / 12;
     return Number.isInteger(ft) ? `${ft}ft` : `${ft.toFixed(1)}ft`;
 }
 
-// Process Steps Auto Loop Functionality (Rule 3)
+// Process Steps Auto Loop System
 function startProcessSequentialReveal() {
     const cards7 = document.querySelectorAll('#process-tab-content-1 .process-step-card');
     const cards15 = document.querySelectorAll('#process-tab-content-2 .heritage-step-card');
@@ -409,7 +413,6 @@ function startProcessSequentialReveal() {
     }
 }
 
-// Tab Switchers for Our Process Section
 function switchProcessTab(tabName) {
     const tab1 = document.getElementById('process-tab-content-1');
     const tab2 = document.getElementById('process-tab-content-2');
@@ -434,7 +437,7 @@ function showCustomSpecsTab() {
     switchProcessTab('checklist');
 }
 
-// Currency switch converter
+// Currency Swappers
 function switchCurrency() {
     activeCurrency = document.getElementById('currency-switcher').value;
     const mobileSel = document.getElementById('currency-switcher-mobile');
@@ -451,7 +454,10 @@ function switchCurrencyMobile(val) {
     switchCurrency();
 }
 
-// Language Switcher Interface with Dual Drawer Synchronization
+// Language API Toggler (Anti-crash safety guard limit)
+let isTranslateScriptLoading = false;
+let translateRetryCount = 0;
+
 function changeLanguage(langCode) {
     const desktopSel = document.getElementById('lang-selector');
     const mobileSel = document.getElementById('lang-selector-mobile');
@@ -464,11 +470,19 @@ function changeLanguage(langCode) {
         selectEl.dispatchEvent(new Event('change'));
         showToast(`Language translated to ${langCode.toUpperCase()}`);
     } else {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.body.appendChild(script);
-        setTimeout(() => { changeLanguage(langCode); }, 1200);
+        if (translateRetryCount > 3) {
+            showToast("Translation engine unreachable (Blocked or Offline)", "error");
+            return;
+        }
+        if (!isTranslateScriptLoading) {
+            isTranslateScriptLoading = true;
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            document.body.appendChild(script);
+        }
+        translateRetryCount++;
+        setTimeout(() => { changeLanguage(langCode); }, 1500);
     }
 }
 
@@ -478,7 +492,7 @@ function formatVal(inrVal) {
     return `${currencySymbols[activeCurrency]}${Math.round(converted).toLocaleString('en-IN')}`;
 }
 
-// Search Overlay Controls
+// Search Module
 function toggleSearch() {
     document.getElementById('search-overlay').classList.toggle('hidden');
 }
@@ -493,7 +507,6 @@ function handleSearch(event) {
     }
 }
 
-// Dropdown Gallery Filter Integration
 function handleDropdownFilter(val) {
     if (!val) return;
     const buttons = document.querySelectorAll('.gallery-filter-btn');
@@ -506,14 +519,19 @@ function handleDropdownFilter(val) {
 }
 
 function filterGallery(category) {
-    document.getElementById('gallery-category-dropdown').selectedIndex = 0;
+    const dropdown = document.getElementById('gallery-category-dropdown');
+    if (dropdown) dropdown.selectedIndex = 0;
+    
     const buttons = document.querySelectorAll('.gallery-filter-btn');
     buttons.forEach(btn => {
         btn.classList.remove('active', 'bg-luxuryGold/10', 'text-luxuryGold', 'border-luxuryGold');
         btn.classList.add('border-transparent', 'text-gray-400');
     });
-    event.target.classList.add('active', 'bg-luxuryGold/10', 'text-luxuryGold', 'border-luxuryGold');
-    event.target.classList.remove('border-transparent', 'text-gray-400');
+    
+    if (event && event.target && event.target.classList.contains('gallery-filter-btn')) {
+        event.target.classList.add('active', 'bg-luxuryGold/10', 'text-luxuryGold', 'border-luxuryGold');
+        event.target.classList.remove('border-transparent', 'text-gray-400');
+    }
 
     if (category === 'all') {
         renderGalleryGrid(products);
@@ -523,17 +541,20 @@ function filterGallery(category) {
     }
 }
 
+function renderGallery() {
+    renderGalleryGrid(products);
+}
+
 function renderGalleryGrid(items) {
     const container = document.getElementById('gallery-grid');
     if (!container) return;
     container.innerHTML = '';
 
     if (items.length === 0) {
-        container.innerHTML = `<p class="text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
+        container.innerHTML = `<p class="col-span-full text-center text-xs text-gray-500 uppercase tracking-widest py-12">No masterpieces match your criteria.</p>`;
         return;
     }
 
-    // Create Rows of up to 10 cards to secure performance
     const cardsPerRow = 10;
     const rows = [];
     for (let i = 0; i < items.length; i += cardsPerRow) {
@@ -544,9 +565,7 @@ function renderGalleryGrid(items) {
         const rowWrapper = document.createElement('div');
         rowWrapper.className = "gallery-marquee-container py-2 relative";
         
-        // Double items array list to secure continuous loop spacing with no gaps
         const doubleList = [...rowItems, ...rowItems, ...rowItems];
-        
         const contentDiv = document.createElement('div');
         contentDiv.className = "gallery-marquee-content space-x-6";
         
@@ -576,7 +595,6 @@ function renderGalleryGrid(items) {
     });
 }
 
-// HTML5 Drag and Drop Sorting Controller
 function renderAdminDragList() {
     const container = document.getElementById('admin-drag-container');
     if (!container) return;
@@ -603,11 +621,9 @@ function handleDragOver(e) {
 async function handleDragDrop(e, targetIdx) {
     e.preventDefault();
     if (dragSourceIdx !== null && dragSourceIdx !== targetIdx) {
-        // Re-align memory array
         const movedItem = products.splice(dragSourceIdx, 1)[0];
         products.splice(targetIdx, 0, movedItem);
         
-        // Sync re-arranged items recursively to IndexedDB in target sorting loop
         if (db) {
             const transaction = db.transaction(["products"], "readwrite");
             const store = transaction.objectStore("products");
@@ -617,7 +633,6 @@ async function handleDragDrop(e, targetIdx) {
             }
         }
         
-        // Refresh views
         renderGallery();
         renderAdminDragList();
         renderAdminProducts();
@@ -625,7 +640,7 @@ async function handleDragDrop(e, targetIdx) {
     }
 }
 
-// Advanced 35+ Types Accordion
+// 35+ Types Accordion
 function renderStringArtDirectory() {
     const container = document.getElementById('string-art-index-accordion');
     if (!container) return;
@@ -669,7 +684,7 @@ function toggleArtClassModal() {
     document.getElementById('art-class-modal').classList.toggle('hidden');
 }
 
-// Custom Studio Searchable Lists Framework
+// Searchable Custom lists Builder
 function renderSearchableLists() {
     const threadList = document.getElementById('thread-list');
     const colorList = document.getElementById('color-list');
@@ -692,7 +707,50 @@ function renderSearchableLists() {
     }
 }
 
-// Upgraded Premium Media Slide and Metadata popup controls
+function filterSearchableList(type) {
+    if (type === 'thread') {
+        const query = document.getElementById('thread-search').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.list-item-thread');
+        items.forEach(item => {
+            const text = item.querySelector('.thread-name-span').innerText.toLowerCase();
+            item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+    } else {
+        const query = document.getElementById('color-search').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.list-item-color');
+        items.forEach(item => {
+            const text = item.querySelector('.color-name-span').innerText.toLowerCase();
+            item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+    }
+}
+
+function dispatchCustomOrder() {
+    const sizeSelector = document.getElementById('custom-size');
+    const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
+    const frameSelector = document.getElementById('custom-frame');
+    const frameText = frameSelector.options[frameSelector.selectedIndex].text;
+    
+    const checkedThreads = Array.from(document.querySelectorAll('input[name="custom-threads"]:checked')).map(el => el.value);
+    const selectedThreadsText = checkedThreads.length > 0 ? checkedThreads.join(", ") : "Standard Thread Formulation";
+
+    const checkedColors = Array.from(document.querySelectorAll('input[name="custom-colors"]:checked')).map(el => el.value);
+    const selectedColorsText = checkedColors.length > 0 ? checkedColors.join(", ") : "Standard Dynamic Palette";
+
+    const customDetails = document.getElementById('custom-details-msg').value.trim() || "No extra instructions provided.";
+
+    const msg = `Hello String Creations 03! I am interested in ordering a Custom Masterpiece:\n\n` + 
+                `• Dimension: ${sizeText}\n` +
+                `• Frame Style: ${frameText}\n` +
+                `• Thread Formulation(s): ${selectedThreadsText}\n` +
+                `• Color Selection(s): ${selectedColorsText}\n\n` +
+                `• Extra Instructions:\n"${customDetails}"\n\n` +
+                `Please calculate the pricing structure and design layout based on these parameters.`;
+    
+    window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
+}
+
+// Media Slide Popup Modal
 let activeProductForCertificate = null;
 function openProductModal(id) {
     const currentIdx = products.findIndex(p => p.id.toString() === id.toString());
@@ -701,7 +759,7 @@ function openProductModal(id) {
     const item = products[currentIdx];
     activeProductForCertificate = item;
 
-    // Reset Slide View
+    // Reset slide frames
     const imgFrame = document.getElementById('modal-img');
     imgFrame.src = item.img;
     imgFrame.classList.remove('hidden');
@@ -714,14 +772,14 @@ function openProductModal(id) {
     document.getElementById('modal-discount-price').innerText = item.discountPrice ? formatVal(item.discountPrice) : "";
     document.getElementById('modal-desc').innerText = item.desc || "";
 
-    // Stars Rating generator
+    // Stars rating indicator
     const starsContainer = document.getElementById('modal-stars-container');
     let starsHTML = '';
     const rating = item.rating || 5;
     for (let i = 0; i < rating; i++) starsHTML += '<i class="fa-solid fa-star"></i>';
     starsContainer.innerHTML = starsHTML;
 
-    // Render Bullet List
+    // Bullet points description
     const bulletContainer = document.getElementById('modal-bullet-list');
     bulletContainer.innerHTML = '';
     if (item.bullets) {
@@ -732,7 +790,7 @@ function openProductModal(id) {
         bulletContainer.innerHTML = `<li>100% Manual Weaving Setup</li><li>Lifetime Archival Quality Guarantee</li>`;
     }
 
-    // Specs Table builder (17 Essential metrics)
+    // Dynamic 17-field specs table
     const specsTable = document.getElementById('specs-table-body');
     const specsData = [
         { k: "Product Name", v: item.name },
@@ -761,7 +819,7 @@ function openProductModal(id) {
         </tr>
     `).join('');
 
-    // Multi Image Slider dot navigation list
+    // Previews loader
     const previewsContainer = document.getElementById('modal-media-previews');
     previewsContainer.innerHTML = '';
 
@@ -778,21 +836,18 @@ function openProductModal(id) {
         previewsContainer.appendChild(dot);
     };
 
-    // Active primary image dot
     addPreviewDot('image', item.img);
 
-    // Parsing MultiImages list
     if (item.multiImages) {
         const imgUrls = item.multiImages.split(',').map(url => url.trim());
         imgUrls.forEach(url => { if (url) addPreviewDot('image', url); });
     }
 
-    // Video preview integration
     if (item.video) {
         addPreviewDot('video', item.video, true);
     }
 
-    // Next / Prev Masterpiece triggers
+    // Previous and Next Masterpieces binding
     const prevBtn = document.getElementById('prev-product-btn');
     const nextBtn = document.getElementById('next-product-btn');
     
@@ -802,7 +857,7 @@ function openProductModal(id) {
     prevBtn.onclick = () => { openProductModal(products[prevIdx].id); };
     nextBtn.onclick = () => { openProductModal(products[nextIdx].id); };
 
-    // Dynamic Action redirects mapping
+    // Sharing and Inquiry Triggers
     document.getElementById('modal-whatsapp-btn').onclick = () => {
         const text = `Greetings! I am interested in inquiring about "${item.name}" valued at ${formatVal(item.price)}. Let's configure customized dimensions options.`;
         window.open(`https://wa.me/918140125772?text=${encodeURIComponent(text)}`, '_blank');
@@ -815,7 +870,6 @@ function openProductModal(id) {
     document.getElementById('product-modal').classList.remove('hidden');
 }
 
-// Premium Lightbox Functions
 function openLightbox(src) {
     const lb = document.getElementById('lightbox-modal');
     const lbImg = document.getElementById('lightbox-img');
@@ -834,7 +888,6 @@ function changeModalMedia(type, url) {
     const videoFrame = document.getElementById('modal-video');
     const localVideoFrame = document.getElementById('modal-local-video');
     
-    // Hide all initially
     imgFrame.classList.add('hidden');
     videoFrame.classList.add('hidden');
     localVideoFrame.classList.add('hidden');
@@ -847,7 +900,6 @@ function changeModalMedia(type, url) {
         imgFrame.src = url;
         imgFrame.classList.remove('hidden');
     } else if (type === 'video') {
-        // Auto detect if uploaded local raw mp4 file base64 or external embed link
         if (url.startsWith('data:video/') || url.endsWith('.mp4')) {
             localVideoFrame.src = url;
             localVideoFrame.classList.remove('hidden');
@@ -880,7 +932,6 @@ function closeCertificate() {
     document.getElementById('certificate-modal').classList.add('hidden');
 }
 
-// Dynamic Post Sharing Module
 function shareItem(platform) {
     if (!activeProductForCertificate) return;
     const text = `Take a look at this breathtaking handmade masterpiece, "${activeProductForCertificate.name}" from String Creations 03!`;
@@ -897,7 +948,7 @@ function copyShareLink() {
     showToast("Masterpiece portfolio link copied!");
 }
 
-// Cart Drawer Operations
+// Shopping Cart Drawer Setup
 function toggleCart() {
     const drawer = document.getElementById('cart-drawer');
     if (drawer) drawer.classList.toggle('translate-x-full');
@@ -926,14 +977,23 @@ function removeFromCart(id) {
     renderCart();
 }
 
-// Admin Session Logic
+// Compact Select Toggler Menu
+function toggleMobileMenu() {
+    const drawer = document.getElementById('mobile-menu-drawer');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    if (drawer && backdrop) {
+        drawer.classList.toggle('translate-x-full');
+        backdrop.classList.toggle('hidden');
+    }
+}
+
+// Security Authentication
 function requestAdminAccess() {
     showSection('admin-view');
     const isLoggedIn = sessionStorage.getItem('sc03_logged_in');
     if (isLoggedIn === 'true') {
         document.getElementById('admin-login-shield').classList.add('hidden');
         document.getElementById('admin-dashboard-panel').classList.remove('hidden');
-        // Render live Drag Sorting panel elements as well
         renderAdminDragList();
     } else {
         document.getElementById('admin-login-shield').classList.remove('hidden');
@@ -1020,7 +1080,7 @@ function dispatchCartCheckout() {
     window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
 }
 
-// Continuous Infinite Testimonials loop mapping
+// Testimonial Loops Mapping
 function renderReviews() {
     const container = document.getElementById('reviews-container');
     if (!container) return;
@@ -1028,7 +1088,7 @@ function renderReviews() {
     const doubleList = [...reviews, ...reviews, ...reviews];
     doubleList.forEach(r => {
         const card = document.createElement('div');
-        card.className = 'glass-card p-8 space-y-4 shrink-0 w-80 inline-block whitespace-normal';
+        card.className = 'glass-card p-8 space-y-4 shrink-0 w-80 inline-block whitespace-normal rounded';
         
         let stars = '';
         for (let i = 0; i < r.rating; i++) stars += '<i class="fa-solid fa-star"></i>';
@@ -1067,7 +1127,7 @@ function handleReviewSubmit(event) {
     showToast('Thank you for sharing your experience!');
 }
 
-// Header Track Order Handler (Rule 1)
+// Track Order Trigger Handlers
 function toggleTrackModal() {
     document.getElementById('track-modal').classList.toggle('hidden');
     document.getElementById('track-result').classList.add('hidden');
@@ -1100,7 +1160,6 @@ function trackArtwork() {
         step2.className = "p-2 bg-luxuryGold/10 border border-luxuryGold/30 text-luxuryGold rounded";
         step3.className = "p-2 bg-luxuryGold/10 border border-luxuryGold/30 text-luxuryGold rounded";
     } else {
-        // Deterministic simulation output logic
         let sum = 0;
         for(let i=0; i<id.length; i++) sum += id.charCodeAt(i);
         if (sum % 2 === 0) {
@@ -1117,7 +1176,7 @@ function trackArtwork() {
     }
 }
 
-// SECURED ADMIN MODULE PORTAL
+// In Memory Administration Grid Render
 function renderAdminProducts() {
     const list = document.getElementById('admin-products-list');
     if (!list) return;
@@ -1136,7 +1195,7 @@ function renderAdminProducts() {
     });
 }
 
-// Advanced Async Local Media Publisher (No URLs required!)
+// Local File Media Publisher integration
 async function handleAdminAddProduct(event) {
     event.preventDefault();
 
@@ -1148,14 +1207,12 @@ async function handleAdminAddProduct(event) {
     const threads = parseInt(document.getElementById('admin-p-threads').value);
     const desc = document.getElementById('admin-p-desc').value;
 
-    // Local files references
     const primaryImgFile = document.getElementById('admin-p-img-file').files[0];
     const multiImgFiles = document.getElementById('admin-p-multi-images-file').files;
     const videoFile = document.getElementById('admin-p-video-file').files[0];
 
-    // Check if at least one display element exists
     if (!primaryImgFile && !videoFile) {
-        alert("Action Required: Please choose at least one Primary Display Photo or Video file to publish.");
+        alert("Action Required: Please select either a primary display photo or video file.");
         return;
     }
 
@@ -1180,7 +1237,6 @@ async function handleAdminAddProduct(event) {
             videoBase64 = await readVideoPromise(videoFile);
         }
 
-        // Formulate dynamic masterpiece details object
         const newProduct = {
             id: 'p-' + Date.now(),
             name,
@@ -1190,16 +1246,15 @@ async function handleAdminAddProduct(event) {
             nails,
             threads,
             desc,
-            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=Video+Only",
+            img: primaryImgBase64 || "https://via.placeholder.com/600/161616/d4af37?text=SC03",
             multiImages: multiImagesBase64.join(', '),
             video: videoBase64,
-            // Specifications parameters defaults
             artType: "Custom Selected Aesthetics",
             boardSize: "Tailored to Order",
             boardColor: "Obsidian Velvet Matte Black",
             frameType: "Authentic Stained Hardwood Profile",
             frameColor: "Aesthetic Vintage Gold Trim",
-            threadMaterial: "German Filament Silk & Cotton Core",
+            threadMaterial: "German Filament Silk Core",
             threadThickness: "0.6mm Micro-tension",
             threadSize: "No. 3 Archival Weft",
             threadColor: "Concentric Customized Hue",
@@ -1211,7 +1266,6 @@ async function handleAdminAddProduct(event) {
             bullets: ["Custom built specifically to your scale", "Lifetime anti-fade thread filament warranty"]
         };
 
-        // Save to Database and Array list
         await saveProductToDB(newProduct);
         products.push(newProduct);
         
