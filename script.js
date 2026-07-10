@@ -13,7 +13,7 @@ const availableColors = [
     "Green", "Yellow", "Purple", "Orange", "Pink", "Brown", "Gray"
 ];
 
-// All 35+ Original Art Types fully preserved
+// All 35+ Original Art Types fully preserved (Point 2 and 3 Fix)
 const defaultStringArtTypes = [
     { id: "sat1", title: "Corporate Logos & Business Branding", content: "Designed with corporate vector alignments utilizing metallic copper or industrial steel cables to generate dimensional geometric projections.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
     { id: "sat2", title: "Company Name Art & Signboards", content: "Meticulous linear letters designed to provide depth refraction for high-end office reception structures.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
@@ -337,9 +337,9 @@ function toggleSocialHub() {
     hub.classList.toggle('pointer-events-none');
     
     if (hub.classList.contains('scale-y-0')) {
-        icon.className = "fa-solid fa-comments text-xl";
+        icon.className = "fa-solid fa-chevron-up text-xs font-bold animate-pulse";
     } else {
-        icon.className = "fa-solid fa-angle-down text-xl";
+        icon.className = "fa-solid fa-chevron-down text-xs font-bold";
     }
 }
 
@@ -542,18 +542,26 @@ function renderGalleryGrid(items) {
     });
 }
 
-// Butttery-Smooth infinite JS track scroller (Point 2 Fix)
+// Dynamic auto-centering and scroll initialization (Resolves Point 2)
 function initMarqueeAutoScroll(rowId) {
     const container = document.getElementById(rowId);
     if (!container) return;
 
     container.style.scrollBehavior = 'auto';
     const scrollSpeed = 0.85;
+    
+    let initialized = false;
 
     function step() {
         if (activeMarqueeScrolls[rowId] === 'paused') {
             requestAnimationFrame(step);
             return;
+        }
+
+        // Auto-detect loaded layout width dynamically to prevent scrolling jumps
+        if (!initialized && container.scrollWidth > container.clientWidth) {
+            container.scrollLeft = container.scrollWidth / 3;
+            initialized = true;
         }
 
         container.scrollLeft += scrollSpeed;
@@ -564,7 +572,6 @@ function initMarqueeAutoScroll(rowId) {
         requestAnimationFrame(step);
     }
 
-    container.scrollLeft = container.scrollWidth / 3;
     activeMarqueeScrolls[rowId] = 'running';
     requestAnimationFrame(step);
 
@@ -695,6 +702,7 @@ function closeSatDetailsModal() {
     }
 }
 
+// 100% Fixed selectors map (Point 2 Fix)
 function renderSearchableLists() {
     const threadList = document.getElementById('thread-list');
     const colorList = document.getElementById('color-list');
@@ -708,7 +716,7 @@ function renderSearchableLists() {
         `).join('');
     }
     if (colorList) {
-        container.innerHTML = availableColors.map(c => `
+        colorList.innerHTML = availableColors.map(c => `
             <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-color">
                 <input type="checkbox" name="custom-colors" value="${c}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
                 <span class="color-name-span">${c}</span>
