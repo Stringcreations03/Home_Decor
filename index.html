@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Translate Script Initialization Callback (Forces initialization ahead of script load) -->
+    <!-- Google Translate Script Callback (Guaranteed to bind properly on global scope) -->
     <script type="text/javascript">
         window.googleTranslateElementInit = function() {
             new google.translate.TranslateElement({
@@ -29,7 +29,6 @@
             }, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
     
     <!-- Tailwind Theme Configuration -->
     <script>
@@ -144,8 +143,6 @@
         </div>
     </header>
 
-    <div id="google_translate_element" style="opacity: 0; position: absolute; pointer-events: none; width: 0; height: 0; overflow: hidden;"></div>
-
     <!-- Slide-over Premium Mobile Navigation Menu Drawer -->
     <div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-xs bg-luxuryBlack border-l border-luxuryGold/20 z-55 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
         <div class="p-6 space-y-8 flex-1 overflow-y-auto">
@@ -255,7 +252,6 @@
                     <button onclick="filterGallery('portrait')" id="filter-portrait" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Portraits</button>
                     <button onclick="filterGallery('mandala')" id="filter-mandala" class="gallery-filter-btn px-6 py-2 border border-transparent text-[11px] uppercase tracking-widest text-gray-400 hover:text-luxuryCream hover:border-luxuryGold/30 transition">Mandalas</button>
                     
-                    <!-- Advanced Dropdown Filter List containing all categories -->
                     <div class="relative">
                         <select id="gallery-category-dropdown" onchange="handleDropdownFilter(this.value)" class="bg-luxuryBlack border border-luxuryGold/30 text-luxuryGold px-4 py-2 text-[11px] uppercase tracking-widest focus:outline-none focus:border-luxuryGold cursor-pointer rounded">
                             <option value="" disabled selected>⚜ More Categories</option>
@@ -322,7 +318,7 @@
                             <span class="font-serif text-5xl text-luxuryGold font-light">03</span>
                             <div class="text-luxuryGold text-2xl"><i class="fa-solid fa-hammer"></i></div>
                             <h4 class="font-serif text-xl text-luxuryCream uppercase tracking-wider">3. Precision Hammering</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed max-w-md mx-auto">Nails are placed and manually aligned on premium hardwood bases with absolute spatial accuracy.</p>
+                            <p class="text-sm text-gray-300 mt-4 max-w-md mx-auto">Nails are placed and manually aligned on premium hardwood bases with absolute spatial accuracy.</p>
                         </div>
                         <div class="process-step-card glass-card p-8 space-y-4 text-center rounded-lg border border-luxuryGold/20">
                             <span class="font-serif text-5xl text-brandTeal font-light">04</span>
@@ -434,7 +430,6 @@
                 <div class="marquee-content space-x-8" id="reviews-container"></div>
             </div>
 
-            <!-- Submit Review Action Button -->
             <div class="text-center mt-12">
                 <button onclick="toggleReviewModal()" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack px-8 py-3 text-xs uppercase tracking-widest font-bold transition">
                     <i class="fa-solid fa-pen-nib mr-2"></i> Submit Your Experience
@@ -472,21 +467,18 @@
                     </select>
                 </div>
 
-                <!-- Searchable Multi-Select Thread Types Options -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400">Select Thread Materials (Select Multiple)</label>
                     <input type="text" id="thread-search" onkeyup="filterSearchableList('thread')" placeholder="Search Thread..." class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs focus:outline-none focus:border-luxuryGold text-luxuryCream rounded">
                     <div id="thread-list" class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-32 overflow-y-auto text-[11px] rounded"></div>
                 </div>
 
-                <!-- Searchable Multi-Select Color Options -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400">Select Art Colors (Select Multiple)</label>
                     <input type="text" id="color-search" onkeyup="filterSearchableList('color')" placeholder="Search Color..." class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs focus:outline-none focus:border-luxuryGold text-luxuryCream rounded">
                     <div id="color-list" class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-32 overflow-y-auto text-[11px] rounded"></div>
                 </div>
 
-                <!-- Additional Message Details Textarea -->
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Additional Custom Details & Instructions</label>
                     <textarea id="custom-details-msg" rows="3" placeholder="Enter custom names, dates, references or specific color requirements here..." class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600 rounded"></textarea>
@@ -517,8 +509,6 @@
 
     <!-- VIEW C: SECURED ADMINISTRATIVE CONTROL CENTRE -->
     <div id="admin-view" class="app-route-view hidden min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
-        
-        <!-- Admin Verification Shield Password protection overlay -->
         <div id="admin-login-shield" class="max-w-md mx-auto glass-card p-8 space-y-6 animate-fadeIn">
             <div class="text-center space-y-2">
                 <div class="text-4xl text-luxuryGold"><i class="fa-solid fa-lock"></i></div>
@@ -542,7 +532,7 @@
                 </div>
             </div>
 
-            <!-- Admin Nav Tabs (Point 2 Fix) -->
+            <!-- Admin Sub-Navigation Tabs (Point 2 Fix) -->
             <div class="flex gap-4 border-b border-luxuryGold/20 pb-2 mb-6">
                 <button onclick="switchAdminTab('portfolio')" id="admin-tab-portfolio" class="px-4 py-2 border-b-2 border-luxuryGold text-luxuryGold text-xs uppercase tracking-widest font-bold transition">Portfolio Masterpieces</button>
                 <button onclick="switchAdminTab('string-types')" id="admin-tab-types" class="px-4 py-2 border-b-2 border-transparent text-gray-400 hover:text-luxuryCream text-xs uppercase tracking-widest font-bold transition">String Art Types Directory</button>
@@ -607,7 +597,7 @@
                                 <input type="file" id="admin-p-multi-images-file" accept="image/*" multiple class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
                             </div>
                             <div>
-                                <label class="block text-[10px] uppercase text-gray-400 mb-1">Direct Video Clip Upload (MP4, Max 2MB)</label>
+                                <label class="block text-[10px] uppercase text-gray-400 mb-1">Direct Video Clip Upload (MP4 optional, Max 2MB)</label>
                                 <input type="file" id="admin-p-video-file" accept="video/*" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
                             </div>
                         </div>
@@ -678,7 +668,7 @@
                             <label class="block text-[10px] uppercase text-gray-400">Description</label>
                             <textarea id="admin-p-desc" required rows="2" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-2.5 text-xs uppercase tracking-widest font-bold transition">Publish to Catalog</button>
+                        <button type="submit" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-2.5 text-xs uppercase tracking-widest font-bold transition rounded">Publish to Catalog</button>
                     </form>
                 </div>
 
@@ -793,7 +783,7 @@
         </div>
     </div>
 
-    <!-- Upgraded Product Details Modal with share tools -->
+    <!-- Product Details Modal with share tools -->
     <div id="product-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
         <div class="glass-card max-w-5xl w-full p-6 md:p-10 relative rounded-xl border border-luxuryGold/20 max-h-[95vh] overflow-y-auto space-y-6">
             <button onclick="closeProductModal()" class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-luxuryGold transition z-10"><i class="fa-solid fa-xmark"></i></button>
@@ -820,7 +810,7 @@
                             <span id="modal-tag" class="text-luxuryGold font-serif tracking-[0.2em] text-[10px] uppercase">Unique Artisan Commission</span>
                             <div class="flex items-center text-luxuryGold text-xs gap-1" id="modal-stars-container"></div>
                         </div>
-                        <h3 id="modal-title" class="font-serif text-3xl md:text-4xl text-luxuryCream mt-2 leading-tight">Masterpiece</h3>
+                        <h3 id="modal-title" class="font-serif text-3xl md:text-4xl text-luxuryCream mt-2 leading-tight font-bold">Masterpiece</h3>
                         <div class="flex items-baseline space-x-4 mt-3">
                             <span id="modal-price" class="text-3xl text-luxuryGold font-bold font-serif">₹0</span>
                             <span id="modal-discount-price" class="text-lg text-gray-500 line-through font-serif"></span>
@@ -927,74 +917,65 @@
         </div>
     </div>
 
-    <!-- Floating WhatsApp Widget -->
-    <a href="https://wa.me/918140125772" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 hover:bg-emerald-600 text-luxuryCream h-14 w-14 rounded-full flex items-center justify-center text-2xl shadow-xl hover:scale-110 transition duration-300 z-40">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- Digital Certificate Modal Frame -->
+    <div id="certificate-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex flex-col items-center justify-center p-6">
+        <button onclick="closeCertificate()" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+        <div class="max-w-2xl w-full bg-[#fcfbf9] text-[#111111] p-12 border-[12px] border-[#d4af37] shadow-2xl space-y-8 relative font-serif text-center">
+            <div class="absolute top-2 left-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute top-2 right-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute bottom-2 left-2 text-[#d4af37] text-2xl">⚜</div>
+            <div class="absolute bottom-2 right-2 text-[#d4af37] text-2xl">⚜</div>
 
-    <!-- Footer -->
-    <footer class="bg-luxuryBlack border-t border-luxuryGold/10 py-16">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <h3 class="text-2xl uppercase tracking-[0.2em] text-[#d4af37] font-bold font-cinzel">Certificate of Authenticity</h3>
+            <div class="w-16 h-[2px] bg-[#d4af37] mx-auto"></div>
             
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 group" onclick="openLightbox('logo.jpg')">
-                    <div class="h-10 w-10 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105 cursor-zoom-in">
-                        <img src="logo.jpg" alt="String Creations 03 Logo" class="h-full w-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=150'">
-                    </div>
-                    <div class="font-serif text-base lg:text-lg font-bold tracking-[0.08em] flex items-center space-x-1 logo-glowing-effect cursor-zoom-in">
-                        <span class="brand-string">STRING</span>
-                        <span class="brand-creations italic font-normal text-luxuryCream">Creations</span>
-                        <span class="brand-03">03</span>
-                    </div>
+            <p class="text-xs uppercase tracking-widest text-gray-500">This certifies that the original thread-mapping creation entitled</p>
+            <h4 id="cert-title" class="text-3xl font-bold my-4">Symphony of Grace</h4>
+            <p class="text-xs max-w-md mx-auto leading-relaxed text-gray-600">is an authentic hand-hammered and woven string art formulation under registry of String Creations 03, incorporating premium threads, custom wooden profiles, and lifetime archival pigments.</p>
+            
+            <div class="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200 text-xs">
+                <div>
+                    <p class="font-sans font-bold text-gray-800" id="cert-registry-id">ID: SC03-38291</p>
+                    <p class="text-[10px] uppercase text-gray-400 mt-1">Registry Seal No</p>
                 </div>
-                <p class="text-[11px] text-gray-500 leading-relaxed">International-caliber handcrafted luxury string art pieces based out of India, crafted for modern interiors and elite collectors.</p>
-                
-                <div class="text-[11px] text-gray-400 space-y-2 pt-2">
-                    <p><a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold flex items-center"><i class="fa-brands fa-whatsapp text-emerald-500 w-5 text-sm"></i> <span>+91 81401 25772</span></a></p>
-                    <p><a href="mailto:stringcreations03@gmail.com" class="hover:text-luxuryGold flex items-center"><i class="fa-solid fa-envelope text-red-400 w-5 text-sm"></i> <span>stringcreations03@gmail.com</span></a></p>
-                    <p><a href="https://instagram.com/stringcreations03" target="_blank" class="hover:text-luxuryGold flex items-center"><i class="fa-brands fa-instagram text-pink-500 w-5 text-sm"></i> <span>@string_creations03</span></a></p>
+                <div>
+                    <p class="italic text-base">String Creations 03</p>
+                    <p class="text-[10px] uppercase text-gray-400 mt-1">Artist Signature Stamp</p>
                 </div>
             </div>
-            
-            <div>
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Aesthetics Directory</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Custom Portraits</a></li>
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Sacred Mandala Art</a></li>
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Couple Milestones</a></li>
-                    <li><a href="#gallery-section" class="hover:text-luxuryGold">Corporate Identity Art</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold mb-4">Collector Support</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#" onclick="toggleTrackModal()" class="hover:text-luxuryGold">Track Order</a></li>
-                    <li><a href="https://wa.me/918140125772" target="_blank" class="hover:text-luxuryGold font-semibold text-luxuryGold"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Inquiry</a></li>
-                    <li><button onclick="requestAdminAccess()" class="hover:text-luxuryGold text-left focus:outline-none">🔒 Secure Executive Panel</button></li>
-                </ul>
-            </div>
-            
-            <div class="space-y-4">
-                <h4 class="text-xs uppercase tracking-widest font-bold text-luxuryGold">Follow Our Art</h4>
-                <div class="flex items-start space-x-4">
-                    <div class="w-20 h-20 bg-white p-1 rounded-md shadow-lg flex items-center justify-center shrink-0 cursor-zoom-in" onclick="openLightbox('instagram_qr.jpg')">
-                        <img src="instagram_qr.jpg" alt="Scan Instagram QR Code" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/150/ffffff/000000?text=Instagram'">
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-gray-400 leading-tight">Scan the QR code with your camera or click below to explore reels & daily designs.</p>
-                        <a href="https://instagram.com/stringcreations03" target="_blank" class="inline-flex items-center space-x-1 text-xs text-luxuryGold hover:text-luxuryGoldHover font-semibold mt-2">
-                            <i class="fa-brands fa-instagram text-sm"></i>
-                            <span>@string_creations03</span>
-                        </a>
-                    </div>
-                </div>
-                <p class="text-[10px] text-gray-500 pt-2">© 2026 String Creations 03. All Rights Reserved.</p>
-            </div>
-            
         </div>
-    </footer>
+    </div>
 
+    <!-- Upgraded Floating Multi-Channel Social Hub Widget (Point 5 Fix) -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-center">
+        <!-- Expanding upward list -->
+        <div id="social-hub-menu" class="flex flex-col items-center gap-3 mb-3 scale-y-0 opacity-0 translate-y-10 transition-all duration-300 origin-bottom pointer-events-none">
+            <!-- Mail -->
+            <a href="mailto:stringcreations03@gmail.com" class="bg-red-500 hover:bg-red-600 text-white h-11 w-11 rounded-full flex items-center justify-center text-lg shadow-xl hover:scale-110 transition duration-300 pointer-events-auto">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <!-- Telegram -->
+            <a href="https://t.me/stringcreations03" target="_blank" class="bg-sky-400 hover:bg-sky-500 text-white h-11 w-11 rounded-full flex items-center justify-center text-lg shadow-xl hover:scale-110 transition duration-300 pointer-events-auto">
+                <i class="fa-brands fa-telegram"></i>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com/string_creations03" target="_blank" class="bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 hover:opacity-90 text-white h-11 w-11 rounded-full flex items-center justify-center text-lg shadow-xl hover:scale-110 transition duration-300 pointer-events-auto">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/918140125772" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white h-11 w-11 rounded-full flex items-center justify-center text-lg shadow-xl hover:scale-110 transition duration-300 pointer-events-auto">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+        <!-- Trigger Gold FAB Button with up/down animation hints -->
+        <button onclick="toggleSocialHub()" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack h-14 w-14 rounded-full flex flex-col items-center justify-center shadow-2xl hover:scale-105 transition duration-300 focus:outline-none relative border border-luxuryGoldHover/30">
+            <i id="hub-trigger-icon" class="fa-solid fa-comments text-xl"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 h-2.5 w-2.5 rounded-full animate-ping"></span>
+            <span class="absolute -top-1 -right-1 bg-red-500 h-2.5 w-2.5 rounded-full"></span>
+        </button>
+    </div>
+
+    <!-- Bottom Scripts Connection -->
     <script src="script.js"></script>
 </body>
 </html>
