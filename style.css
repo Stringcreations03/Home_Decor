@@ -39,7 +39,7 @@ html {
     filter: drop-shadow(0px 2px 10px rgba(26, 130, 226, 0.3));
 }
 
-/* Custom scrollbar config */
+/* Scrollbar configs */
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -50,7 +50,7 @@ html {
     background: #1a82e2;
 }
 
-/* Continuous Infinite Horizontal Scrolling Reviews */
+/* Reviews Infinite Marquee Animation */
 @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -72,7 +72,7 @@ html {
     animation-play-state: paused;
 }
 
-/* Clean Carousel-style Auto-Loop Process steps formatting */
+/* Philosophy Tabs dynamic visibility */
 .process-step-card, .heritage-step-card {
     display: none;
     opacity: 0;
@@ -87,75 +87,12 @@ html {
     max-width: 450px;
 }
 
-/* Luxury Draggable items and scrolling animation variables */
-@keyframes marquee-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-}
-
-/* Upgraded Hardware Accelerated Horizontal Scroll Container (No conflict with JS) */
+/* GPU Accelerated Horizontal Marquee scroll setup (Point 3 Fix) */
 .gallery-marquee-container {
-    display: flex;
-    align-items: center;
     overflow-x: auto;
     white-space: nowrap;
     position: relative;
     width: 100%;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
-/* Webkit browser scrollbar elimination */
-.gallery-marquee-container::-webkit-scrollbar {
-    display: none; 
-}
-
-.gallery-marquee-content {
-    display: flex;
-    gap: 24px; /* Equal spacing matrix between cards */
-}
-
-/* Premium Navigation Arrow overlays on Marquee rows */
-.marquee-arrow-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(13, 13, 13, 0.65);
-    color: #d4af37;
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 30;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-.marquee-arrow-btn:hover {
-    background: #d4af37;
-    color: #0d0d0d;
-    border-color: #d4af37;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-    transform: translateY(-50%) scale(1.08);
-}
-.marquee-arrow-left {
-    left: 15px;
-}
-.marquee-arrow-right {
-    right: 15px;
-}
-.gallery-marquee-content {
-    display: inline-flex;
-    animation: marquee-reverse 35s linear infinite;
-}
-
-.gallery-marquee-content:hover {
-    animation-play-state: paused;
 }
 
 .luxury-border-glow {
@@ -181,7 +118,6 @@ html {
     z-index: 55;
 }
 
-/* Custom scrollbar elimination helper */
 .scrollbar-none::-webkit-scrollbar {
     display: none;
 }
@@ -190,12 +126,13 @@ html {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-/* Premium Navigation Arrow overlays on Marquee rows */
+
+/* Header overlays styling */
 .marquee-arrow-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(13, 13, 13, 0.55);
+    background: rgba(13, 13, 13, 0.75);
     color: #d4af37;
     border: 1px solid rgba(212, 175, 55, 0.25);
     width: 42px;
@@ -208,7 +145,6 @@ html {
     z-index: 20;
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 .marquee-arrow-btn:hover {
     background: #d4af37;
@@ -222,98 +158,11 @@ html {
 .marquee-arrow-right {
     right: 15px;
 }
-/* ==========================================================================
-   STRING CREATIONS 03 - PREMIUM 3D WATERFALL & FLYING BIRDS BACKGROUND
-   ========================================================================== */
 
-/* ૧. ઓરિજિનલ 3D લુક ધરાવતું વોટરફોલ બેકગ્રાઉન્ડ (લાલ હોડી વાળું ચિત્ર) */
+/* Hide Google Translate raw bar structure cleanly */
+.goog-te-banner-frame, .skiptranslate {
+    display: none !important;
+}
 body {
-    background-image: url('waterfall-bg.jpg'); /* લાલ હોડી વાળા ચિત્રનો પાથ */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    position: relative;
-    top: 0px !important; /* ગૂગલ ટ્રાન્સલેટના ગેપને અટકાવવા */
-}
-
-/* ૨. વોટરફોલ ધુમ્મસ ઇફેક્ટ (Water Mist Overlay) - ઝરણાને લાઈવ લુક આપવા */
-.mist-overlay {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 250px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 80%);
-    pointer-events: none;
-    z-index: 5;
-    animation: mistMove 6s ease-in-out infinite alternate;
-}
-@keyframes mistMove {
-    0% { transform: translateY(10px) scale(0.95); opacity: 0.5; }
-    100% { transform: translateY(-10px) scale(1.05); opacity: 0.8; }
-}
-
-/* ૩. બેનર સાથે ઉડતી ઓરિજિનલ ચકલીઓ (ત્રીજું ચિત્ર) */
-.bird-banner-carrier {
-    position: fixed;
-    top: 100px;
-    width: 500px; 
-    height: 250px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 10;
-    pointer-events: none;
-    /* બે એનિમેશન: આડી ઉડાન અને ઉભી ધ્રુજારી */
-    animation: 
-        flyAcross 24s linear infinite, 
-        flyWobble 2s ease-in-out infinite alternate;
-}
-@keyframes flyWobble {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-15px); }
-}
-@keyframes flyAcross {
-    0% {
-        left: -550px;
-        background-image: url('birds-ltr.png'); /* ડાબેથી જમણે જતી ટ્રાન્સપરન્ટ ઈમેજ */
-    }
-    49% {
-        left: 100vw;
-        background-image: url('birds-ltr.png');
-    }
-    50% {
-        left: 100vw;
-        background-image: url('birds-rtl.png'); /* જમણેથી ડાબે જતી ટ્રાન્સપરન્ટ ઈમેજ */
-    }
-    99% {
-        left: -550px;
-        background-image: url('birds-rtl.png');
-    }
-    100% {
-        left: -550px;
-        background-image: url('birds-ltr.png');
-    }
-}
-
-/* ૪. કાચ જેવા ટ્રાન્સપરન્ટ પ્રીમિયમ કાર્ડ્સ (Glassmorphism Effect) */
-.glass-header {
-    background: rgba(13, 13, 13, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-}
-.glass-card {
-    background: rgba(22, 22, 22, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-}
-
-/* ૫. ગૂગલ ટ્રાન્સલેટના ડિફોલ્ટ આઇકોન્સ હાઇડ કરવા */
-.skiptranslate, iframe.skiptranslate, #google_translate_element {
-    display: none !important;
-    visibility: hidden !important;
-}
-.goog-te-banner-frame {
-    display: none !important;
+    top: 0px !important;
 }
