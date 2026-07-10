@@ -1,3 +1,5 @@
+
+```javascript
 // Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 12 Feet (144 Inches)
 const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144];
 
@@ -192,10 +194,10 @@ let activeCurrency = "INR";
 const currencySymbols = { INR: "₹", USD: "$", EUR: "€" };
 const exchangeRates = { INR: 1, USD: 0.012, EUR: 0.011 }; 
 
-// Active auto-scroll tracker registry (Point 1 Fix)
+// Active auto-scroll tracker registry (Point 2 Fix)
 let activeMarqueeScrolls = {};
 
-// philosophy step loop configs
+// Philosophy steps Loop Timers
 let currentStep7 = 0;
 let currentStep15 = 0;
 let step7Interval = null;
@@ -276,7 +278,7 @@ function readVideoPromise(file) {
     });
 }
 
-// Launcher Core setup
+// Global DOM Loaded (Delayed Translate loader - Point 1 Fix)
 window.addEventListener('DOMContentLoaded', () => {
     populateCustomSelectors();
     renderGallery();
@@ -288,10 +290,19 @@ window.addEventListener('DOMContentLoaded', () => {
     startProcessSequentialReveal();
 });
 
-function formatToFt(inch) {
-    const ft = inch / 12;
-    return Number.isInteger(ft) ? `${ft}ft` : `${ft.toFixed(1)}ft`;
-}
+// Load Google Translate Widget ONLY after entire page asset loading is 100% complete (Point 1 Fix)
+window.addEventListener('load', () => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(script);
+
+    // Initialize scrolling marquees after layouts are fully painted
+    const containerIds = Object.keys(activeMarqueeScrolls);
+    containerIds.forEach(id => {
+        initMarqueeAutoScroll(id);
+    });
+});
 
 function populateCustomSelectors() {
     const sizeSelector = document.getElementById('custom-size');
@@ -317,6 +328,24 @@ function populateCustomSelectors() {
     });
 }
 
+// Floating Hub Menu toggle widget (Point 4 Fix)
+function toggleSocialHub() {
+    const hub = document.getElementById('social-hub-menu');
+    const icon = document.getElementById('hub-trigger-icon');
+    
+    hub.classList.toggle('scale-y-0');
+    hub.classList.toggle('opacity-0');
+    hub.classList.toggle('translate-y-10');
+    hub.classList.toggle('pointer-events-none');
+    
+    if (hub.classList.contains('scale-y-0')) {
+        icon.className = "fa-solid fa-comments text-xl";
+    } else {
+        icon.className = "fa-solid fa-angle-down text-xl";
+    }
+}
+
+// Philosophy Auto sequential step loops
 function startProcessSequentialReveal() {
     const cards7 = document.querySelectorAll('#process-tab-content-1 .process-step-card');
     const cards15 = document.querySelectorAll('#process-tab-content-2 .heritage-step-card');
@@ -381,7 +410,7 @@ function switchCurrencyMobile(val) {
     switchCurrency();
 }
 
-// Event trigger helper
+// 100% Robust Standard Selector Event Dispatcher
 function triggerHtmlEvent(element, eventName) {
     var event;
     if (document.createEvent) {
@@ -447,7 +476,7 @@ function filterGallery(category) {
     }
 }
 
-// Buttery Smooth Automatic Marquee Sliders Restored (Point 1 Fix)
+// High performance infinite loop rendering system (Point 2 & 3 Fix)
 function renderGallery() {
     renderGalleryGrid(products);
 }
@@ -473,8 +502,9 @@ function renderGalleryGrid(items) {
         const rowWrapper = document.createElement('div');
         rowWrapper.className = "relative w-full overflow-hidden";
         
+        // Guarantee at least 15 items in chain so even single items in category loop infinitely (Point 3 Fix)
         let doubleList = [...rowItems];
-        while (doubleList.length < 12) {
+        while (doubleList.length < 15) {
             doubleList = [...doubleList, ...rowItems];
         }
         doubleList = [...doubleList, ...doubleList, ...doubleList];
@@ -507,10 +537,15 @@ function renderGalleryGrid(items) {
             </div>
         `;
         container.appendChild(rowWrapper);
-        initMarqueeAutoScroll(rowId);
+        
+        // Dynamic initialization loop trigger
+        setTimeout(() => {
+            initMarqueeAutoScroll(rowId);
+        }, 100);
     });
 }
 
+// Butttery-Smooth infinite JS track scroller (Point 2 Fix)
 function initMarqueeAutoScroll(rowId) {
     const container = document.getElementById(rowId);
     if (!container) return;
@@ -524,19 +559,17 @@ function initMarqueeAutoScroll(rowId) {
             return;
         }
 
-        container.scrollLeft -= scrollSpeed;
+        container.scrollLeft += scrollSpeed;
 
-        if (container.scrollLeft <= container.scrollWidth / 3) {
-            container.scrollLeft = (container.scrollWidth / 3) * 2;
+        if (container.scrollLeft >= (container.scrollWidth / 3) * 2) {
+            container.scrollLeft = container.scrollWidth / 3;
         }
         requestAnimationFrame(step);
     }
 
-    setTimeout(() => {
-        container.scrollLeft = (container.scrollWidth / 3) * 2;
-        activeMarqueeScrolls[rowId] = 'running';
-        requestAnimationFrame(step);
-    }, 100);
+    container.scrollLeft = container.scrollWidth / 3;
+    activeMarqueeScrolls[rowId] = 'running';
+    requestAnimationFrame(step);
 
     container.onmouseenter = () => { activeMarqueeScrolls[rowId] = 'paused'; };
     container.onmouseleave = () => { activeMarqueeScrolls[rowId] = 'running'; };
@@ -701,45 +734,6 @@ function filterSearchableList(type) {
             item.style.display = text.includes(query) ? 'flex' : 'none';
         });
     }
-}
-
-// Search Module
-function toggleSearch() {
-    document.getElementById('search-overlay').classList.toggle('hidden');
-}
-
-function handleSearch(event) {
-    if (event.key === 'Enter') {
-        const query = document.getElementById('search-input').value.toLowerCase().trim();
-        const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
-        renderGalleryGrid(filtered);
-        toggleSearch();
-        document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-function dispatchCustomOrder() {
-    const sizeSelector = document.getElementById('custom-size');
-    const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
-    const frameSelector = document.getElementById('custom-frame');
-    const frameText = frameSelector.options[frameSelector.selectedIndex].text;
-    
-    const checkedThreads = Array.from(document.querySelectorAll('input[name="custom-threads"]:checked')).map(el => el.value);
-    const selectedThreadsText = checkedThreads.length > 0 ? checkedThreads.join(", ") : "Standard";
-
-    const checkedColors = Array.from(document.querySelectorAll('input[name="custom-colors"]:checked')).map(el => el.value);
-    const selectedColorsText = checkedColors.length > 0 ? checkedColors.join(", ") : "Standard Palette";
-
-    const customDetails = document.getElementById('custom-details-msg').value.trim() || "None";
-
-    const msg = `Greetings! Custom Order Specifications Setup Request:\n\n` + 
-                `• Dimension: ${sizeText}\n` +
-                `• Frame Style: ${frameText}\n` +
-                `• Threads Selection: ${selectedThreadsText}\n` +
-                `• Color Scheme: ${selectedColorsText}\n` +
-                `• Instructions: ${customDetails}`;
-    
-    window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
 }
 
 // Secure Admin Routing Tab Controller (Point 2 Fix)
