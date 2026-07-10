@@ -4,6 +4,15 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Luxury fixed background style across the entire page (Point 1, 2, 3, 4 fully solved) */
+body {
+    background-image: linear-gradient(rgba(13, 13, 13, 0.75), rgba(13, 13, 13, 0.75)), url('background.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .glass-header {
     background: rgba(10, 10, 10, 0.94);
     backdrop-filter: blur(12px);
@@ -50,7 +59,7 @@ html {
     background: #1a82e2;
 }
 
-/* Infinite Horizontal Scroller Marquee Animation */
+/* Continuous Infinite Horizontal Scrolling Reviews */
 @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
