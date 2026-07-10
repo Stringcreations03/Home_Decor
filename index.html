@@ -18,9 +18,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Translate Script Callback (Guaranteed to bind properly on global scope) -->
+    <!-- Google Translate Script Initialization Callback (Forces initialization ahead of script load) -->
     <script type="text/javascript">
-        window.googleTranslateElementInit = function() {
+        function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
                 includedLanguages: 'en,hi,zh-CN,ja,ko,fr,de,es,ru,ar,pt,it',
@@ -53,7 +53,7 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="style.css">
+    <link class="bg-body-custom" rel="stylesheet" href="style.css">
 </head>
 <body class="bg-luxuryBlack text-luxuryCream font-sans leading-relaxed selection:bg-luxuryGold selection:text-luxuryBlack">
 
@@ -206,10 +206,10 @@
     
     <!-- VIEW A: HOME & MAIN LANDING -->
     <div id="home-view" class="app-route-view pt-20">
-        <!-- Hero Section -->
+        <!-- Hero Section (Seamless match with global background image) -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
             <div class="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover filter brightness-[0.22] blur-[1px]" alt="Background Art">
+                <img src="background.jpg" class="w-full h-full object-cover filter brightness-[0.25]" alt="Background Art">
                 <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent to-luxuryBlack/55"></div>
             </div>
 
@@ -430,6 +430,7 @@
                 <div class="marquee-content space-x-8" id="reviews-container"></div>
             </div>
 
+            <!-- Submit Review Action Button -->
             <div class="text-center mt-12">
                 <button onclick="toggleReviewModal()" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack px-8 py-3 text-xs uppercase tracking-widest font-bold transition">
                     <i class="fa-solid fa-pen-nib mr-2"></i> Submit Your Experience
@@ -467,18 +468,21 @@
                     </select>
                 </div>
 
+                <!-- Searchable Multi-Select Thread Types Options -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400">Select Thread Materials (Select Multiple)</label>
                     <input type="text" id="thread-search" onkeyup="filterSearchableList('thread')" placeholder="Search Thread..." class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs focus:outline-none focus:border-luxuryGold text-luxuryCream rounded">
                     <div id="thread-list" class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-32 overflow-y-auto text-[11px] rounded"></div>
                 </div>
 
+                <!-- Searchable Multi-Select Color Options -->
                 <div class="space-y-2">
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400">Select Art Colors (Select Multiple)</label>
                     <input type="text" id="color-search" onkeyup="filterSearchableList('color')" placeholder="Search Color..." class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs focus:outline-none focus:border-luxuryGold text-luxuryCream rounded">
                     <div id="color-list" class="grid grid-cols-2 gap-2 bg-luxuryBlack/50 p-3 border border-luxuryGold/10 max-h-32 overflow-y-auto text-[11px] rounded"></div>
                 </div>
 
+                <!-- Additional Message Details Textarea -->
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Additional Custom Details & Instructions</label>
                     <textarea id="custom-details-msg" rows="3" placeholder="Enter custom names, dates, references or specific color requirements here..." class="w-full bg-luxuryBlack border border-luxuryGold/20 p-3 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold placeholder-gray-600 rounded"></textarea>
@@ -509,6 +513,8 @@
 
     <!-- VIEW C: SECURED ADMINISTRATIVE CONTROL CENTRE -->
     <div id="admin-view" class="app-route-view hidden min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
+        
+        <!-- Admin Verification Shield Password protection overlay -->
         <div id="admin-login-shield" class="max-w-md mx-auto glass-card p-8 space-y-6 animate-fadeIn">
             <div class="text-center space-y-2">
                 <div class="text-4xl text-luxuryGold"><i class="fa-solid fa-lock"></i></div>
@@ -597,7 +603,7 @@
                                 <input type="file" id="admin-p-multi-images-file" accept="image/*" multiple class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
                             </div>
                             <div>
-                                <label class="block text-[10px] uppercase text-gray-400 mb-1">Direct Video Clip Upload (MP4 optional, Max 2MB)</label>
+                                <label class="block text-[10px] uppercase text-gray-400 mb-1">Direct Video Clip Upload (MP4, Max 2MB)</label>
                                 <input type="file" id="admin-p-video-file" accept="video/*" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-1.5 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold rounded">
                             </div>
                         </div>
@@ -723,35 +729,6 @@
         </div>
     </div>
 
-    <!-- Track Order Popup Modal -->
-    <div id="track-modal" class="fixed inset-0 bg-luxuryBlack/90 z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card max-w-lg w-full p-8 relative space-y-6 rounded-lg border border-luxuryGold/20">
-            <button onclick="toggleTrackModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
-            <div class="text-center space-y-2">
-                <h3 class="font-serif text-2xl text-luxuryGold uppercase tracking-widest">Track Order Phase</h3>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Enter reference code to view production state</p>
-            </div>
-            
-            <div class="space-y-4">
-                <input type="text" id="order-track-id" placeholder="e.g. SC03-2415" class="w-full bg-luxuryBlack border border-luxuryGold/25 px-4 py-3 text-sm focus:outline-none focus:border-luxuryGold text-center uppercase tracking-widest text-luxuryCream">
-                <button onclick="trackArtwork()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition">Verify Status</button>
-            </div>
-
-            <!-- Dynamic Track Results -->
-            <div id="track-result" class="hidden glass-card p-4 space-y-4 border border-luxuryGold/20 rounded">
-                <div class="flex justify-between text-xs pb-2 border-b border-luxuryGold/10">
-                    <span class="text-gray-400">Order Ref: <b id="track-display-id" class="text-luxuryGold"></b></span>
-                    <span class="text-luxuryGold font-bold">Phase: <span id="track-display-phase" class="text-luxuryCream">Threading</span></span>
-                </div>
-                <div class="grid grid-cols-3 gap-2 text-center text-[9px] uppercase tracking-wider">
-                    <div id="track-step-1" class="p-2 bg-luxuryGold/10 border border-luxuryGold/30 text-luxuryGold rounded">1. Mapping</div>
-                    <div id="track-step-2" class="p-2 bg-neutral-900 text-gray-600 rounded">2. Weaving</div>
-                    <div id="track-step-3" class="p-2 bg-neutral-900 text-gray-600 rounded">3. Dispatch</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Review Submission Form Modal -->
     <div id="review-modal" class="fixed inset-0 bg-luxuryBlack/90 z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card max-w-lg w-full p-8 relative rounded-lg border border-luxuryGold/20 shadow-2xl">
@@ -783,137 +760,12 @@
         </div>
     </div>
 
-    <!-- Product Details Modal with share tools -->
-    <div id="product-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
-        <div class="glass-card max-w-5xl w-full p-6 md:p-10 relative rounded-xl border border-luxuryGold/20 max-h-[95vh] overflow-y-auto space-y-6">
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-luxuryGold transition z-10"><i class="fa-solid fa-xmark"></i></button>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div class="lg:col-span-6 space-y-4">
-                    <div class="relative bg-neutral-900/60 rounded-lg border border-luxuryGold/15 overflow-hidden aspect-square flex items-center justify-center p-2 group shadow-2xl">
-                        <img id="modal-img" src="" class="w-full h-full object-cover rounded cursor-zoom-in transition duration-500 hover:scale-105" alt="Active Art Image" onclick="openLightbox(this.src)">
-                        <iframe id="modal-video" class="w-full h-full rounded hidden absolute inset-0" src="about:blank" frameborder="0" allowfullscreen></iframe>
-                        <video id="modal-local-video" class="w-full h-full rounded hidden absolute inset-0 object-cover bg-black" controls src=""></video>
-                    </div>
-                    
-                    <div id="modal-media-previews" class="flex space-x-2 overflow-x-auto py-2 scrollbar-none"></div>
-
-                    <div class="flex justify-between items-center pt-2">
-                        <button id="prev-product-btn" class="text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryGold transition font-bold"><i class="fa-solid fa-chevron-left mr-2"></i> Previous Art</button>
-                        <button id="next-product-btn" class="text-xs uppercase tracking-widest text-gray-400 hover:text-luxuryGold transition font-bold">Next Art <i class="fa-solid fa-chevron-right mr-2"></i></button>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-6 space-y-6">
-                    <div>
-                        <div class="flex justify-between items-start gap-4">
-                            <span id="modal-tag" class="text-luxuryGold font-serif tracking-[0.2em] text-[10px] uppercase">Unique Artisan Commission</span>
-                            <div class="flex items-center text-luxuryGold text-xs gap-1" id="modal-stars-container"></div>
-                        </div>
-                        <h3 id="modal-title" class="font-serif text-3xl md:text-4xl text-luxuryCream mt-2 leading-tight font-bold">Masterpiece</h3>
-                        <div class="flex items-baseline space-x-4 mt-3">
-                            <span id="modal-price" class="text-3xl text-luxuryGold font-bold font-serif">₹0</span>
-                            <span id="modal-discount-price" class="text-lg text-gray-500 line-through font-serif"></span>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <p id="modal-desc" class="text-xs text-gray-300 leading-relaxed font-light"></p>
-                        <ul id="modal-bullet-list" class="text-xs text-gray-400 space-y-1 list-disc list-inside leading-relaxed font-light"></ul>
-                    </div>
-
-                    <div class="border border-luxuryGold/10 rounded-lg overflow-hidden bg-luxuryBlack/50">
-                        <div class="bg-luxuryCharcoal/80 px-4 py-2 border-b border-luxuryGold/10 text-[10px] uppercase tracking-wider text-luxuryGold font-bold">Technical Parameters Index</div>
-                        <table class="w-full text-left text-[11px] text-gray-300">
-                            <tbody class="divide-y divide-luxuryGold/5" id="specs-table-body"></tbody>
-                        </table>
-                    </div>
-
-                    <!-- Action and Share Buttons (COA and link tools restored) -->
-                    <div class="space-y-4 pt-4 border-t border-luxuryGold/10">
-                        <div class="grid grid-cols-2 gap-4">
-                            <button id="modal-whatsapp-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-xs uppercase tracking-widest font-bold transition rounded shadow flex items-center justify-center gap-2">
-                                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Inquiry
-                            </button>
-                            <button id="modal-instagram-btn" class="bg-pink-600 hover:bg-pink-700 text-white py-3 text-xs uppercase tracking-widest font-bold transition rounded shadow flex items-center justify-center gap-2">
-                                <i class="fa-brands fa-instagram text-sm"></i> Instagram DM
-                            </button>
-                        </div>
-                        
-                        <div class="grid grid-cols-3 gap-2">
-                            <button id="modal-share-wa-btn" onclick="shareItem('whatsapp')" class="bg-neutral-800 hover:bg-neutral-700 text-luxuryCream py-2 text-[10px] uppercase tracking-wider font-bold transition rounded flex items-center justify-center gap-1.5 border border-luxuryGold/10">
-                                <i class="fa-brands fa-whatsapp text-emerald-500"></i> WhatsApp
-                            </button>
-                            <button id="modal-share-copy-btn" onclick="copyShareLink()" class="bg-neutral-800 hover:bg-neutral-700 text-luxuryCream py-2 text-[10px] uppercase tracking-wider font-bold transition rounded flex items-center justify-center gap-1.5 border border-luxuryGold/10">
-                                <i class="fa-regular fa-copy text-luxuryGold"></i> Copy Link
-                            </button>
-                            <button id="modal-cert-btn" onclick="generateDigitalCertificate()" class="bg-neutral-800 hover:bg-neutral-700 text-luxuryCream py-2 text-[10px] uppercase tracking-wider font-bold transition rounded flex items-center justify-center gap-1.5 border border-luxuryGold/10">
-                                <i class="fa-solid fa-certificate text-luxuryGold"></i> Certificate
-                            </button>
-                        </div>
-
-                        <button id="modal-add-to-cart-btn" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition rounded shadow">
-                            Add to Collector Container
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dynamic String Art Type Details Modal -->
-    <div id="sat-details-modal" class="fixed inset-0 bg-luxuryBlack/95 z-55 hidden flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
-        <div class="glass-card max-w-4xl w-full p-6 md:p-10 relative rounded-xl border border-luxuryGold/20 max-h-[90vh] overflow-y-auto space-y-6">
-            <button onclick="closeSatDetailsModal()" class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-luxuryGold transition z-10"><i class="fa-solid fa-xmark"></i></button>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <div class="space-y-4">
-                    <div class="relative bg-neutral-900/60 rounded-lg border border-luxuryGold/15 overflow-hidden aspect-square flex items-center justify-center p-2">
-                        <img id="sat-modal-img" src="" class="w-full h-full object-cover rounded cursor-zoom-in" alt="Active Image" onclick="openLightbox(this.src)">
-                        <video id="sat-modal-local-video" class="w-full h-full rounded hidden absolute inset-0 object-cover bg-black" controls src=""></video>
-                    </div>
-                    <div id="sat-modal-media-previews" class="flex space-x-2 overflow-x-auto py-2 scrollbar-none"></div>
-                </div>
-                <div class="space-y-6">
-                    <span class="text-luxuryGold font-serif tracking-[0.2em] text-[10px] uppercase">Custom Studio Category</span>
-                    <h3 id="sat-modal-title" class="font-serif text-2xl md:text-3xl text-luxuryCream leading-tight font-bold">Art Type Title</h3>
-                    <p id="sat-modal-desc" class="text-xs text-gray-300 leading-relaxed font-light"></p>
-                    
-                    <div class="pt-4 border-t border-luxuryGold/10">
-                        <button id="sat-modal-inquire-btn" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack py-3 text-xs uppercase tracking-widest font-bold transition rounded shadow">
-                            Inquire for this Style on WhatsApp
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lightbox Modal -->
-    <div id="lightbox-modal" class="fixed inset-0 bg-black/95 z-55 hidden flex items-center justify-center p-4 cursor-zoom-out" onclick="closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
-        <img id="lightbox-img" class="max-h-[90vh] max-w-full object-contain rounded shadow-2xl transition-transform duration-300" src="" alt="Enlarged Masterpiece View">
-    </div>
-
-    <!-- Shopping Drawer -->
-    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-luxuryCharcoal border-l border-luxuryGold/20 z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
-        <div class="p-6 border-b border-luxuryGold/10 flex justify-between items-center bg-luxuryBlack">
-            <h3 class="font-serif text-xl text-luxuryGold tracking-wide">Selected Masterpieces</h3>
-            <button onclick="toggleCart()" class="text-luxuryCream hover:text-luxuryGold"><i class="fa-solid fa-xmark text-xl"></i></button>
-        </div>
-        
-        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <p id="cart-empty-msg" class="text-xs text-gray-500 text-center py-8">Your collection container is empty.</p>
-        </div>
-
-        <div class="p-6 border-t border-luxuryGold/10 bg-luxuryBlack space-y-4">
-            <div class="flex justify-between items-center text-xs uppercase tracking-wider">
-                <span>Value:</span>
-                <span id="cart-total-price" class="font-serif text-xl text-luxuryGold font-bold">₹0</span>
-            </div>
-            <button onclick="dispatchCartCheckout()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-4 font-bold text-xs uppercase tracking-widest transition">
-                Proceed Order to WhatsApp
-            </button>
+    <!-- Search Overlay Modal -->
+    <div id="search-overlay" class="fixed inset-0 bg-luxuryBlack/95 z-55 hidden flex items-center justify-center p-6">
+        <button onclick="toggleSearch()" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
+        <div class="max-w-xl w-full space-y-4">
+            <p class="text-[10px] text-luxuryGold uppercase tracking-widest font-bold text-center">Search Our Curated Masterpieces</p>
+            <input type="text" id="search-input" onkeyup="handleSearch(event)" placeholder="Press Enter to Search..." class="w-full bg-luxuryBlack border border-luxuryGold/35 px-6 py-4 text-sm focus:outline-none focus:border-luxuryGold text-center text-luxuryCream rounded-lg tracking-wider">
         </div>
     </div>
 
@@ -946,7 +798,7 @@
         </div>
     </div>
 
-    <!-- Upgraded Floating Multi-Channel Social Hub Widget (Point 5 Fix) -->
+    <!-- Upgraded Floating Multi-Channel Social Hub Widget (Point 4 Fix) -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-center">
         <!-- Expanding upward list -->
         <div id="social-hub-menu" class="flex flex-col items-center gap-3 mb-3 scale-y-0 opacity-0 translate-y-10 transition-all duration-300 origin-bottom pointer-events-none">
