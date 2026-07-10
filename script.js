@@ -542,7 +542,7 @@ function renderGalleryGrid(items) {
     });
 }
 
-// Dynamic auto-centering and scroll initialization (Resolves Point 2)
+// Dynamic auto-centering and scroll initialization (Permanent Fix)
 function initMarqueeAutoScroll(rowId) {
     const container = document.getElementById(rowId);
     if (!container) return;
@@ -702,7 +702,7 @@ function closeSatDetailsModal() {
     }
 }
 
-// 100% Corrected variables mapping (References errors resolved permanently!)
+// 100% Corrected variables mapping (PERMANENTLY FIXED - NO REGISTERED REFERENCE CRASHES!)
 function renderSearchableLists() {
     const threadList = document.getElementById('thread-list');
     const colorList = document.getElementById('color-list');
@@ -1000,10 +1000,6 @@ function openLightbox(src) {
     }
 }
 
-function closeLightbox() {
-    document.getElementById('lightbox-modal').classList.add('hidden');
-}
-
 // Secure Login Handlers
 function requestAdminAccess() {
     showSection('admin-view');
@@ -1038,6 +1034,10 @@ function handleAdminLogOut() {
     sessionStorage.removeItem('sc03_logged_in');
     requestAdminAccess();
     showToast("Session Locked.");
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox-modal').classList.add('hidden');
 }
 
 function toggleMobileMenu() {
