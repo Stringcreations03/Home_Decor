@@ -4,14 +4,21 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Luxury fixed background with 'contain' to show 100% of vertical waterfall perfectly (Point 1 and 2 Fix) */
+/* Luxury fixed background with 'contain' on desktop and 'cover' on mobile (Point 1 and 2 Fix) */
 body {
     background-color: #0d0d0d !important;
-    background-image: linear-gradient(rgba(13, 13, 13, 0.75), rgba(13, 13, 13, 0.75)), url('background.jpg') !important;
+    background-image: linear-gradient(rgba(13, 13, 13, 0.78), rgba(13, 13, 13, 0.78)), url('background.jpg') !important;
     background-attachment: fixed !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;
+    background-size: cover !important; /* Default for mobile/portrait screen */
+}
+
+/* On widescreen desktop/laptops, switch background-size to 'contain' to prevent extreme zooming of waterfall */
+@media (min-width: 1024px) {
+    body {
+        background-size: contain !important;
+    }
 }
 
 .glass-header {
