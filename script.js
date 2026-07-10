@@ -1,5 +1,3 @@
-
-```javascript
 // Dimensions Matrix - Purely ranging from 3 Feet (36 Inches) up to 12 Feet (144 Inches)
 const dimensions = [36, 40, 42, 44, 48, 54, 60, 66, 72, 78, 80, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144];
 
@@ -15,7 +13,7 @@ const availableColors = [
     "Green", "Yellow", "Purple", "Orange", "Pink", "Brown", "Gray"
 ];
 
-// All 35+ Original Art Types fully preserved (Point 2 and 3 Fix)
+// All 35+ Original Art Types fully preserved
 const defaultStringArtTypes = [
     { id: "sat1", title: "Corporate Logos & Business Branding", content: "Designed with corporate vector alignments utilizing metallic copper or industrial steel cables to generate dimensional geometric projections.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
     { id: "sat2", title: "Company Name Art & Signboards", content: "Meticulous linear letters designed to provide depth refraction for high-end office reception structures.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
@@ -194,7 +192,7 @@ let activeCurrency = "INR";
 const currencySymbols = { INR: "₹", USD: "$", EUR: "€" };
 const exchangeRates = { INR: 1, USD: 0.012, EUR: 0.011 }; 
 
-// Active auto-scroll tracker registry (Point 2 Fix)
+// Active auto-scroll tracker registry (Point 1 and 2 Fix)
 let activeMarqueeScrolls = {};
 
 // Philosophy steps Loop Timers
@@ -278,7 +276,7 @@ function readVideoPromise(file) {
     });
 }
 
-// Global DOM Loaded (Delayed Translate loader - Point 1 Fix)
+// Global DOM Loaded
 window.addEventListener('DOMContentLoaded', () => {
     populateCustomSelectors();
     renderGallery();
@@ -290,7 +288,7 @@ window.addEventListener('DOMContentLoaded', () => {
     startProcessSequentialReveal();
 });
 
-// Load Google Translate Widget ONLY after entire page asset loading is 100% complete (Point 1 Fix)
+// Load Google Translate Widget ONLY after entire page load completes (Point 1 Fix)
 window.addEventListener('load', () => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -345,7 +343,6 @@ function toggleSocialHub() {
     }
 }
 
-// Philosophy Auto sequential step loops
 function startProcessSequentialReveal() {
     const cards7 = document.querySelectorAll('#process-tab-content-1 .process-step-card');
     const cards15 = document.querySelectorAll('#process-tab-content-2 .heritage-step-card');
@@ -711,7 +708,7 @@ function renderSearchableLists() {
         `).join('');
     }
     if (colorList) {
-        colorList.innerHTML = availableColors.map(c => `
+        container.innerHTML = availableColors.map(c => `
             <label class="flex items-center space-x-2 cursor-pointer py-1 text-gray-300 hover:text-luxuryGold list-item-color">
                 <input type="checkbox" name="custom-colors" value="${c}" class="rounded border-luxuryGold/40 bg-luxuryBlack text-luxuryGold">
                 <span class="color-name-span">${c}</span>
