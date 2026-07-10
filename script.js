@@ -13,7 +13,7 @@ const availableColors = [
     "Green", "Yellow", "Purple", "Orange", "Pink", "Brown", "Gray"
 ];
 
-// All 35+ Original String Art types fully preserved (Point 2 Fix)
+// All 35+ Original Art Types fully preserved (Point 2 and 3 Fix)
 const defaultStringArtTypes = [
     { id: "sat1", title: "Corporate Logos & Business Branding", content: "Designed with corporate vector alignments utilizing metallic copper or industrial steel cables to generate dimensional geometric projections.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
     { id: "sat2", title: "Company Name Art & Signboards", content: "Meticulous linear letters designed to provide depth refraction for high-end office reception structures.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" },
@@ -52,7 +52,7 @@ const defaultStringArtTypes = [
     { id: "sat35", title: "Fractal Mathematical Art", content: "Never-ending geometrical designs built from highly complex, recursive nail configurations.", img: "https://images.unsplash.com/photo-1507208773393-4001fc56622d?auto=format&fit=crop&q=80&w=400", multiImages: "", video: "" }
 ];
 
-// Original Products Data fully preserved
+// Curated Masterpieces (Fully Restored)
 const defaultProducts = [
     {
         id: "p1",
@@ -175,10 +175,10 @@ const defaultProducts = [
 const defaultReviews = [
     { name: "Jaymin Patel", rating: 5, text: "The portrait string art looks remarkably detailed. Custom crafted and delivered with immense protective packaging." },
     { name: "Aarav Mehta", rating: 5, text: "The portrait of Radha Krishna has transformed our foyer completely. Absolutely breath-taking attention to detail." },
-    { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates. Outstanding!" }
+    { name: "Elena Rostova", rating: 5, text: "Unbelievable craftsmanship. Shipped perfectly to Germany in zero-shock wooden crates." }
 ];
 
-// LocalStorage Engine
+// LocalStorage Engine Initializer
 let products = JSON.parse(localStorage.getItem('sc03_products')) || [...defaultProducts];
 let reviews = JSON.parse(localStorage.getItem('sc03_reviews')) || [...defaultReviews];
 let stringArtTypes = JSON.parse(localStorage.getItem('sc03_string_art_types')) || [...defaultStringArtTypes];
@@ -192,13 +192,16 @@ let activeCurrency = "INR";
 const currencySymbols = { INR: "₹", USD: "$", EUR: "€" };
 const exchangeRates = { INR: 1, USD: 0.012, EUR: 0.011 }; 
 
-// Sequencer Timers
+// Active auto-scroll tracker registry (Point 1 Fix)
+let activeMarqueeScrolls = {};
+
+// philosophy step loop configs
 let currentStep7 = 0;
 let currentStep15 = 0;
 let step7Interval = null;
 let step15Interval = null;
 
-// Toast Notification
+// Toast Engine
 function showToast(message, type = 'success') {
     const container = document.getElementById('toast-container');
     if (!container) return;
@@ -209,9 +212,7 @@ function showToast(message, type = 'success') {
     }
     toast.innerText = message;
     container.appendChild(toast);
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    setTimeout(() => { toast.remove(); }, 3000);
 }
 
 function showSection(viewId) {
@@ -229,7 +230,7 @@ function saveToStorage() {
     localStorage.setItem('sc03_cart', JSON.stringify(cart));
 }
 
-// Local Compression
+// Media compressions
 function compressImagePromise(file) {
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -266,7 +267,7 @@ function compressImagePromise(file) {
 function readVideoPromise(file) {
     return new Promise((resolve, reject) => {
         if (file.size > 2 * 1024 * 1024) { 
-            reject("Error: Video file is too large! Please compress to below 2MB to prevent browser crash.");
+            reject("Error: Video file is too large! Please compress to below 2MB.");
             return;
         }
         const reader = new FileReader();
@@ -275,7 +276,7 @@ function readVideoPromise(file) {
     });
 }
 
-// Global Loader
+// Launcher Core setup
 window.addEventListener('DOMContentLoaded', () => {
     populateCustomSelectors();
     renderGallery();
@@ -316,7 +317,6 @@ function populateCustomSelectors() {
     });
 }
 
-// Philosophy Reveal Loop (Preserved and fixed)
 function startProcessSequentialReveal() {
     const cards7 = document.querySelectorAll('#process-tab-content-1 .process-step-card');
     const cards15 = document.querySelectorAll('#process-tab-content-2 .heritage-step-card');
@@ -381,7 +381,20 @@ function switchCurrencyMobile(val) {
     switchCurrency();
 }
 
-// Google Translate Interface Connector (Point 1 Fix)
+// Event trigger helper
+function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+        event = document.createEvent('HTMLEvents');
+        event.initEvent(eventName, true, true);
+        element.dispatchEvent(event);
+    } else {
+        event = document.createEventObject();
+        event.eventType = eventName;
+        element.fireEvent('on' + event.eventType, event);
+    }
+}
+
 function changeLanguage(langCode) {
     const desktopSel = document.getElementById('lang-selector');
     const mobileSel = document.getElementById('lang-selector-mobile');
@@ -391,7 +404,7 @@ function changeLanguage(langCode) {
     const selectEl = document.querySelector('.goog-te-combo');
     if (selectEl) {
         selectEl.value = langCode;
-        selectEl.dispatchEvent(new Event('change'));
+        triggerHtmlEvent(selectEl, 'change');
         showToast(`Language translated to ${langCode.toUpperCase()}`);
     } else {
         let attempts = 0;
@@ -400,15 +413,15 @@ function changeLanguage(langCode) {
             if (select) {
                 clearInterval(interval);
                 select.value = langCode;
-                select.dispatchEvent(new Event('change'));
+                triggerHtmlEvent(select, 'change');
                 showToast(`Language translated to ${langCode.toUpperCase()}`);
             }
             attempts++;
-            if (attempts > 10) {
+            if (attempts > 12) {
                 clearInterval(interval);
                 showToast("Translation engine loading... Try again.", "error");
             }
-        }, 600);
+        }, 500);
     }
 }
 
@@ -434,7 +447,7 @@ function filterGallery(category) {
     }
 }
 
-// GPU Accelerated Gallery Rows (Point 3 Speed Fix)
+// Buttery Smooth Automatic Marquee Sliders Restored (Point 1 Fix)
 function renderGallery() {
     renderGalleryGrid(products);
 }
@@ -456,51 +469,101 @@ function renderGalleryGrid(items) {
     }
 
     rows.forEach((rowItems, rowIndex) => {
-        const rowId = `row-scroll-${rowIndex}`;
+        const rowId = `marquee-row-${rowIndex}`;
         const rowWrapper = document.createElement('div');
         rowWrapper.className = "relative w-full overflow-hidden";
         
+        let doubleList = [...rowItems];
+        while (doubleList.length < 12) {
+            doubleList = [...doubleList, ...rowItems];
+        }
+        doubleList = [...doubleList, ...doubleList, ...doubleList];
+
         rowWrapper.innerHTML = `
             <button class="marquee-arrow-btn marquee-arrow-left" onclick="shiftMarquee('${rowId}', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="marquee-arrow-btn marquee-arrow-right" onclick="shiftMarquee('${rowId}', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
             
-            <div id="${rowId}" class="gallery-marquee-container flex gap-6 overflow-x-auto py-4 scrollbar-none scroll-smooth">
-                ${rowItems.map(p => `
-                    <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
-                        <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
-                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
-                            <p class="text-xs text-gray-400 font-light truncate mt-1">${p.desc || ''}</p>
-                            <div class="flex justify-between items-center mt-5">
-                                <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
-                                <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
-                                    Add to Bag
-                                </button>
+            <div id="${rowId}" class="gallery-marquee-container py-2 scrollbar-none">
+                <div class="gallery-marquee-content inline-flex gap-6">
+                    ${doubleList.map(p => `
+                        <div class="gallery-card glass-card group overflow-hidden relative transition-all duration-300 rounded luxury-border-glow shrink-0 w-72 inline-block whitespace-normal select-none">
+                            <div class="relative overflow-hidden aspect-square bg-neutral-900 cursor-pointer card-zoom" onclick="openProductModal('${p.id}')">
+                                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600/161616/d4af37?text=SC03'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent opacity-60"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-serif text-lg text-luxuryCream group-hover:text-luxuryGold transition cursor-pointer truncate" onclick="openProductModal('${p.id}')">${p.name}</h3>
+                                <p class="text-xs text-gray-400 font-light truncate mt-1">${p.desc || ''}</p>
+                                <div class="flex justify-between items-center mt-5">
+                                    <span class="text-luxuryGold font-serif text-base font-bold">${formatVal(p.price)}</span>
+                                    <button onclick="addToCart('${p.id}'); event.stopPropagation();" class="bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-[10px] uppercase tracking-wider font-semibold px-4 py-2 transition rounded shadow">
+                                        Add to Bag
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `).join('')}
+                    `).join('')}
+                </div>
             </div>
         `;
         container.appendChild(rowWrapper);
+        initMarqueeAutoScroll(rowId);
     });
+}
+
+function initMarqueeAutoScroll(rowId) {
+    const container = document.getElementById(rowId);
+    if (!container) return;
+
+    container.style.scrollBehavior = 'auto';
+    const scrollSpeed = 0.85;
+
+    function step() {
+        if (activeMarqueeScrolls[rowId] === 'paused') {
+            requestAnimationFrame(step);
+            return;
+        }
+
+        container.scrollLeft -= scrollSpeed;
+
+        if (container.scrollLeft <= container.scrollWidth / 3) {
+            container.scrollLeft = (container.scrollWidth / 3) * 2;
+        }
+        requestAnimationFrame(step);
+    }
+
+    setTimeout(() => {
+        container.scrollLeft = (container.scrollWidth / 3) * 2;
+        activeMarqueeScrolls[rowId] = 'running';
+        requestAnimationFrame(step);
+    }, 100);
+
+    container.onmouseenter = () => { activeMarqueeScrolls[rowId] = 'paused'; };
+    container.onmouseleave = () => { activeMarqueeScrolls[rowId] = 'running'; };
 }
 
 function shiftMarquee(rowId, direction) {
     const container = document.getElementById(rowId);
     if (!container) return;
+
+    activeMarqueeScrolls[rowId] = 'paused';
+    container.style.scrollBehavior = 'smooth';
+
     const shiftAmount = 312;
     if (direction === 'left') {
-        container.scrollBy({ left: -shiftAmount, behavior: 'smooth' });
+        container.scrollLeft -= shiftAmount;
     } else {
-        container.scrollBy({ left: shiftAmount, behavior: 'smooth' });
+        container.scrollLeft += shiftAmount;
     }
+
+    clearTimeout(container.scrollTimeout);
+    container.scrollTimeout = setTimeout(() => {
+        container.style.scrollBehavior = 'auto';
+        activeMarqueeScrolls[rowId] = 'running';
+    }, 1500);
 }
 
-// Render dynamic Accordion (All 35+ Art Types preserved) (Point 2 Fix)
+// Render dynamic Accordions (All 35+ types supported)
 function renderStringArtDirectory() {
     const container = document.getElementById('string-art-index-accordion');
     if (!container) return;
@@ -535,7 +598,6 @@ function toggleAccordionSection(idx) {
     icon.innerHTML = block.classList.contains('hidden') ? '<i class="fa-solid fa-chevron-down"></i>' : '<i class="fa-solid fa-chevron-up"></i>';
 }
 
-// Dynamic Pop-up Modal details for Clients (Point 2 Fix)
 function openSatDetailsModal(id) {
     const item = stringArtTypes.find(sat => sat.id.toString() === id.toString());
     if (!item) return;
@@ -582,13 +644,12 @@ function openSatDetailsModal(id) {
     if (item.multiImages) {
         item.multiImages.split(',').map(u => u.trim()).forEach(u => { if (u) addPreviewDot(u); });
     }
-
     if (item.video) {
         addPreviewDot(item.video, true);
     }
 
     document.getElementById('sat-modal-inquire-btn').onclick = () => {
-        const text = `Greetings String Creations 03! I would like to inquire about this style of art: "${item.title}". Please send scaling templates options.`;
+        const text = `Greetings String Creations 03! I would like to inquire about this style of art: "${item.title}".`;
         window.open(`https://wa.me/918140125772?text=${encodeURIComponent(text)}`, '_blank');
     };
 
@@ -604,7 +665,6 @@ function closeSatDetailsModal() {
     }
 }
 
-// Custom Specs List
 function renderSearchableLists() {
     const threadList = document.getElementById('thread-list');
     const colorList = document.getElementById('color-list');
@@ -643,6 +703,21 @@ function filterSearchableList(type) {
     }
 }
 
+// Search Module
+function toggleSearch() {
+    document.getElementById('search-overlay').classList.toggle('hidden');
+}
+
+function handleSearch(event) {
+    if (event.key === 'Enter') {
+        const query = document.getElementById('search-input').value.toLowerCase().trim();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+        renderGalleryGrid(filtered);
+        toggleSearch();
+        document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 function dispatchCustomOrder() {
     const sizeSelector = document.getElementById('custom-size');
     const sizeText = sizeSelector.options[sizeSelector.selectedIndex].text;
@@ -667,7 +742,7 @@ function dispatchCustomOrder() {
     window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
 }
 
-// Admin Tab Router (Point 2 Fix)
+// Secure Admin Routing Tab Controller (Point 2 Fix)
 function switchAdminTab(tabName) {
     const tabPortfolioBtn = document.getElementById('admin-tab-portfolio');
     const tabTypesBtn = document.getElementById('admin-tab-types');
@@ -688,42 +763,7 @@ function switchAdminTab(tabName) {
     }
 }
 
-// Secure Login Handlers
-function requestAdminAccess() {
-    showSection('admin-view');
-    const isLoggedIn = sessionStorage.getItem('sc03_logged_in');
-    if (isLoggedIn === 'true') {
-        document.getElementById('admin-login-shield').classList.add('hidden');
-        document.getElementById('admin-dashboard-panel').classList.remove('hidden');
-        renderAdminDragList();
-    } else {
-        document.getElementById('admin-login-shield').classList.remove('hidden');
-        document.getElementById('admin-dashboard-panel').classList.add('hidden');
-    }
-}
-
-function handleAdminAuth() {
-    const pass = document.getElementById('admin-pass').value;
-    const err = document.getElementById('admin-err');
-    if (pass === 'SC03Admin2026') {
-        sessionStorage.setItem('sc03_logged_in', 'true');
-        document.getElementById('admin-login-shield').classList.add('hidden');
-        document.getElementById('admin-dashboard-panel').classList.remove('hidden');
-        err.classList.add('hidden');
-        showToast("Session Unlocked.");
-        document.getElementById('admin-pass').value = '';
-        renderAdminDragList();
-    } else {
-        err.classList.remove('hidden');
-    }
-}
-
-function handleAdminLogOut() {
-    sessionStorage.removeItem('sc03_logged_in');
-    requestAdminAccess();
-    showToast("Session Locked.");
-}
-
+// Shopping Drawer Configuration
 function updateCartCount() {
     const el = document.getElementById('cart-count');
     if (el) el.innerText = cart.length;
@@ -743,9 +783,9 @@ function addToCart(id) {
         cart.push(item);
         saveToStorage();
         updateCartCount();
-        showToast(`"${item.name}" added to bag.`);
+        showToast(`"${item.name}" added to container.`);
     } else {
-        alert('This masterpiece is already added inside your container bag.');
+        alert('This masterpiece is already added inside your bag.');
     }
 }
 
@@ -782,7 +822,7 @@ function renderCart() {
                 <h4 class="text-xs uppercase font-bold text-luxuryCream tracking-wider">${item.name}</h4>
                 <p class="text-xs text-luxuryGold font-serif font-semibold mt-1">${formatVal(item.price)}</p>
             </div>
-            <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-regular fa-trash-can"></i></button>
+            <button onclick="removeFromCart('${item.id}')" class="text-red-500 text-sm"><i class="fa-regular fa-trash-can"></i></button>
         `;
         container.appendChild(div);
     });
@@ -791,22 +831,24 @@ function renderCart() {
 
 function dispatchCartCheckout() {
     if (cart.length === 0) {
-        alert('Container bag is currently empty.');
+        alert('Container bag is empty.');
         return;
     }
     let orderList = cart.map(item => `• ${item.name} (${formatVal(item.price)})`).join('\n');
     const total = cart.reduce((sum, item) => sum + item.price, 0);
-    const msg = `Greetings String Creations 03! Order request placement:\n\n${orderList}\n\nTotal: ${formatVal(total)}`;
+    const msg = `Greetings String Creations 03! Order Request:\n\n${orderList}\n\nTotal: ${formatVal(total)}`;
     window.open("https://wa.me/918140125772?text=" + encodeURIComponent(msg), '_blank');
 }
 
-// Portfolio Detail View mapping
+// Product Modal (17 Technical Parameters fully restored)
+let activeProductForCertificate = null;
 let currentIdxForProduct = 0;
 function openProductModal(id) {
     const idx = products.findIndex(p => p.id.toString() === id.toString());
     if (idx === -1) return;
     currentIdxForProduct = idx;
     const item = products[idx];
+    activeProductForCertificate = item;
 
     const imgFrame = document.getElementById('modal-img');
     imgFrame.src = item.img;
@@ -821,13 +863,33 @@ function openProductModal(id) {
     document.getElementById('modal-price').innerText = formatVal(item.price);
     document.getElementById('modal-desc').innerText = item.desc || "";
 
+    const bulletContainer = document.getElementById('modal-bullet-list');
+    bulletContainer.innerHTML = '';
+    if (item.bullets) {
+        item.bullets.forEach(b => { bulletContainer.innerHTML += `<li>${b}</li>`; });
+    } else {
+        bulletContainer.innerHTML = `<li>100% Manual Weaving Setup</li><li>Lifetime Archival Quality Guarantee</li>`;
+    }
+
     const specsTable = document.getElementById('specs-table-body');
     const specsData = [
         { k: "Product Name", v: item.name },
         { k: "Price Structure", v: formatVal(item.price) },
+        { k: "Art Typology", v: item.artType || "Manual Silhouette Layering" },
+        { k: "Board size", v: item.boardSize || '36" x 36" (3ft x 3ft)' },
+        { k: "Board coating color", v: item.boardColor || "Matte Dark Velvet Black" },
+        { k: "Outer framing type", v: item.frameType || "Custom Stained Hardwood Profile" },
+        { k: "Framing coloration", v: item.frameColor || "Obsidian Gold Rim Staining" },
+        { k: "Thread core material", v: item.threadMaterial || "German Filament Silk Core" },
+        { k: "Thread micro thickness", v: item.threadThickness || "0.6mm Micro-tension" },
+        { k: "Thread size gauge", v: item.threadSize || "No. 3 Archival Weft" },
+        { k: "Thread selection hue", v: item.threadColor || "Spectral Saffron" },
         { k: "Precision nail counts", v: `${item.nails || '360'} Nails` },
         { k: "Creation crafted hours", v: item.hours || "18 Hours" },
-        { k: "Category sector", v: item.category.toUpperCase() }
+        { k: "Art difficulty level", v: item.difficulty || "Intermediate (3/5)" },
+        { k: "Category sector", v: item.category.toUpperCase() },
+        { k: "Availability state", v: item.availability || "In Stock" },
+        { k: "Registry added date", v: item.dateAdded || "2026-07-09" }
     ];
     specsTable.innerHTML = specsData.map(spec => `
         <tr class="hover:bg-luxuryGold/5 transition">
@@ -903,6 +965,32 @@ function closeProductModal() {
     }
 }
 
+// Sharing & COA Digital Certificate Features (Restored)
+function generateDigitalCertificate() {
+    if (!activeProductForCertificate) return;
+    document.getElementById('cert-title').innerText = activeProductForCertificate.name;
+    document.getElementById('cert-registry-id').innerText = `REGISTRY SECURE NO: SC03-${Math.floor(Math.random() * 900000 + 100000)}`;
+    document.getElementById('certificate-modal').classList.remove('hidden');
+}
+
+function closeCertificate() {
+    document.getElementById('certificate-modal').classList.add('hidden');
+}
+
+function shareItem(platform) {
+    if (!activeProductForCertificate) return;
+    const text = `Take a look at this breathtaking handmade masterpiece, "${activeProductForCertificate.name}" from String Creations 03!`;
+    const url = window.location.href;
+    if (platform === 'whatsapp') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, '_blank');
+    }
+}
+
+function copyShareLink() {
+    navigator.clipboard.writeText(window.location.href);
+    showToast("Masterpiece link copied to clipboard!");
+}
+
 // Lightbox controller
 function openLightbox(src) {
     const lb = document.getElementById('lightbox-modal');
@@ -922,7 +1010,7 @@ function toggleMobileMenu() {
     document.getElementById('mobile-menu-backdrop').classList.toggle('hidden');
 }
 
-// Dynamic Sorting Panel Grid reorder Module
+// Drag & Drop Gallery displaying modules
 function renderAdminDragList() {
     const container = document.getElementById('admin-drag-container');
     if (!container) return;
@@ -955,7 +1043,7 @@ function handleDragDrop(e, targetIdx) {
     }
 }
 
-// In Memory Administration Panel Portfolio Item CRUD Mapping
+// Portfolio Item Publishing CRUD
 let editingProductId = null;
 function renderAdminProducts() {
     const list = document.getElementById('admin-products-list');
@@ -990,6 +1078,21 @@ function editProductFromAdmin(id) {
     document.getElementById('admin-p-nails').value = item.nails;
     document.getElementById('admin-p-threads').value = item.threads;
     document.getElementById('admin-p-desc').value = item.desc || "";
+
+    // Fill technical parameters optional specs values in edit state
+    document.getElementById('admin-p-arttype').value = item.artType || "";
+    document.getElementById('admin-p-boardsize').value = item.boardSize || "";
+    document.getElementById('admin-p-boardcolor').value = item.boardColor || "";
+    document.getElementById('admin-p-frametype').value = item.frameType || "";
+    document.getElementById('admin-p-framecolor').value = item.frameColor || "";
+    document.getElementById('admin-p-threadmaterial').value = item.threadMaterial || "";
+    document.getElementById('admin-p-threadthickness').value = item.threadThickness || "";
+    document.getElementById('admin-p-threadsize').value = item.threadSize || "";
+    document.getElementById('admin-p-threadcolor').value = item.threadColor || "";
+    document.getElementById('admin-p-difficulty').value = item.difficulty || "";
+    document.getElementById('admin-p-availability').value = item.availability || "";
+    document.getElementById('admin-p-bullets').value = item.bullets ? item.bullets.join(', ') : "";
+
     showToast("Specifications Loaded into Form.");
 }
 
@@ -1002,6 +1105,21 @@ async function handleAdminAddProduct(event) {
     const nails = parseInt(document.getElementById('admin-p-nails').value);
     const threads = parseInt(document.getElementById('admin-p-threads').value);
     const desc = document.getElementById('admin-p-desc').value;
+
+    const artType = document.getElementById('admin-p-arttype').value.trim() || "Custom Selected Aesthetics";
+    const boardSize = document.getElementById('admin-p-boardsize').value.trim() || "Tailored to Order";
+    const boardColor = document.getElementById('admin-p-boardcolor').value.trim() || "Obsidian Velvet Matte Black";
+    const frameType = document.getElementById('admin-p-frametype').value.trim() || "Authentic Stained Hardwood Profile";
+    const frameColor = document.getElementById('admin-p-framecolor').value.trim() || "Aesthetic Vintage Gold Trim";
+    const threadMaterial = document.getElementById('admin-p-threadmaterial').value.trim() || "German Filament Silk Core";
+    const threadThickness = document.getElementById('admin-p-threadthickness').value.trim() || "0.6mm Micro-tension";
+    const threadSize = document.getElementById('admin-p-threadsize').value.trim() || "No. 3 Archival Weft";
+    const threadColor = document.getElementById('admin-p-threadcolor').value.trim() || "Concentric Customized Hue";
+    const difficulty = document.getElementById('admin-p-difficulty').value.trim() || "Custom Grade";
+    const availability = document.getElementById('admin-p-availability').value.trim() || "In Stock";
+    
+    const bulletsRaw = document.getElementById('admin-p-bullets').value.trim();
+    const bullets = bulletsRaw ? bulletsRaw.split(',').map(b => b.trim()) : ["100% Handmade", "Lifetime anti-fade warranty"];
 
     const primaryImgFile = document.getElementById('admin-p-img-file').files[0];
     const multiImgFiles = document.getElementById('admin-p-multi-images-file').files;
@@ -1032,6 +1150,19 @@ async function handleAdminAddProduct(event) {
                 products[index].threads = threads;
                 products[index].desc = desc;
 
+                products[index].artType = artType;
+                products[index].boardSize = boardSize;
+                products[index].boardColor = boardColor;
+                products[index].frameType = frameType;
+                products[index].frameColor = frameColor;
+                products[index].threadMaterial = threadMaterial;
+                products[index].threadThickness = threadThickness;
+                products[index].threadSize = threadSize;
+                products[index].threadColor = threadColor;
+                products[index].difficulty = difficulty;
+                products[index].availability = availability;
+                products[index].bullets = bullets;
+
                 if (primaryImgFile) products[index].img = primaryImgBase64;
                 if (multiImgFiles.length > 0) products[index].multiImages = multiImagesBase64.join(', ');
                 if (videoFile) products[index].video = videoBase64;
@@ -1054,7 +1185,9 @@ async function handleAdminAddProduct(event) {
             img: primaryImgBase64 || "https://via.placeholder.com/600",
             multiImages: multiImagesBase64.join(', '),
             video: videoBase64,
-            rating: 5, dateAdded: new Date().toISOString().split('T')[0]
+            artType, boardSize, boardColor, frameType, frameColor,
+            threadMaterial, threadThickness, threadSize, threadColor,
+            difficulty, availability, bullets, rating: 5, dateAdded: new Date().toISOString().split('T')[0]
         };
 
         products.push(newProduct);
@@ -1078,6 +1211,74 @@ function deleteProductFromAdmin(id) {
         renderAdminDragList();
         showToast("Product deleted.");
     }
+}
+
+// CSV Export/Import Configurations (Restored)
+function exportCatalog() {
+    let csvContent = "data:text/csv;charset=utf-8,ID,Name,Category,Price,Hours,Nails,Threads,ImageURL,MultiImages,VideoURL,Description\n";
+    products.forEach(p => {
+        let escapedDesc = `"${(p.desc || '').replace(/"/g, '""')}"`;
+        csvContent += `${p.id},"${p.name}",${p.category},${p.price},"${p.hours}",${p.nails},${p.threads},"${p.img}","${p.multiImages || ''}","${p.video || ''}",${escapedDesc}\n`;
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "SC03_Catalog_Backup.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Portfolio backup downloaded!");
+}
+
+function triggerCSVImport() {
+    document.getElementById('csv-import-file').click();
+}
+
+function importCatalog(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        const importedList = [];
+        
+        for (let i = 1; i < lines.length; i++) {
+            const row = lines[i].trim();
+            if (!row) continue;
+            
+            const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+            if (cols.length >= 8) {
+                const item = {
+                    id: cols[0].replace(/"/g, '').trim(),
+                    name: cols[1].replace(/"/g, '').trim(),
+                    category: cols[2].replace(/"/g, '').trim(),
+                    price: parseInt(cols[3]),
+                    hours: cols[4].replace(/"/g, '').trim(),
+                    nails: parseInt(cols[5]),
+                    threads: parseInt(cols[6]),
+                    img: cols[7].replace(/"/g, '').trim(),
+                    multiImages: cols[8] ? cols[8].replace(/"/g, '').trim() : "",
+                    video: cols[9] ? cols[9].replace(/"/g, '').trim() : "",
+                    desc: cols[10] ? cols[10].replace(/"/g, '').trim() : ""
+                };
+                importedList.push(item);
+            }
+        }
+        
+        if (importedList.length > 0) {
+            products = importedList;
+            saveToStorage();
+            renderGallery();
+            renderAdminProducts();
+            renderAdminDragList();
+            showToast(`Imported ${products.length} products`);
+        } else {
+            alert("Invalid CSV Format.");
+        }
+    };
+    reader.readAsText(file);
 }
 
 // Admin String Types CRUD Framework (Point 2 Fix)
@@ -1230,7 +1431,7 @@ function handleReviewSubmit(event) {
     showToast('Review Submitted.');
 }
 
-// Track Modal results
+// Track Modal results (Fully Restored Tracking Codes log)
 function toggleTrackModal() {
     document.getElementById('track-modal').classList.toggle('hidden');
     document.getElementById('track-result').classList.add('hidden');
