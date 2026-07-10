@@ -187,10 +187,11 @@
     <!-- VIEW A: HOME & MAIN LANDING -->
     <div id="home-view" class="app-route-view pt-20">
         <!-- Hero Section -->
+       <!-- Hero Section (Seamless match with global background image) -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-            <div class="absolute inset-0 z-0">
-                <img src="background.jpg" class="w-full h-full object-cover filter brightness-[0.25]" alt="Background Art">
-                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent to-luxuryBlack/55"></div>
+            <div class="absolute inset-0 z-0 bg-transparent">
+                <!-- We removed the duplicate img tag from here to stop the logo from overlapping twice! -->
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-[#0d0d0d]/30"></div>
             </div>
 
             <div class="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-8">
