@@ -21,7 +21,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind Theme Configuration -->
+    <!-- Tailwind Theme Configuration (From HTML 2) -->
     <script>
         tailwind.config = {
             theme: {
@@ -56,7 +56,7 @@
             }, 'google_translate_element');
         }
     </script>
-
+    
     <style>
         /* Custom Animations & Styles */
         .glass-header {
@@ -101,7 +101,7 @@
     <header class="fixed top-0 inset-x-0 z-50 glass-header border-b border-luxuryGold/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Logo with dynamic zoom pop-up feature -->
+            <!-- Logo with zoom pop-up feature -->
             <div class="flex items-center space-x-3 group shrink-0 pr-4">
                 <div class="h-11 w-11 rounded-full overflow-hidden border border-luxuryGold/40 bg-luxuryCharcoal flex items-center justify-center transition-transform duration-300 group-hover:scale-105 cursor-zoom-in" onclick="openLightbox('https://stringartportrait.in/cdn/shop/files/Gold_Black_Jewellery_Logo_2.png?v=1776151286&width=500')">
                     <img src="https://stringartportrait.in/cdn/shop/files/Gold_Black_Jewellery_Logo_2.png?v=1776151286&width=500" alt="String Art Portrait Logo" class="h-full w-full object-cover">
@@ -126,9 +126,8 @@
 
             <!-- Utility Controls and Icons Section -->
             <div class="flex items-center gap-4 xl:gap-6 shrink-0 pl-4">
-                
                 <div class="hidden xl:flex items-center gap-4 xl:gap-5 whitespace-nowrap">
-                    <!-- Language Switcher -->
+                    <!-- International Language Switcher -->
                     <div class="flex items-center space-x-1.5 text-[10px] uppercase tracking-wider text-gray-400 border-r border-luxuryGold/20 pr-4 shrink-0">
                         <span class="text-luxuryGold mr-1"><i class="fa-solid fa-globe"></i> Language</span>
                         <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent text-luxuryCream focus:outline-none cursor-pointer text-[10px] font-bold">
@@ -156,7 +155,7 @@
                         </select>
                     </div>
 
-                    <!-- Track Order Link -->
+                    <!-- Track Order Link Button -->
                     <button onclick="toggleTrackModal()" class="text-[10px] uppercase tracking-wider text-luxuryGold font-bold hover:text-luxuryCream transition shrink-0">
                         <i class="fa-solid fa-truck-fast mr-1"></i> Track Order
                     </button>
@@ -179,9 +178,6 @@
             </div>
         </div>
     </header>
-
-    <!-- Invisible Google Translate Container -->
-    <div id="google_translate_element" style="opacity: 0; position: absolute; pointer-events: none; width: 0; height: 0; overflow: hidden;"></div>
 
     <!-- Slide-over Premium Mobile Navigation Menu Drawer -->
     <div id="mobile-menu-drawer" class="fixed inset-y-0 right-0 w-full max-w-xs bg-luxuryBlack border-l border-luxuryGold/20 z-55 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
@@ -246,9 +242,9 @@
     
     <!-- VIEW A: HOME & MAIN LANDING -->
     <div id="home-view" class="app-route-view pt-20">
-        <!-- Hero Section -->
+        <!-- Hero Section (Combined with beautiful background image and overlay) -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-            <div class="absolute inset-0 z-0" id="hero-bg-container">
+            <div class="absolute inset-0 z-0">
                 <img id="hero-bg-img" src="https://stringartportrait.in/cdn/shop/files/ChatGPT_Image_Apr_13_2026_02_24_46_PM.png?v=1776070518&width=1536" class="w-full h-full object-cover filter brightness-[0.22] blur-[1px]" alt="Background Art">
                 <div class="absolute inset-0 bg-gradient-to-t from-luxuryBlack via-transparent to-luxuryBlack/55"></div>
             </div>
@@ -312,12 +308,12 @@
 
                 <!-- Curated Marquee Loop Gallery Rows -->
                 <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Dynamic Rows Loaded Here Via JavaScript -->
+                     <!-- Dynamic Rows Loaded Here Via JavaScript -->
                 </div>
             </div>
         </section>
 
-        <!-- Our Handcrafting Process Section -->
+        <!-- Our Handcrafting Process Section (Removed Laxman Rekha white borders) -->
         <section id="process-section" class="py-24 bg-luxuryCharcoal/30 border-t border-luxuryGold/10">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="text-center mb-16 space-y-2">
@@ -334,7 +330,7 @@
 
                 <!-- 7-Step Philosophy -->
                 <div id="process-tab-content-1" class="animate-fadeIn">
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div class="process-step-card glass-card p-6 space-y-4 text-center rounded-lg border border-luxuryGold/20">
                             <span class="font-serif text-5xl text-brandTeal font-light">01</span>
                             <div class="text-luxuryGold text-2xl"><i class="fa-solid fa-camera-retro"></i></div>
@@ -365,17 +361,17 @@
                 <!-- Tab Content 2: 15-Step Professional Heritage Checklist -->
                 <div id="process-tab-content-2" class="hidden animate-fadeIn">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="heritage-step-card glass-card p-6 rounded-lg border-l-4 border-brandTeal">
-                            <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 1: Design Mapping</h4>
-                            <p class="text-xs text-gray-300 mt-2">Converting design structures mathematically into high-density coordinates.</p>
+                        <div class="heritage-step-card glass-card p-8 text-center rounded-lg border-l-4 border-brandTeal">
+                            <h4 class="font-serif text-2xl text-luxuryGold font-semibold">Step 1: Design Mapping</h4>
+                            <p class="text-sm text-gray-300 mt-4 max-w-md mx-auto">Converting design structures mathematically into high-density coordinates.</p>
                         </div>
-                        <div class="heritage-step-card glass-card p-6 rounded-lg border-l-4 border-brandBlue">
-                            <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 2: Base Selection</h4>
-                            <p class="text-xs text-gray-300 mt-2">Selecting premium warp-resistant MDF or sustainable natural pine wood sheets.</p>
+                        <div class="heritage-step-card glass-card p-8 text-center rounded-lg border-l-4 border-brandBlue">
+                            <h4 class="font-serif text-2xl text-luxuryGold font-semibold">Step 2: Base Selection</h4>
+                            <p class="text-sm text-gray-300 mt-4 max-w-md mx-auto">Selecting premium warp-resistant MDF or sustainable natural pine wood sheets.</p>
                         </div>
-                        <div class="heritage-step-card glass-card p-6 rounded-lg border-l-4 border-[#d4af37]">
-                            <h4 class="font-serif text-base text-luxuryGold font-semibold">Step 3: Surface Treatment</h4>
-                            <p class="text-xs text-gray-300 mt-2">Executing precision sanding followed by matte obsidian prime coat applications.</p>
+                        <div class="heritage-step-card glass-card p-8 text-center rounded-lg border-l-4 border-[#d4af37]">
+                            <h4 class="font-serif text-2xl text-luxuryGold font-semibold">Step 3: Surface Treatment</h4>
+                            <p class="text-sm text-gray-300 mt-4 max-w-md mx-auto">Executing precision sanding followed by matte obsidian prime coat applications.</p>
                         </div>
                     </div>
                 </div>
@@ -423,7 +419,7 @@
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Canvas Archetype & Size (From 3ft to 8ft)</label>
                     <select id="custom-size" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
                         <option value="42cm">42cm - Mini Masterpiece</option>
-                        <option value="60cm">60cm - Standard Premium (Bestseller)</option>
+                        <option value="60cm" selected>60cm - Standard Premium (Bestseller)</option>
                         <option value="95cm">95cm - Royal Grand</option>
                     </select>
                 </div>
@@ -431,11 +427,11 @@
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-gray-400 mb-2">Frame Aesthetics</label>
                     <select id="custom-frame" class="w-full bg-luxuryBlack border border-luxuryGold/20 text-luxuryCream px-4 py-3 text-xs focus:outline-none focus:border-luxuryGold">
-                        <option value="wood-black" selected>Wood - Black Frame</option>
-                        <option value="wood-white">Wood - White Frame</option>
-                        <option value="pvc-brown">PVC - Brown Frame</option>
-                        <option value="pvc-white">PVC - White Frame</option>
-                        <option value="without-frame">No Frame (Borderless)</option>
+                        <option value="wood-black" selected>Wood - Black</option>
+                        <option value="wood-white">Wood - White</option>
+                        <option value="pvc-brown">PVC - Brown</option>
+                        <option value="pvc-white">PVC - White</option>
+                        <option value="without-frame">No Frame (Without Frame)</option>
                     </select>
                 </div>
 
@@ -459,7 +455,7 @@
                         <span class="font-serif text-sm text-luxuryGold font-bold uppercase tracking-widest">Custom Quote on WhatsApp</span>
                     </div>
                     <button onclick="dispatchCustomOrder()" class="w-full bg-luxuryGold hover:bg-luxuryGoldHover text-luxuryBlack text-center py-4 font-bold text-xs uppercase tracking-widest transition rounded shadow">
-                        Submit Design via WhatsApp
+                        Submit Design to Artist
                     </button>
                 </div>
             </div>
@@ -472,7 +468,7 @@
                 </div>
                 
                 <div id="string-art-index-accordion" class="space-y-3">
-                    <!-- Populated dynamically via JS -->
+                    <!-- Loaded dynamically via JavaScript -->
                 </div>
             </div>
         </div>
@@ -481,7 +477,7 @@
     <!-- VIEW C: SECURED ADMINISTRATIVE CONTROL CENTRE -->
     <div id="admin-view" class="app-route-view hidden min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
         
-        <!-- Admin Verification Shield -->
+        <!-- Admin Verification Shield Password protection overlay -->
         <div id="admin-login-shield" class="max-w-md mx-auto glass-card p-8 space-y-6 animate-fadeIn">
             <div class="text-center space-y-2">
                 <div class="text-4xl text-luxuryGold"><i class="fa-solid fa-lock"></i></div>
@@ -525,7 +521,7 @@
                 </div>
             </div>
 
-            <!-- Admin Tabs -->
+            <!-- Admin Sub-Navigation Tabs -->
             <div class="flex gap-4 border-b border-luxuryGold/20 pb-2 mb-6">
                 <button onclick="switchAdminTab('portfolio')" id="admin-tab-portfolio" class="px-4 py-2 border-b-2 border-luxuryGold text-luxuryGold text-xs uppercase tracking-widest font-bold transition">Portfolio Masterpieces</button>
                 <button onclick="switchAdminTab('hero-banner')" id="admin-tab-hero" class="px-4 py-2 border-b-2 border-transparent text-gray-400 hover:text-luxuryCream text-xs uppercase tracking-widest font-bold transition">Change Hero Background</button>
@@ -534,7 +530,15 @@
             <!-- Tab 1: Portfolio Masterpieces Panel -->
             <div id="admin-portfolio-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div class="lg:col-span-6 glass-card p-8 space-y-6">
-                    <h3 class="font-serif text-lg text-luxuryGold" id="admin-p-form-title">Add Portfolio Artwork</h3>
+                    <div class="flex justify-between items-center border-b border-luxuryGold/10 pb-4">
+                        <h3 class="font-serif text-lg text-luxuryGold" id="admin-p-form-title">Add Portfolio Artwork</h3>
+                        <div class="flex space-x-2">
+                            <button onclick="exportCatalog()" class="text-[9px] bg-neutral-800 text-luxuryCream hover:text-luxuryGold px-3 py-1.5 uppercase font-bold tracking-widest border border-luxuryGold/10">Export CSV</button>
+                            <button onclick="triggerCSVImport()" class="text-[9px] bg-neutral-800 text-luxuryCream hover:text-luxuryGold px-3 py-1.5 uppercase font-bold tracking-widest border border-luxuryGold/10">Import CSV</button>
+                            <input type="file" id="csv-import-file" accept=".csv" onchange="importCatalog(event)" class="hidden">
+                        </div>
+                    </div>
+                    
                     <form onsubmit="handleAdminAddProduct(event)" class="space-y-3">
                         <div>
                             <label class="block text-[10px] uppercase text-gray-400">Artwork Name</label>
@@ -555,8 +559,8 @@
                                 <input type="number" id="admin-p-price" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
                             </div>
                             <div>
-                                <label class="block text-[10px] uppercase text-gray-400">Compare at Price (₹)</label>
-                                <input type="number" id="admin-p-compare-price" required class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
+                                <label class="block text-[10px] uppercase text-gray-400">Compare Price (₹)</label>
+                                <input type="number" id="admin-p-compare-price" placeholder="Optional" class="w-full bg-luxuryBlack border border-luxuryGold/20 px-3 py-2 text-xs text-luxuryCream focus:outline-none focus:border-luxuryGold">
                             </div>
                         </div>
                         
@@ -661,7 +665,7 @@
     </div>
 
     <!-- Digital Certificate Modal Frame -->
-    <div id="certificate-modal" class="fixed inset-0 bg-luxuryBlack/95 z-50 hidden flex flex-col items-center justify-center p-6">
+    <div id="certificate-modal" class="fixed inset-0 bg-luxuryBlack/95 z-55 hidden flex flex-col items-center justify-center p-6">
         <button onclick="closeCertificate()" class="absolute top-8 right-8 text-3xl text-gray-400 hover:text-luxuryGold"><i class="fa-solid fa-xmark"></i></button>
         <div class="max-w-2xl w-full bg-[#fcfbf9] text-[#111111] p-12 border-[12px] border-[#d4af37] shadow-2xl space-y-8 relative font-serif text-center">
             <div class="absolute top-2 left-2 text-[#d4af37] text-2xl">⚜</div>
@@ -982,11 +986,7 @@
         }
 
         function filterGallery(cat) {
-            renderGallery(categoryMap(cat));
-        }
-
-        function categoryMap(cat) {
-            return cat;
+            renderGallery(cat);
         }
 
         // --- 4. ACCORDION DIRECTORY RENDERING ---
@@ -1078,7 +1078,7 @@
         function generateDigitalCertificate() {
             if(!activeProduct) return;
             document.getElementById('cert-title').textContent = activeProduct.name;
-            document.getElementById('cert-registry-id').textContent = `ID: SAP-${activeProduct.id}-${Math.floor(Math.random()*90000 + 10000)}`;
+            document.getElementById('cert-registry-id').textContent = `ID: SC03-${activeProduct.id}-${Math.floor(Math.random()*90000 + 10000)}`;
             document.getElementById('certificate-modal').classList.remove('hidden');
         }
 
@@ -1145,7 +1145,6 @@
             }
         }
 
-        // Base64 File Reader converter
         function getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -1185,7 +1184,6 @@
                 localStorage.setItem('sc03_catalog', JSON.stringify(catalog));
                 showToast("Artwork published successfully!", "success");
                 
-                // Reset form
                 event.target.reset();
                 renderGallery();
                 renderAdminCatalog();
@@ -1223,7 +1221,6 @@
             });
         }
 
-        // Hero Background Customizer
         async function uploadHeroBackground(event) {
             const file = event.target.files[0];
             if(!file) return;
@@ -1253,7 +1250,7 @@
             }
         }
 
-        // --- 10. SYSTEM UTILITIES (Toast, Translate, Currency, etc.) ---
+        // --- 10. SYSTEM UTILITIES ---
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1292,8 +1289,7 @@
             document.getElementById('track-display-id').textContent = trackId;
             document.getElementById('track-result').classList.remove('hidden');
             
-            // Random production phase logic simulation
-            const phases = ["Mapping Coordinates", " artisan String-weaving session", "Dispatched with Carrier"];
+            const phases = ["Mapping Coordinates", "artisan String-weaving session", "Dispatched with Carrier"];
             const phase = phases[Math.floor(Math.random() * phases.length)];
             document.getElementById('track-display-phase').textContent = phase;
 
@@ -1324,7 +1320,6 @@
             renderAccordion();
             applyHeroBackground();
             
-            // Render basic static mock review marquee
             const reviews = [
                 { name: "Komal Patel", msg: "Amazing handcrafted quality! Perfect gift for my parents' anniversary." },
                 { name: "Rajesh Sharma", msg: "Highly impressed by the precision of the threads. Truly custom masterpiece." },
@@ -1339,10 +1334,6 @@
                     <div class="flex justify-between items-center mt-4">
                         <span class="text-[10px] font-bold text-luxuryGold uppercase">${r.name}</span>
                         <span class="text-xs text-amber-500">⭐⭐⭐⭐⭐</span>
-                        <span class="text-xs text-amber-500">⭐⭐⭐⭐</span>
-                        <span class="text-xs text-amber-500">⭐⭐⭐</span>
-                        <span class="text-xs text-amber-500">⭐⭐</span>
-                        <span class="text-xs text-amber-500">⭐</span>
                     </div>
                 `;
                 marquee.appendChild(card);
